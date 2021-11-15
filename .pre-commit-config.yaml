@@ -1,0 +1,12 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.0.1
+    hooks:
+      - id: check-added-large-files
+  - repo: local
+    hooks:
+      - id: test
+        name: test
+        language: system
+        entry: sh tools/pre_commit_test.sh
+        types: [python]

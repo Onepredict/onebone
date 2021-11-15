@@ -1,0 +1,4 @@
+.python-version
+.ipynb_checkpoints
+__pycache__
+.coverage
