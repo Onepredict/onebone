@@ -1,4 +1,4 @@
 isort . --check
 black . --check
-
-flake8 .
+flake .
+python -m pytest tests
