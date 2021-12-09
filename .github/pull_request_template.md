@@ -1,19 +1,19 @@
-## 목적
-PR의 목적을 적어주세요.
+## Summary
+_Write the summary about this PR._
 
 - 
 
-## 변경사항
-구체적인 변경사항을 적어주세요.
+## Changes
+_Write changes in detail._
 
 - 
 
-## 테스트 방법
-변경사항을 테스트할 수 있는 방법을 적어주세요.
+## How to Test?
+_Write a way to test the changes._
 
 - 
 
 ## Checklist
 
-- [ ] 모든 테스트가 통과되었나요?
-- [ ] README 등 문서에 변경사항이 추가되었나요?
+- [ ] Do you pass all the tests?
+- [ ] Do you write the changes on document such as README?
