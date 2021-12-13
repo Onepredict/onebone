@@ -16,3 +16,24 @@ test:
 
 pre-commit-test:
 	sh scripts/pre_commit_test.sh
+
+build:
+	pip install build
+	python -m build .
+
+sphinx-start:
+	mkdir docs
+	sphinx quick-start docs
+
+sphinx-build:
+	sphinx-apidoc -fMT -o docs/source oplib -t docs/templates
+	sphinx-build -b html docs/source/ docs/build/html
+
+sphinx-server-docker-build:
+	docker build -t sphinx-server -f Dockerfiles/document_server.Dockerfile .
+
+sphinx-server-docker-run:
+	docker-compose -f Dockerfiles/docker-compose.yml up -d
+
+sphinx-server-docker-stop:
+	docker-compose -f Dockerfiles/docker-compose.yml down
