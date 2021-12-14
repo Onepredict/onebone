@@ -6,11 +6,12 @@ oplib
    :undoc-members:
    :show-inheritance:
 
-Subpackages
------------
 
 .. toctree::
-   :maxdepth: 4
+   :maxdepth: 1
 
-   oplib.frequency
-   oplib.time
+   oplib.math
+   oplib.preprocessing
+   oplib.rotary
+   oplib.signal
+   oplib.utils
