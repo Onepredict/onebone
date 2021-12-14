@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>&lt;no title&gt; &mdash; oplib  documentation</title>
+  <title>oplib.signal &mdash; oplib  documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
     <link rel="shortcut icon" href="_static/favicon.ico"/>
@@ -19,7 +19,8 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="oplib" href="oplib.html" /> 
+    <link rel="next" title="oplib.utils" href="oplib.utils.html" />
+    <link rel="prev" title="oplib.rotary" href="oplib.rotary.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -27,7 +28,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-            <a href="#" class="icon icon-home"> oplib
+            <a href="index.html" class="icon icon-home"> oplib
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -38,8 +39,15 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="oplib.html">oplib</a></li>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="oplib.html">oplib</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="oplib.math.html">oplib.math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oplib.preprocessing.html">oplib.preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oplib.rotary.html">oplib.rotary</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">oplib.signal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="oplib.utils.html">oplib.utils</a></li>
+</ul>
+</li>
 </ul>
 
         </div>
@@ -48,17 +56,18 @@
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="#">oplib</a>
+          <a href="index.html">oplib</a>
       </nav>
 
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
-      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
-      <li>&lt;no title&gt;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="oplib.html">oplib</a> &raquo;</li>
+      <li>oplib.signal</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/oplib.signal.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -66,25 +75,30 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <div class="toctree-wrapper compound">
-<p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="oplib.html">oplib</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="oplib.math.html">oplib.math</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oplib.preprocessing.html">oplib.preprocessing</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oplib.rotary.html">oplib.rotary</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oplib.signal.html">oplib.signal</a></li>
-<li class="toctree-l2"><a class="reference internal" href="oplib.utils.html">oplib.utils</a></li>
-</ul>
-</li>
-</ul>
+  <section id="module-oplib.signal">
+<span id="oplib-signal"></span><h1>oplib.signal<a class="headerlink" href="#module-oplib.signal" title="Permalink to this headline"></a></h1>
+<dl class="py function">
+<dt class="sig sig-object py" id="oplib.signal.print_bye">
+<span class="sig-prename descclassname"><span class="pre">oplib.signal.</span></span><span class="sig-name descname"><span class="pre">print_bye</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">msg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'oplib'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#oplib.signal.print_bye" title="Permalink to this definition"></a></dt>
+<dd><p>Print Bye!</p>
+<dl class="simple">
+<dt>msg<span class="classifier">str</span></dt><dd><p>Message</p>
+</dd>
+</dl>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">print_bye</span><span class="p">(</span><span class="s2">&quot;oplib&quot;</span><span class="p">)</span>
+<span class="go">Bye, oplib!</span>
+</pre></div>
 </div>
+</dd></dl>
+
+</section>
 
 
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="oplib.html" class="btn btn-neutral float-right" title="oplib" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="oplib.rotary.html" class="btn btn-neutral float-left" title="oplib.rotary" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="oplib.utils.html" class="btn btn-neutral float-right" title="oplib.utils" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
     </div>
 
   <hr/>

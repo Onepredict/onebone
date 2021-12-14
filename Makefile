@@ -26,6 +26,8 @@ sphinx-start:
 	sphinx quick-start docs
 
 sphinx-build:
+	rm -rf docs/build/html
+	find docs/source -type f -name "*.rst" -not -name "index.rst" -delete
 	sphinx-apidoc -fMT -o docs/source oplib -t docs/templates
 	sphinx-build -b html docs/source/ docs/build/html
 
