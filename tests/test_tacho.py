@@ -5,11 +5,12 @@ from scipy.interpolate import interp1d
 from oplib.rotary.tacho import tacho_to_angle, tacho_to_rpm
 from oplib.utils.exception import ValueLevelError
 
-# [rpm_level, profile_type, tacho_fs, is_plot]
+# TEST_PARAMS = [rpm_level, profile_type, tacho_fs]
 TEST_PARAMS = [
     [3600, "sine", 25600],
 ]
 
+# THRESHOLD is allowable error
 THRESHOLD = [0.01]
 
 
@@ -74,18 +75,19 @@ def _relative_error(threshold, rpm_level, profile_type, tacho_fs, is_plot=False)
     )
 
     # estimate rpm
-    state_levels_gap = 0.5
+    state_levels_trh = 0.5
     angle, t, tp = tacho_to_angle(
         tacho_signal,
         tacho_fs,
-        state_levels_gap,
+        state_levels_trh,
     )
     rpm, _, _ = tacho_to_rpm(
         tacho_signal,
         tacho_fs,
-        state_levels_gap,
+        state_levels_trh,
     )
 
+    # relative error
     a1 = angle_profile(t)[~np.isnan(angle)]
     a2 = angle[~np.isnan(angle)]
     a2 += a1[0]  # compensate for the phase difference between real angle and estimated angle
@@ -123,4 +125,5 @@ def test_tacho(is_plot: bool = False):
 
 
 if __name__ == "__main__":
+    tacho_to_rpm(np.array([0, 1, 0, 1, 0, 0, 1, 0, 0, 1]), 10, 0.5)[0]
     test_tacho(False)
