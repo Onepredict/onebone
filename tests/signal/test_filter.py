@@ -48,16 +48,7 @@ def check_error_case(filter_: Callable):
 
 
 def test_lowpass_filter():
-    check_normal_signal(
-        lowpass_filter,
-        (5000.0, 50),
-        np.array(
-            [
-                10.0,
-                20.0,
-            ]
-        ),
-    )
+    check_normal_signal(lowpass_filter, (5000.0, 50), np.array([10.0, 20.0]))
     check_error_case(lowpass_filter)
 
 
