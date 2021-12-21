@@ -1,6 +1,7 @@
 setup:
 	git config commit.template .gitmessage.txt
 	poetry install
+	pre-commit install
 
 format:
 	isort .
