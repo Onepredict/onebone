@@ -1,12 +1,19 @@
+"""Test code for tacho.py.
+- Author: Kangwhi Kim
+- Contact: kangwhi.kim@onepredict.com
+"""
+
+
 import matplotlib.pyplot as plt
 import numpy as np
+import pytest
 from scipy.interpolate import interp1d
 
 from oplib.rotary.tacho import tacho_to_angle, tacho_to_rpm
 
-# TEST_PARAMS = [rpm_level, profile_type, tacho_fs]
+# TEST_PARAMS = [rpm_level, profile_type, tacho_fs, state_levels, state_levels_trh]
 TEST_PARAMS = [
-    [3600, "sine", 25600],
+    [3600, "sine", 25600, (0, 1), 0.5],
 ]
 
 # THRESHOLD is allowable error
@@ -62,9 +69,10 @@ def _generate_tacho_signal(rpm_level, profile_type, tacho_fs, state_levels=None,
     return signal, angle_profile, rpm_profile
 
 
-def _relative_error(threshold, tacho_signal, tacho_fs, angle_profile, rpm_profile, is_plot=False):
+def _relative_error(
+    threshold, tacho_signal, tacho_fs, state_levels_trh, angle_profile, rpm_profile, is_plot=False
+):
     # Estimate RPM
-    state_levels_trh = 0.5
     angle_estimated, t, tp = tacho_to_angle(
         tacho_signal,
         tacho_fs,
@@ -107,6 +115,7 @@ def _relative_error(threshold, tacho_signal, tacho_fs, angle_profile, rpm_profil
         axes[1].scatter(tp, rpm_profile(tp), s=30, c="r", marker="x", label="pulse rising")
         axes[1].legend()
         plt.show()
+
     assert (
         re_angle <= threshold
     ), f"Wrong Angle: angle-relative error: {re_angle}, threshold: {threshold}"
@@ -114,35 +123,25 @@ def _relative_error(threshold, tacho_signal, tacho_fs, angle_profile, rpm_profil
     print(f"Angle-relative error: {re_angle}\tRPM-relative error: {re_rpm}")
 
 
-# def _check_array_shape(tacho_signal, tacho_fs):
-#     # Estimate RPM
-#     state_levels_trh = 0.5
-#     angle_estimated, t, tp = tacho_to_angle(
-#         tacho_signal,
-#         tacho_fs,
-#         state_levels_trh,
-#     )
-#     rpm_estimated, _, _ = tacho_to_rpm(
-#         tacho_signal,
-#         tacho_fs,
-#         state_levels_trh,
-#     )
-
-#     # case 1: signal shape [2, 3, data_length] -> ArrayShapeError
-#     changed_signal = np.stack([origin_signal] * 3, axis=0)
-#     changed_signal = np.stack([changed_signal] * 2, axis=0)
-#     with pytest.raises(Exception) as ex:
-#         filter_(changed_signal, *input_args)
-#     assert str(ex.value) == "Dimension of signal must be less than 3."
+def _check_array_shape(tacho_signal, tacho_fs, state_levels_trh):
+    with pytest.raises(ValueError):
+        tacho_to_angle(tacho_signal, tacho_fs, state_levels_trh)
+        tacho_to_rpm(tacho_signal, tacho_fs, state_levels_trh)
 
 
 def test_tacho(is_plot=False):
-    for (rpm_level, profile_type, tacho_fs), threshold in zip(TEST_PARAMS, THRESHOLD):
+    for (rpm_level, profile_type, tacho_fs, state_levels, state_levels_trh), threshold in zip(
+        TEST_PARAMS, THRESHOLD
+    ):
         tacho_signal, angle_profile, rpm_profile = _generate_tacho_signal(
-            rpm_level, profile_type, tacho_fs
+            rpm_level, profile_type, tacho_fs, state_levels
         )
-        _relative_error(threshold, tacho_signal, tacho_fs, angle_profile, rpm_profile, is_plot)
+        _relative_error(
+            threshold, tacho_signal, tacho_fs, state_levels_trh, angle_profile, rpm_profile, is_plot
+        )
+        invalid_signal = np.stack([tacho_signal] * 2)
+        _check_array_shape(invalid_signal, tacho_fs, state_levels_trh)
 
 
 if __name__ == "__main__":
-    test_tacho(is_plot=True)
+    test_tacho(is_plot=False)

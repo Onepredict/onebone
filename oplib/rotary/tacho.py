@@ -1,6 +1,6 @@
-""" to leave only a specific frequency band.
-- Author: Kyunghwan Kim
-- Contact: kyunghwan.kim@onepredict.io
+"""Convert tacho to angle or RPM.
+- Author: Kangwhi Kim
+- Contact: kangwhi.kim@onepredict.com
 """
 
 from typing import Tuple, Union
@@ -83,9 +83,9 @@ def tacho_to_angle(
     >>> angle, t, tp = tacho_to_angle(x, fs, state_levels_trh)
 
     >>> angle
-    array([           nan,            nan,            nan, 1.16262283e-15,
-       2.09439510e+00, 4.18879020e+00, 6.28318531e+00, 8.37758041e+00,
-       1.04719755e+01, 1.25663706e+01])
+    array([-6.28318531e+00, -4.18879020e+00, -2.09439510e+00,  1.16262283e-15,
+           2.09439510e+00,  4.18879020e+00,  6.28318531e+00,  8.37758041e+00,
+           1.04719755e+01,  1.25663706e+01])
     >>> t
     array([0. , 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9])
     >>> tp
@@ -200,7 +200,7 @@ def tacho_to_rpm(
     >>> rpm, t, tp = tacho_to_rpm(x, fs, state_levels_trh)
 
     >>> rpm
-    array([ nan,  nan,  nan,  nan,  nan, 200., 200., 200.,  nan,  nan])
+    array([200., 200., 200., 200., 200., 200., 200., 200., 200., 200.])
     >>> t
     array([0. , 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9])
     >>> tp
