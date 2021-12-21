@@ -1,7 +1,7 @@
 """Test frequency filter.
 
 - Author: Kyunghwan Kim
-- Contact: kyunghwan.kim@onepredict.io
+- Contact: kyunghwan.kim@onepredict.com
 """
 
 from typing import Callable, Tuple
@@ -74,7 +74,7 @@ def check_array_shape(filter_: Callable, input_args: Tuple[float, int]):
     # case 1: signal shape [2, 3, data_length] -> ArrayShapeError
     changed_signal = np.stack([origin_signal] * 3, axis=0)
     changed_signal = np.stack([changed_signal] * 2, axis=0)
-    with pytest.raises(Exception) as ex:
+    with pytest.raises(ValueError) as ex:
         filter_(changed_signal, *input_args)
     assert str(ex.value) == "Dimension of signal must be less than 3."
 

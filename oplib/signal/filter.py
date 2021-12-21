@@ -1,7 +1,7 @@
 """A frequency filter to leave only a specific frequency band.
 
 - Author: Kyunghwan Kim
-- Contact: kyunghwan.kim@onepredict.io
+- Contact: kyunghwan.kim@onepredict.com
 """
 
 from typing import Union
@@ -22,7 +22,7 @@ def lowpass_filter(
 
     Parameters
     ----------
-    signal: np.ndarray [signal_length,], [n, signal_length,]
+    signal: numpy.ndarray [signal_length,], [n, signal_length,]
         Original time-domain signal.
     fs: Union[int, float]
         Sampling rate.
@@ -35,7 +35,7 @@ def lowpass_filter(
 
     Returns
     -------
-    out: np.ndarray
+    out: numpy.ndarray
         Filtered signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
@@ -45,7 +45,7 @@ def lowpass_filter(
     >>> fs = 5000.0
     >>> t = np.linspace(0, 1, int(fs))
     >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
-    >>> signal += signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
+    >>> signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
 
     >>> freq_x = np.fft.rfftfreq(signal.size, 1 / fs)[:-1]
     >>> origin_fft_mag = abs((np.fft.rfft(signal) / signal.size)[:-1] * 2)
@@ -69,7 +69,7 @@ def lowpass_filter(
         raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis)}")
 
     if len(signal.shape) > 2:
-        raise Exception("Dimension of signal must be less than 3.")
+        raise ValueError("Dimension of signal must be less than 3.")
 
     nyq = 0.5 * float(fs)
     cutoff = cutoff / nyq
@@ -90,7 +90,7 @@ def highpass_filter(
 
     Parameters
     ----------
-    signal: np.ndarray [signal_length,], [n, signal_length,]
+    signal: numpy.ndarray [signal_length,], [n, signal_length,]
         Original time-domain signal.
     fs: Union[int, float]
         Sampling rate.
@@ -103,7 +103,7 @@ def highpass_filter(
 
     Returns
     -------
-    out: np.ndarray
+    out: numpy.ndarray
         Filtered signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
@@ -113,7 +113,7 @@ def highpass_filter(
     >>> fs = 5000.0
     >>> t = np.linspace(0, 1, int(fs))
     >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
-    >>> signal += signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
+    >>> signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
 
     >>> freq_x = np.fft.rfftfreq(signal.size, 1 / fs)[:-1]
     >>> origin_fft_mag = abs((np.fft.rfft(signal) / signal.size)[:-1] * 2)
@@ -137,7 +137,7 @@ def highpass_filter(
         raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis)}")
 
     if len(signal.shape) > 2:
-        raise Exception("Dimension of signal must be less than 3.")
+        raise ValueError("Dimension of signal must be less than 3.")
 
     nyq = 0.5 * fs
     cutoff = cutoff / nyq
@@ -159,7 +159,7 @@ def bandpass_filter(
 
     Parameters
     ----------
-    signal: np.ndarray [signal_length,], [n, signal_length,]
+    signal: numpy.ndarray [signal_length,], [n, signal_length,]
         Original time-domain signal.
     fs: Union[int, float]
         Sampling rate.
@@ -174,7 +174,7 @@ def bandpass_filter(
 
     Returns
     -------
-    out: np.ndarray
+    out: numpy.ndarray
         Filtered signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
@@ -184,8 +184,8 @@ def bandpass_filter(
     >>> fs = 5000.0
     >>> t = np.linspace(0, 1, int(fs))
     >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
-    >>> signal += signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
-    >>> signal += signal += 5.0 * np.sin(2 * np.pi * 500.0 * t)
+    >>> signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
+    >>> signal += 5.0 * np.sin(2 * np.pi * 500.0 * t)
 
     >>> freq_x = np.fft.rfftfreq(signal.size, 1 / fs)[:-1]
     >>> origin_fft_mag = abs((np.fft.rfft(signal) / signal.size)[:-1] * 2)
@@ -211,7 +211,7 @@ def bandpass_filter(
         raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis)}")
 
     if len(signal.shape) > 2:
-        raise Exception("Dimension of signal must be less than 3.")
+        raise ValueError("Dimension of signal must be less than 3.")
 
     nyq = 0.5 * fs
     low = l_cutoff / nyq
@@ -234,7 +234,7 @@ def bandstop_filter(
 
     Parameters
     ----------
-    signal: np.ndarray [signal_length,], [n, signal_length,]
+    signal: numpy.ndarray [signal_length,], [n, signal_length,]
         Original time-domain signal.
     fs: Union[int, float]
         Sampling rate.
@@ -249,7 +249,7 @@ def bandstop_filter(
 
     Returns
     -------
-    out: np.ndarray
+    out: numpy.ndarray
         Filtered signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
@@ -259,8 +259,8 @@ def bandstop_filter(
     >>> fs = 5000.0
     >>> t = np.linspace(0, 1, int(fs))
     >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
-    >>> signal += signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
-    >>> signal += signal += 5.0 * np.sin(2 * np.pi * 500.0 * t)
+    >>> signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
+    >>> signal += 5.0 * np.sin(2 * np.pi * 500.0 * t)
 
     >>> freq_x = np.fft.rfftfreq(signal.size, 1 / fs)[:-1]
     >>> origin_fft_mag = abs((np.fft.rfft(signal) / signal.size)[:-1] * 2)
@@ -286,7 +286,7 @@ def bandstop_filter(
         raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis)}")
 
     if len(signal.shape) > 2:
-        raise Exception("Dimension of signal must be less than 3.")
+        raise ValueError("Dimension of signal must be less than 3.")
 
     nyq = 0.5 * fs
     low = l_cutoff / nyq
