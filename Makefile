@@ -1,6 +1,7 @@
 setup:
 	git config commit.template .gitmessage.txt
 	poetry install
+	pre-commit install
 
 format:
 	isort .
@@ -12,7 +13,7 @@ test:
 
 	rm -rf .pytest_cache
 	flake8 .
-	python -m pytest tests --cov app
+	python -m pytest tests --cov oplib
 
 pre-commit-test:
 	sh scripts/pre_commit_test.sh
