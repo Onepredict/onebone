@@ -15,7 +15,7 @@ test:
 	black . --check
 
 	rm -rf .pytest_cache
-	flake8 .
+	flake8 oplib tests
 	poetry run pytest --cov=oplib
 
 pre-commit-test:
