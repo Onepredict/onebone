@@ -17,14 +17,13 @@ jobs:
       run: |
         curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
         source $HOME/.poetry/env
-        echo `which python`
-        echo `python -m pip list | grep isort`
     - name: Install dependencies
       run: |
         source $HOME/.poetry/env
         poetry install
         echo `which python`
-        echo `python -m pip list | grep isort`
+        echo `poetry show isort`
+        echo `poetry env info`
     - name: Lint
       run: |
         source $HOME/.poetry/env
