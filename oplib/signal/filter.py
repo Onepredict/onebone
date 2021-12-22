@@ -29,7 +29,7 @@ def lowpass_filter(
     cutoff: Union[int, float]
         Cutoff frequency.
     order: int
-        Order of butterworth filter.
+        Order of butterworth filter. Default is 5.
     axis: int
         The axis of the input data array along which to apply the linear filter. Default is -1.
 
@@ -97,7 +97,7 @@ def highpass_filter(
     cutoff: Union[int, float]
         Cutoff frequency.
     order: int
-        Order of butterworth filter.
+        Order of butterworth filter. Default is 5.
     axis: int
         The axis of the input data array along which to apply the linear filter. Default is -1.
 
@@ -168,7 +168,7 @@ def bandpass_filter(
     h_cutoff: Union[int, float]
         High cutoff frequency.
     order: int
-        Order of butterworth filter.
+        Order of butterworth filter. Default is 5.
     axis: int
         The axis of the input data array along which to apply the linear filter. Default is -1.
 
@@ -243,7 +243,7 @@ def bandstop_filter(
     h_cutoff: Union[int, float]
         High cutoff frequency.
     order: int
-        Order of butterworth filter.
+        Order of butterworth filter. Default is 5.
     axis: int
         The axis of the input data array along which to apply the linear filter. Default is -1.
 

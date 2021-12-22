@@ -1,4 +1,6 @@
 isort . --check
 black . --check
-flake .
-python -m pytest tests
+
+flake8 .
+# python -m pytest tests --cov oplib
+poetry run pytest --cov=oplib
