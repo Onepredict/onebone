@@ -18,20 +18,20 @@ jobs:
         curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
         source $HOME/.poetry/env
         echo `which python`
-        echo `pip list | grep isort`
+        echo `python -m pip list | grep isort`
     - name: Install dependencies
       run: |
         source $HOME/.poetry/env
         poetry install
         echo `which python`
-        echo `pip list | grep isort`
+        echo `python -m pip list | grep isort`
     - name: Lint
       run: |
         source $HOME/.poetry/env
         echo `which python`
-        echo `pip list | grep isort`
-        isort . --check
-        black . --check
+        echo `python -m pip list | grep isort`
+        python -m isort . --check
+        python -m black . --check
     - name: Test
       run: |
         source $HOME/.poetry/env
