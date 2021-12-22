@@ -16,20 +16,20 @@ jobs:
     - name: Install Poetry
       run: |
         curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
-        source $HOME/.poetry/env
-        which python
+        echo `which python`
+        echo `pip list | grep isort`
         pip list | grep isort
     - name: Install dependencies
       run: |
         source $HOME/.poetry/env
         poetry install
-        which python
-        pip list | grep isort
+        echo `which python`
+        echo `pip list | grep isort`
     - name: Lint
       run: |
         source $HOME/.poetry/env
-        which python
-        pip list | grep isort
+        echo `which python`
+        echo `pip list | grep isort`
         isort . --check
         black . --check
     - name: Test
