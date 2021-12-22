@@ -1,4 +1,5 @@
 """Convert tacho to angle or RPM.
+
 - Author: Kangwhi Kim
 - Contact: kangwhi.kim@onepredict.com
 """
@@ -56,14 +57,13 @@ def tacho_to_angle(
         The difference between state levels used to identify pulses.
         (The state levels used to identify pulses.)
     indices_trh: int
-        The difference between indices of the first samples of high-level-state of pulses.
-        The default is '2' in order to identify pulses.
+        The difference between indices of the first samples of high-level-state of pulses. Default is 2.
     pulses_per_rev: int
-        Number of tachometer pulses per revolution.
+        Number of tachometer pulses per revolution. Default is 1.
     output_fs: int or float
-        Output sample rate.
+        Output sample rate. Default is `fs`.
     fit_type: str
-        Fitting method.
+        Fitting method. Default is linear.
 
     Returns
     -------
@@ -173,14 +173,13 @@ def tacho_to_rpm(
         The difference between state levels used to identify pulses.
         (The state levels used to identify pulses.)
     indices_trh: int
-        The difference between indices of the first samples of high-level-state of pulses.
-        The default is '2' in order to identify pulses.
+        The difference between indices of the first samples of high-level-state of pulses. Default is 2.
     pulses_per_rev: int
-        Number of tachometer pulses per revolution.
+        Number of tachometer pulses per revolution. Default is 1.
     output_fs: int or float
-        Output sample rate.
+        Output sample rate. Default is `fs`.
     fit_type: str
-        Fitting method.
+        Fitting method. Default is linear.
 
     Returns
     -------
