@@ -19,13 +19,16 @@ jobs:
         source $HOME/.poetry/env
     - name: Install dependencies
       run: |
+        source $HOME/.poetry/env
         poetry install
     - name: Lint
       run: |
+        source $HOME/.poetry/env
         isort . --check
         black . --check
     - name: Test
       run: |
+        source $HOME/.poetry/env
         poetry run pytest --cov=oplib tests/ --cov-report=xml
     # - name: Upload coverage to Codecov  
     #   uses: codecov/codecov-action@v1
