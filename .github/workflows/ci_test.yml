@@ -1,7 +1,7 @@
 name: CI-Test
 on: [push, pull_request]
 jobs:
-  build:
+  ci_test:
     runs-on: ubuntu-latest
     strategy:
       max-parallel: 4
@@ -14,27 +14,30 @@ jobs:
       with:
         python-version: ${{ matrix.python-version }}
     - name: Install Poetry
-      run: |
-        curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
-        source $HOME/.poetry/env
+      uses: snok/install-poetry@v1
+      with:
+        virtualenvs-create: true
+        virtualenvs-in-project: true
+        installer-parallel: true
+    - name: Load cached venv
+      id: cached-poetry-dependencies
+      uses: actions/cache@v2
+      with:
+        path: .venv
+        key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
     - name: Install dependencies
+      if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
+      run: poetry install --no-interaction --no-root
+    - name: Install library
+      run: poetry install --no-interaction
+    - name: Lint
       run: |
-        source $HOME/.poetry/env
-        poetry install
-        echo `which python`
-        echo `which pip`
-        echo `poetry show isort`
-        echo `poetry env info`
-    # - name: Lint
-    #   run: |
-    #     source $HOME/.poetry/env
-    #     echo `which python`
-    #     echo `python -m pip list | grep isort`
-    #     python -m isort . --check
-    #     python -m black . --check
+        source .venv/bin/activate
+        isort . --check
+        black . --check
     - name: Test
       run: |
-        source $HOME/.poetry/env
+        source .venv/bin/activate
         poetry run pytest --cov=oplib tests/ --cov-report=xml
     # - name: Upload coverage to Codecov  
     #   uses: codecov/codecov-action@v1
