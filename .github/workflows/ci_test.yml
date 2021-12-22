@@ -22,15 +22,16 @@ jobs:
         source $HOME/.poetry/env
         poetry install
         echo `which python`
+        echo `which pip`
         echo `poetry show isort`
         echo `poetry env info`
-    - name: Lint
-      run: |
-        source $HOME/.poetry/env
-        echo `which python`
-        echo `python -m pip list | grep isort`
-        python -m isort . --check
-        python -m black . --check
+    # - name: Lint
+    #   run: |
+    #     source $HOME/.poetry/env
+    #     echo `which python`
+    #     echo `python -m pip list | grep isort`
+    #     python -m isort . --check
+    #     python -m black . --check
     - name: Test
       run: |
         source $HOME/.poetry/env
