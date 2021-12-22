@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3.3"
 services:
   nginx:
     build:
@@ -11,3 +11,14 @@ services:
     restart: always
     ports:
       - 80:80
+
+  pypiserver:
+    image: pypiserver/pypiserver:latest
+    container_name: pypiserver
+    volumes:
+      - ~/packages:/data/packages
+    restart: always
+    ports:
+      - 8008:8080
+    command: -P /data/packages/htpasswd.txt --overwrite
+      

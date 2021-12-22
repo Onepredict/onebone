@@ -35,8 +35,8 @@ sphinx-build:
 sphinx-server-docker-build:
 	docker build -t sphinx-server -f Dockerfiles/document_server.Dockerfile .
 
-sphinx-server-docker-run:
+docker-compose-run:
 	docker-compose -f Dockerfiles/docker-compose.yml up -d
 
-sphinx-server-docker-stop:
+docker-compose-stop:
 	docker-compose -f Dockerfiles/docker-compose.yml down
