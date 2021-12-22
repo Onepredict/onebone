@@ -3,6 +3,9 @@ setup:
 	poetry install
 	pre-commit install
 
+clean:
+	rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info */.pytest_cache .pytest_cache
+
 format:
 	isort .
 	black .
@@ -13,7 +16,7 @@ test:
 
 	rm -rf .pytest_cache
 	flake8 .
-	python -m pytest tests --cov oplib
+	poetry run pytest --cov=oplib
 
 pre-commit-test:
 	sh scripts/pre_commit_test.sh

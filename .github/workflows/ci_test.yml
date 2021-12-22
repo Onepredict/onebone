@@ -1,0 +1,35 @@
+name: CI-Test
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.9]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v1
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install Poetry
+      run: |
+        curl -sSL https://raw.githubusercontent.com/sdispater/poetry/master/get-poetry.py | python
+        source $HOME/.poetry/env
+    - name: Install dependencies
+      run: |
+        poetry install
+    - name: Lint
+      run: |
+        isort . --check
+	      black . --check
+    - name: Test
+      run: |
+        poetry run pytest --cov=oplib tests/ --cov-report=xml
+    # - name: Upload coverage to Codecov  
+    #   uses: codecov/codecov-action@v1
+    #   with: 
+    #     token: ${{ secrets.CODECOV_TOKEN }}
+    #     file: ./coverage.xml
+    #     flags: unittests
