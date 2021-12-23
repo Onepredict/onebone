@@ -1,18 +1,44 @@
-[type]: [title](issue number)
+[type]: [subject](issue number)
 
-[--- content ---]
+[-- body --]
 
-# ---------------- 
-# 내용 포함된 예시)
-# feat: 라이브러리 브레이킹포인트 수정(#1401)
+# --------------------------- The Type ---------------------------
 #
-# react-testing-library 버전이 변경됨에 따라서
-# 기존에 작성된 코드를 라이브러리 버전에 맞게 수정
-# -----------------
-# [타입] 리스트
-# feat    : 이슈 관련 코드 작성(코드 추가, 수정, 삭제) 
-# fix     : 간단한 수정 사항(이슈 내용 이외의 추가적인 변경사항)
-# refactor: 리팩토링(로직은 변경되지 않지만 코드 구조를 개선한 경우)
-# docs    : 문서 (문서 추가, 수정, 삭제)
-# test    : 테스트 (테스트 코드 추가, 수정, 삭제)
-# chore   : 기타 변경사항 (빌드 스크립트 수정 등)
+# feat    : A new feature
+# fix     : A bug fix
+# docs    : Changes to documentation
+# style   : Formatting, missing semi colons, etc; no code change
+# refactor: Refactoring production code
+# test    : Adding tests, refactoring test; no production code change
+# chore   : Updating build tasks, package manager configs, 
+#           etc; no production code change
+#
+# -------------------- Example Commit Message --------------------
+#
+# More detailed explanatory text, if necessary. Wrap it to about 72
+# characters or so. In some contexts, the first line is treated as the
+# subject of the commit and the rest of the text as the body. The
+# blank line separating the summary from the body is critical (unless
+# you omit the body entirely); various tools like `log`, `shortlog`
+# and `rebase` can get confused if you run the two together.
+# 
+# Explain the problem that this commit is solving. Focus on why you
+# are making this change as opposed to how (the code explains that).
+# Are there side effects or other unintuitive consequences of this
+# change? Here's the place to explain them.
+# 
+# Further paragraphs come after blank lines.
+# 
+#  - Bullet points are okay, too
+# 
+#  - Typically a hyphen or asterisk is used for the bullet, preceded
+#    by a single space, with blank lines in between, but conventions
+#    vary here
+# 
+# If you use an issue tracker, put references to them at the bottom,
+# like this:
+# 
+# Resolves: #123
+# See also: #456, #789
+#
+# ----------------------------------------------------------------

@@ -1,6 +1,10 @@
 setup:
 	git config commit.template .gitmessage.txt
 	poetry install
+	pre-commit install
+
+clean:
+	rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info */.pytest_cache .pytest_cache
 
 format:
 	isort .
@@ -11,8 +15,8 @@ test:
 	black . --check
 
 	rm -rf .pytest_cache
-	flake8 .
-	python -m pytest tests --cov app
+	flake8 oplib tests
+	poetry run pytest --cov=oplib
 
 pre-commit-test:
 	sh scripts/pre_commit_test.sh
@@ -34,8 +38,8 @@ sphinx-build:
 sphinx-server-docker-build:
 	docker build -t sphinx-server -f Dockerfiles/document_server.Dockerfile .
 
-sphinx-server-docker-run:
+docker-compose-run:
 	docker-compose -f Dockerfiles/docker-compose.yml up -d
 
-sphinx-server-docker-stop:
+docker-compose-stop:
 	docker-compose -f Dockerfiles/docker-compose.yml down
