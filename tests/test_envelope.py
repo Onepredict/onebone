@@ -15,7 +15,7 @@ def test_bad_args():
     x = np.array([1.0 + 0.0j])
     with pytest.raises(ValueError) as ex:
         envelope_analytic(x)
-    assert ex.value.args[0] == "x must be real."
+    assert ex.value.args[0] == "'x' must be real."
 
 
 def test_envelope_theoretical():

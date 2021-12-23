@@ -28,7 +28,9 @@ def envelope_analytic(x, axis: int = -1) -> np.ndarray:
         Envelope of the `x`, of each 1-D array along `axis`
     """
     if np.iscomplexobj(x):
-        raise ValueError("x must be real.")
+        raise ValueError("'x' must be real.")
+    if not isinstance(axis, int):
+        raise TypeError(f"'axis' must be integer, not {type(axis).__name__}.")
     y = np.abs(hilbert(x, axis=axis))
 
     return y
