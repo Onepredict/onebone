@@ -22,8 +22,8 @@ def lowpass_filter(
 
     Parameters
     ----------
-    signal: numpy.ndarray [signal_length,], [n, signal_length,]
-        Original time-domain signal.
+    signal: numpy.ndarray
+        Original time-domain signal. Input shape can be [signal_length,], [n, signal_length,].
     fs: Union[int, float]
         Sampling rate.
     cutoff: Union[int, float]
@@ -90,8 +90,8 @@ def highpass_filter(
 
     Parameters
     ----------
-    signal: numpy.ndarray [signal_length,], [n, signal_length,]
-        Original time-domain signal.
+    signal: numpy.ndarray
+        Original time-domain signal. Input shape can be [signal_length,], [n, signal_length,].
     fs: Union[int, float]
         Sampling rate.
     cutoff: Union[int, float]
@@ -159,8 +159,8 @@ def bandpass_filter(
 
     Parameters
     ----------
-    signal: numpy.ndarray [signal_length,], [n, signal_length,]
-        Original time-domain signal.
+    signal: numpy.ndarray
+        Original time-domain signal. Input shape can be [signal_length,], [n, signal_length,].
     fs: Union[int, float]
         Sampling rate.
     l_cutoff: Union[int, float]
@@ -234,8 +234,8 @@ def bandstop_filter(
 
     Parameters
     ----------
-    signal: numpy.ndarray [signal_length,], [n, signal_length,]
-        Original time-domain signal.
+    signal: numpy.ndarray
+        Original time-domain signal. Input shape can be [signal_length,], [n, signal_length,].
     fs: Union[int, float]
         Sampling rate.
     l_cutoff: Union[int, float]
