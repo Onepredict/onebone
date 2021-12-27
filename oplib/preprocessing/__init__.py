@@ -1,3 +1,3 @@
-from .hello import print_hello
+from .scaling import minmax_scaling, zscore_scaling
 
-__all__ = ["print_hello"]
+__all__ = ["minmax_scaling", "zscore_scaling"]
