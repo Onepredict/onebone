@@ -1,5 +1,8 @@
 name: Document deploy
-on: [push]
+on:
+  push:
+    branches:
+      - main
 jobs:
   document-deploy:
     runs-on: [self-hosted, linux, x64, deploy]
