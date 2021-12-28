@@ -61,7 +61,7 @@ def tacho_to_angle(
     pulses_per_rev: int
         Number of tachometer pulses per revolution. Default is 1.
     output_fs: int or float
-        Output sample rate. Default is `fs`.
+        Output sample rate. If output_fs is None, output_fs is fs. Default is None.
     fit_type: str
         Fitting method. Default is linear.
 

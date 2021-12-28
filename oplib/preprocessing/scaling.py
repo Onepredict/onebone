@@ -10,7 +10,9 @@ import numpy as np
 from sklearn.preprocessing import minmax_scale, scale
 
 
-def minmax_scaling(x: np.ndarray, feature_range: Tuple[int, int] = (0, 1)):
+def minmax_scaling(
+    x: np.ndarray, feature_range: Tuple[int, int] = (0, 1), axis: int = 0
+) -> np.ndarray:
     """
     .. note:: This method uses `sklearn.preprocessing.minmax_scale`_ method as it is.
     .. _sklearn.preprocessing.minmax_scale: \
@@ -22,18 +24,26 @@ def minmax_scaling(x: np.ndarray, feature_range: Tuple[int, int] = (0, 1)):
 
     Parameters
     ----------
+    x: array-like of shape (n_samples, n_features)
+        The data.
+    feature_range: tuple (min, max).
+        Desired range of transformed data. Default is (0, 1)
+    axis: int
+        Axis used to scale along. Default is 0.
 
     Returns
     -------
+    x_tr: numpy.ndarray of shape (n_samples, n_features)
+        The transformed data.
 
     Examples
     --------
 
     """
-    return minmax_scale(x, feature_range)
+    return minmax_scale(x, feature_range=feature_range, axis=axis)
 
 
-def zscore_scaling(x: np.ndarray):
+def zscore_scaling(x: np.ndarray, axis: int = 0):
     """
     .. note:: This method uses `sklearn.preprocessing.scale`_ method as it is.
     .. _sklearn.preprocessing.scale: \
@@ -48,11 +58,17 @@ def zscore_scaling(x: np.ndarray):
 
     Parameters
     ----------
+    x: array-like of shape (n_samples, n_features)
+        The data.
+    axis: int
+        Axis used to compute the means and standard deviations along.
 
     Returns
     -------
+    x_tr: numpy.ndarray of shape (n_samples, n_features)
+        The transformed data.
 
     Examples
     --------
     """
-    return scale(x)
+    return scale(x, axis=axis)

@@ -22,7 +22,7 @@ def lowpass_filter(
 
     Parameters
     ----------
-    signal: numpy.ndarray [signal_length,], [n, signal_length,]
+    signal: numpy.ndarray of shape (signal_length,), (n, signal_length,)
         Original time-domain signal.
     fs: Union[int, float]
         Sampling rate.
@@ -35,7 +35,7 @@ def lowpass_filter(
 
     Returns
     -------
-    out: numpy.ndarray
+    out: numpy.ndarray of shape (signal_length,), (n, signal_length,)
         Filtered signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
@@ -90,7 +90,7 @@ def highpass_filter(
 
     Parameters
     ----------
-    signal: numpy.ndarray [signal_length,], [n, signal_length,]
+    signal: numpy.ndarray of shape (signal_length,), (n, signal_length,)
         Original time-domain signal.
     fs: Union[int, float]
         Sampling rate.
@@ -103,7 +103,7 @@ def highpass_filter(
 
     Returns
     -------
-    out: numpy.ndarray
+    out: numpy.ndarray of shape (signal_length,), (n, signal_length,)
         Filtered signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
@@ -159,7 +159,7 @@ def bandpass_filter(
 
     Parameters
     ----------
-    signal: numpy.ndarray [signal_length,], [n, signal_length,]
+    signal: numpy.ndarray of shape (signal_length,), (n, signal_length,)
         Original time-domain signal.
     fs: Union[int, float]
         Sampling rate.
@@ -174,7 +174,7 @@ def bandpass_filter(
 
     Returns
     -------
-    out: numpy.ndarray
+    out: numpy.ndarray of shape (signal_length,), (n, signal_length,)
         Filtered signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
@@ -234,7 +234,7 @@ def bandstop_filter(
 
     Parameters
     ----------
-    signal: numpy.ndarray [signal_length,], [n, signal_length,]
+    signal: numpy.ndarray of shape (signal_length,), (n, signal_length,)
         Original time-domain signal.
     fs: Union[int, float]
         Sampling rate.
@@ -249,7 +249,7 @@ def bandstop_filter(
 
     Returns
     -------
-    out: numpy.ndarray
+    out: numpy.ndarray of shape (signal_length,), (n, signal_length,)
         Filtered signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
