@@ -7,4 +7,5 @@ jobs:
     - uses: actions/checkout@v1
     - name: Pull & Document build
       run: |
-        cd ~/opt/oplib & git pull origin main & make sphinx-build
+        pyenv versions
+        cd ~/opt/oplib & git pull origin main & pyenv local oplib & make sphinx-build
