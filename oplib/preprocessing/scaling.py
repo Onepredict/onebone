@@ -7,11 +7,12 @@
 from typing import Tuple
 
 import numpy as np
+from numpy.typing import ArrayLike
 from sklearn.preprocessing import minmax_scale, scale
 
 
 def minmax_scaling(
-    x: np.ndarray, feature_range: Tuple[int, int] = (0, 1), axis: int = 0
+    x: ArrayLike, feature_range: Tuple[int, int] = (0, 1), axis: int = 0
 ) -> np.ndarray:
     """
     .. note:: This method uses `sklearn.preprocessing.minmax_scale`_ method as it is.
@@ -43,7 +44,7 @@ def minmax_scaling(
     return minmax_scale(x, feature_range=feature_range, axis=axis)
 
 
-def zscore_scaling(x: np.ndarray, axis: int = 0):
+def zscore_scaling(x: ArrayLike, axis: int = 0):
     """
     .. note:: This method uses `sklearn.preprocessing.scale`_ method as it is.
     .. _sklearn.preprocessing.scale: \
