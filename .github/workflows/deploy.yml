@@ -1,7 +1,7 @@
 name: Deploy
 on: [push]
 jobs:
-  ci_test:
+  deploy:
     runs-on: [self-hosted, linux, x64, deploy]
     steps:
     - uses: actions/checkout@v1
@@ -26,7 +26,13 @@ jobs:
       run: poetry install --no-interaction --no-root
     - name: Install library
       run: poetry install --no-interaction
-    - name: Deploy
+    - name: Test
+      run: |
+        ls -al
+        pwd
+        git status
+        ls ~/workspace/oplib
+    - name: Build & Deploy
       run: |
         poetry build
         poetry publish -r oplib
