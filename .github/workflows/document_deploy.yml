@@ -1,0 +1,10 @@
+name: Document deploy
+on: [push]
+jobs:
+  document-deploy:
+    runs-on: [self-hosted, linux, x64, deploy]
+    steps:
+    - uses: actions/checkout@v1
+    - name: Pull & Document build
+      run: |
+        cd ~/opt/oplib & git pull origin main & make sphinx-build
