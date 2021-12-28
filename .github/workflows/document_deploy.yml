@@ -6,8 +6,8 @@ jobs:
     steps:
     - name: Pull & Document build
       uses: actions/checkout@v1
-        with:
-          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
+      with:
+        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
       working-directory: /home/kyunghwan/opt/oplib
       run: |
         git pull origin main
