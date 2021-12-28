@@ -6,6 +6,12 @@ jobs:
     steps:
     - uses: actions/checkout@v1
     - name: Pull & Document build
+      working-directory: /home/kyunghwan/opt/oplib
       run: |
-        pyenv versions
-        cd ~/opt/oplib & git pull origin main & pyenv local oplib & make sphinx-build
+        git config user.name "Kyunghwan Kim"
+        git config user.email "kyunghwan.kim@onepredict.com"
+        git config github.token ${{ secrets.GITHUB_TOKEN }}
+        export GIT_SSH_COMMAND=$(git config --local --get core.sshCommand)
+        git pull origin main
+        pyenv local oplib
+        make sphinx-build
