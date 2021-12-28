@@ -8,9 +8,6 @@ jobs:
     - name: Pull & Document build
       working-directory: /home/kyunghwan/opt/oplib
       run: |
-        # git config user.name "Kyunghwan Kim"
-        # git config user.email "kyunghwan.kim@onepredict.com"
-        # git config github.token ${{ secrets.GITHUB_TOKEN }}
         export GIT_SSH_COMMAND=$(git config --local --get core.sshCommand)
         git pull origin main
         pyenv local oplib
