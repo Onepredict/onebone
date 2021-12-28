@@ -4,11 +4,11 @@ jobs:
   document-deploy:
     runs-on: [self-hosted, linux, x64, deploy]
     steps:
-    - uses: actions/checkout@v1
     - name: Pull & Document build
+      uses: actions/checkout@v1
+        with:
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
       working-directory: /home/kyunghwan/opt/oplib
-      with:
-        ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
       run: |
         git pull origin main
         pyenv local oplib
