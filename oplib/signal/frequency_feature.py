@@ -4,20 +4,44 @@
 - Contact: kangwhi.kim@onepredict.com
 """
 
-from typing import Tuple
+from typing import Tuple, Union
 
 import numpy as np
 from scipy.fft import fft, fftfreq
 
 
+def _index_along_axis(x: np.ndarray, s: slice, axis: int):
+    """Index under certain conditions along the axis you specify."""
+    x = x.copy()  # shallow copy
+    lower_ndim, upper_ndim = len(x.shape[:axis]), len(x.shape[axis + 1 :])
+    indices = (
+        lower_ndim
+        * np.s_[
+            :,
+        ]
+        + (s,)
+        + upper_ndim
+        * np.s_[
+            :,
+        ]
+    )
+    x = x[indices]
+
+    return x
+
+
 def _get_amp_and_freq(
-    x: np.ndarray, fs: float = None, freq_range: Tuple = None
+    x: np.ndarray, fs: float = None, freq_range: Tuple = None, axis: int = -1
 ) -> Tuple[np.ndarray, np.ndarray]:
+    """
+    Get the amplitudes and FFT sample frequencies through positive FFT.
+    And you can get results within a specific frequency range.
+    """
 
     if not isinstance(x, np.ndarray):
         raise TypeError("'x' must be array.")
-    if len(x.shape) >= 2:
-        raise ValueError("'x' has less than 2 dimensions.")
+    if len(x.shape) >= 3:
+        raise ValueError("'x' has less than 3 dimensions.")
 
     if not isinstance(fs, (int, float)):
         raise TypeError("'fs' must be integer or float.")
@@ -32,17 +56,18 @@ def _get_amp_and_freq(
         raise ValueError("The first element of 'freq_range' must be lower than the second element.")
 
     # Do FFT.
-    amp = fft(x)
-    n = amp.size
+    amp = fft(x, axis=axis)
+    n = amp.shape[axis]
 
     # Set 'fs' for normalized mean frequency.
     if fs is None:
         fs = 1
+
     # Return the FFT sample frequencies.
     freq = fftfreq(n, d=1 / fs)
 
-    # Get the oneside of FFT results.
-    amp = amp[: n // 2]
+    # Get the oneside of FFT results along axis.
+    amp = _index_along_axis(amp, np.s_[: n // 2], axis)
     freq = freq[: n // 2]
 
     # Get frequencies and amplitudes of FFT samples within the frequency range.
@@ -60,46 +85,61 @@ def _get_amp_and_freq(
     if low_idx | high_idx:
         raise ValueError("The frequency range is not valid.")
 
-    amp = amp[low_idx : high_idx + 1]
+    amp = _index_along_axis(amp, np.s_[low_idx : high_idx + 1], axis=axis)
     freq = freq[low_idx : high_idx + 1]
+
+    # Make the dimensions of 'amp' equal to the dimensions of 'freq'.
+    lower_dims, upper_dims = amp.shape[:axis], amp.shape[axis + 1 :]
+    freq_shape = (
+        len(lower_dims) * (1,)
+        + np.s_[
+            :,
+        ]
+        + len(upper_dims) * (1,)
+    )
+    freq = freq.reshape(freq_shape)
+    amp_shape = lower_dims + (1,) + upper_dims
+    amp = np.zeros(amp_shape)
+    freq = amp + freq  # Numpy broadcasting
 
     return amp, freq
 
 
-def mnf(x: np.ndarray, fs: float = None, freq_range: Tuple = None) -> float:
+def mnf(
+    x: np.ndarray, fs: float = None, freq_range: Tuple = None, axis: int = -1
+) -> Union[float, np.ndarray]:
     """Compute the mean frequency.
     Mean frequency has a similar definiton as the central frequency."""
     # Get the amplitudes and FFT sample frequencies.
-    amp, freq = _get_amp_and_freq(x, fs, freq_range)
+    amp, freq = _get_amp_and_freq(x, fs, freq_range, axis)
 
     # Get the MNF(mean frequency).
-    mnf = np.sum(freq * np.abs(amp)) / np.sum(np.abs(amp))
+    mnf = np.sum(freq * np.abs(amp), axis=axis) / np.sum(np.abs(amp), axis=axis)
 
     return mnf
 
 
-def mdf(x: np.ndarray, fs: float = None, freq_range: Tuple = None) -> float:
+def mdf(x: np.ndarray, fs: float = None, freq_range: Tuple = None, axis: int = -1) -> float:
     """Compute the median frequency."""
     # Get the amplitudes and FFT sample frequencies.
-    amp, freq = _get_amp_and_freq(x, fs, freq_range)
+    amp, _ = _get_amp_and_freq(x, fs, freq_range, axis)
 
     # Get the MDF(median frequency).
-    cumsum_amp = np.cumsum(amp)
-    mdf_idx = np.where(cumsum_amp <= cumsum_amp[-1] / 2)[0][-1]
-    mdf = freq[mdf_idx]
+    cumsum_amp = np.cumsum(amp, axis=axis)
+    mdf = np.apply_along_axis(lambda x: x[x <= x[-1] / 2][-1], axis, cumsum_amp)
 
     return mdf
 
 
-def vcf(x: np.ndarray, fs: float = None, freq_range: Tuple = None) -> float:
+def vcf(x: np.ndarray, fs: float = None, freq_range: Tuple = None, axis: int = -1) -> float:
     """Compute the variance of central frequency(mean frequency)."""
     # Get the amplitudes and FFT sample frequencies.
-    amp, freq = _get_amp_and_freq(x, fs, freq_range)
+    amp, freq = _get_amp_and_freq(x, fs, freq_range, axis)
 
     # Get the MNF(mean frequency).
-    cf = mnf(x, fs, freq_range)
+    cf = mnf(x, fs, freq_range, axis)
 
     # Get the VCF(variance of central frequency).
-    vcf = np.sum(((freq - cf) ** 2) * np.abs(amp)) / np.sum(np.abs(amp))
+    vcf = np.sum(((freq - cf) ** 2) * np.abs(amp), axis=axis) / np.sum(np.abs(amp), axis=axis)
 
     return vcf
