@@ -5,10 +5,11 @@
 """
 
 import numpy as np
+from numpy.typing import ArrayLike
 from scipy.signal import hilbert
 
 
-def envelope_analytic(x, axis: int = -1) -> np.ndarray:
+def envelope_analytic(x: ArrayLike, axis: int = -1) -> np.ndarray:
 
     """
     Extract the envelope from the signal using the 'Hilbert transform'.
