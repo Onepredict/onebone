@@ -13,7 +13,10 @@ from scipy.fft import fft, fftfreq
 def _index_along_axis(x: np.ndarray, s: slice, axis: int):
     """Index under certain conditions along the axis you specify."""
     x = x.copy()  # shallow copy
-    lower_ndim, upper_ndim = len(x.shape[:axis]), len(x.shape[axis + 1 :])
+    if axis == -1:
+        lower_ndim, upper_ndim = len(x.shape[:axis]), 0
+    else:
+        lower_ndim, upper_ndim = len(x.shape[:axis]), len(x.shape[axis + 1 :])
     indices = (
         lower_ndim
         * np.s_[
@@ -37,7 +40,13 @@ def _get_amp_and_freq(
     Get the amplitudes and FFT sample frequencies through positive FFT.
     And you can get results within a specific frequency range.
     """
+    # Set default parameter
+    if fs is None:
+        fs = 1  # `fs`` for normalized mean frequency.
+    if freq_range is None:
+        freq_range = (0, fs / 2)
 
+    # Check inputs
     if not isinstance(x, np.ndarray):
         raise TypeError("'x' must be array.")
     if len(x.shape) >= 3:
@@ -56,12 +65,8 @@ def _get_amp_and_freq(
         raise ValueError("The first element of 'freq_range' must be lower than the second element.")
 
     # Do FFT.
-    amp = fft(x, axis=axis)
+    amp = np.abs(fft(x, axis=axis))
     n = amp.shape[axis]
-
-    # Set 'fs' for normalized mean frequency.
-    if fs is None:
-        fs = 1
 
     # Return the FFT sample frequencies.
     freq = fftfreq(n, d=1 / fs)
@@ -71,36 +76,27 @@ def _get_amp_and_freq(
     freq = freq[: n // 2]
 
     # Get frequencies and amplitudes of FFT samples within the frequency range.
-    if freq_range is None:
-        low_f = freq[0]
-        high_f = freq[-1]
-    else:
-        low_f = freq_range[0]
-        high_f = freq_range[-1]
+    low_f = freq_range[0]
+    high_f = freq_range[-1]
 
     freq_range_indices = np.where((freq >= low_f) & (freq <= high_f))[0]
+    if len(freq_range_indices) == 0:
+        raise ValueError("The frequency range is not valid.")
     low_idx = freq_range_indices[0]
     high_idx = freq_range_indices[-1]
-
-    if low_idx | high_idx:
-        raise ValueError("The frequency range is not valid.")
 
     amp = _index_along_axis(amp, np.s_[low_idx : high_idx + 1], axis=axis)
     freq = freq[low_idx : high_idx + 1]
 
     # Make the dimensions of 'amp' equal to the dimensions of 'freq'.
-    lower_dims, upper_dims = amp.shape[:axis], amp.shape[axis + 1 :]
-    freq_shape = (
-        len(lower_dims) * (1,)
-        + np.s_[
-            :,
-        ]
-        + len(upper_dims) * (1,)
-    )
+    if axis == -1:
+        lower_dims, upper_dims = amp.shape[:axis], ()
+    else:
+        lower_dims, upper_dims = amp.shape[:axis], amp.shape[axis + 1 :]
+    freq_shape = len(lower_dims) * (1,) + (amp.shape[axis],) + len(upper_dims) * (1,)
     freq = freq.reshape(freq_shape)
     amp_shape = lower_dims + (1,) + upper_dims
-    amp = np.zeros(amp_shape)
-    freq = amp + freq  # Numpy broadcasting
+    freq = np.zeros(amp_shape) + freq  # Numpy broadcasting
 
     return amp, freq
 
@@ -114,7 +110,7 @@ def mnf(
     amp, freq = _get_amp_and_freq(x, fs, freq_range, axis)
 
     # Get the MNF(mean frequency).
-    mnf = np.sum(freq * np.abs(amp), axis=axis) / np.sum(np.abs(amp), axis=axis)
+    mnf = np.sum(freq * amp, axis=axis) / np.sum(amp, axis=axis)
 
     return mnf
 
@@ -122,11 +118,13 @@ def mnf(
 def mdf(x: np.ndarray, fs: float = None, freq_range: Tuple = None, axis: int = -1) -> float:
     """Compute the median frequency."""
     # Get the amplitudes and FFT sample frequencies.
-    amp, _ = _get_amp_and_freq(x, fs, freq_range, axis)
+    amp, freq = _get_amp_and_freq(x, fs, freq_range, axis)
 
     # Get the MDF(median frequency).
     cumsum_amp = np.cumsum(amp, axis=axis)
-    mdf = np.apply_along_axis(lambda x: x[x <= x[-1] / 2][-1], axis, cumsum_amp)
+    mdf = np.apply_along_axis(
+        lambda amp, freq: freq[amp <= amp[-1] / 2][-1], axis, cumsum_amp, freq
+    )
 
     return mdf
 
@@ -140,6 +138,6 @@ def vcf(x: np.ndarray, fs: float = None, freq_range: Tuple = None, axis: int = -
     cf = mnf(x, fs, freq_range, axis)
 
     # Get the VCF(variance of central frequency).
-    vcf = np.sum(((freq - cf) ** 2) * np.abs(amp), axis=axis) / np.sum(np.abs(amp), axis=axis)
+    vcf = np.sum(((freq - cf) ** 2) * amp, axis=axis) / np.sum(amp, axis=axis)
 
     return vcf
