@@ -217,7 +217,7 @@ def bandpass_filter(
     low = l_cutoff / nyq
     high = h_cutoff / nyq
     b, a = butter(order, [low, high], btype="bandpass")
-    signal = lfilter(b, a, signal)
+    signal = lfilter(b, a, signal, axis=axis)
     return signal
 
 
@@ -292,5 +292,5 @@ def bandstop_filter(
     low = l_cutoff / nyq
     high = h_cutoff / nyq
     b, a = butter(order, [low, high], btype="bandstop")
-    signal = lfilter(b, a, signal)
+    signal = lfilter(b, a, signal, axis=axis)
     return signal
