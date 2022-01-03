@@ -25,21 +25,25 @@ def minmax_scaling(
 
     Parameters
     ----------
-    x: array-like of shape (n_samples, n_features)
+    x : array-like of shape (n_samples, n_features)
         The data.
-    feature_range: tuple (min, max).
+    feature_range : tuple (min, max).
         Desired range of transformed data. Default is (0, 1)
-    axis: int
+    axis : int
         Axis used to scale along. Default is 0.
 
     Returns
     -------
-    x_tr: numpy.ndarray of shape (n_samples, n_features)
+    x_tr : numpy.ndarray of shape (n_samples, n_features)
         The transformed data.
 
     Examples
     --------
-
+    >>> a = list(range(9))
+    >>> a
+    [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    >>> minmax_scaling(a)
+    array([0.   , 0.125, 0.25 , 0.375, 0.5  , 0.625, 0.75 , 0.875, 1.   ])
     """
     return minmax_scale(x, feature_range=feature_range, axis=axis)
 
@@ -59,17 +63,23 @@ def zscore_scaling(x: ArrayLike, axis: int = 0):
 
     Parameters
     ----------
-    x: array-like of shape (n_samples, n_features)
+    x : array-like of shape (n_samples, n_features)
         The data.
-    axis: int
+    axis : int
         Axis used to compute the means and standard deviations along.
 
     Returns
     -------
-    x_tr: numpy.ndarray of shape (n_samples, n_features)
+    x_tr : numpy.ndarray of shape (n_samples, n_features)
         The transformed data.
 
     Examples
     --------
+    >>> a = list(range(9))
+    >>> a
+    [0, 1, 2, 3, 4, 5, 6, 7, 8]
+    >>> zscore_scaling(a)
+    array([-1.54919334, -1.161895  , -0.77459667, -0.38729833,  0.        ,
+            0.38729833,  0.77459667,  1.161895  ,  1.54919334])
     """
     return scale(x, axis=axis)
