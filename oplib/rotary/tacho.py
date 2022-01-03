@@ -49,29 +49,29 @@ def tacho_to_angle(
 
     Parameters
     ----------
-    x: numpy.ndarray
+    x : numpy.ndarray
         Tachometer pulse signal(1-D).
-    fs: int or float
+    fs : int or float
         Sample rate.
-    state_levels_trh: int or float
+    state_levels_trh : int or float
         The difference between state levels used to identify pulses.
         (The state levels used to identify pulses.)
-    indices_trh: int
-        The difference between indices of the first samples of high-level-state of pulses. Default is 2.
-    pulses_per_rev: int
-        Number of tachometer pulses per revolution. Default is 1.
-    output_fs: int or float
-        Output sample rate. Default is `fs`.
-    fit_type: str
-        Fitting method. Default is linear.
+    indices_trh : int, default=2
+        The difference between indices of the first samples of high-level-state of pulses.
+    pulses_per_rev : int, default=1
+        Number of tachometer pulses per revolution.
+    output_fs : int or float, default=None
+        Output sample rate. When the default is None, the `output_fs` is the `fs`.
+    fit_type : str, default="linear"
+        Fitting method
 
     Returns
     -------
-    angle: numpy.ndarray
+    angle : numpy.ndarray
         Rotational angle(1-D).
-    t: numpy.ndarray
+    t : numpy.ndarray
         Time(1-D) expressed in seconds.
-    tp: numpy.ndarray
+    tp : numpy.ndarray
         Pulse locations(1-D) expressed in seconds.
 
     Examples
@@ -97,29 +97,29 @@ def tacho_to_angle(
 
     # Check inputs
     if not isinstance(x, np.ndarray):
-        raise TypeError("'x' must be array.")
+        raise TypeError("`x` must be array.")
     if len(x.shape) >= 2:
-        raise ValueError("'x' has less than 2 dimensions.")
+        raise ValueError("`x` has less than 2 dimensions.")
 
     if not (isinstance(fs, int) | isinstance(fs, float)):
-        raise TypeError("'fs' must be integer or float.")
+        raise TypeError("`fs` must be integer or float.")
 
     if not (isinstance(state_levels_trh, int) | isinstance(state_levels_trh, float)):
-        raise TypeError("'state_levels_trh' must be integer or float.")
+        raise TypeError("`state_levels_trh` must be integer or float.")
 
     if not isinstance(indices_trh, int):
-        raise TypeError("'indices_trh' must be integer.")
+        raise TypeError("`indices_trh` must be integer.")
 
     if not isinstance(pulses_per_rev, int):
-        raise TypeError("'pulses_per_rev' must be integer.")
+        raise TypeError("`pulses_per_rev` must be integer.")
 
     if not (isinstance(output_fs, int) | isinstance(output_fs, float)):
-        raise TypeError("'output_fs must' be integer or float.")
+        raise TypeError("`output_fs must` be integer or float.")
 
     if not isinstance(fit_type, str):
-        raise TypeError("'fit_type' must be string.")
+        raise TypeError("`fit_type` must be string.")
 
-    # Resample time for the sampling rate of 'output_fs'
+    # Resample time for the sampling rate of `output_fs`
     inc = 1 / output_fs  # incrementals of time
     end_time = (x.size - 1) / fs
     t = np.arange(0, end_time + inc, inc)
@@ -165,29 +165,29 @@ def tacho_to_rpm(
 
     Parameters
     ----------
-    x: numpy.ndarray
+    x : numpy.ndarray
         Tachometer pulse signal(1-D).
-    fs: int or float
+    fs : int or float
         Sample rate.
-    state_levels_trh: int or float
+    state_levels_trh : int or float
         The difference between state levels used to identify pulses.
         (The state levels used to identify pulses.)
-    indices_trh: int
-        The difference between indices of the first samples of high-level-state of pulses. Default is 2.
-    pulses_per_rev: int
-        Number of tachometer pulses per revolution. Default is 1.
-    output_fs: int or float
-        Output sample rate. Default is `fs`.
-    fit_type: str
-        Fitting method. Default is linear.
+    indices_trh : int, default=2
+        The difference between indices of the first samples of high-level-state of pulses.
+    pulses_per_rev : int, default=1
+        Number of tachometer pulses per revolution.
+    output_fs : int or float, default=None
+        Output sample rate. When the default is None, the `output_fs` is the `fs`.
+    fit_type : str, default="linear"
+        Fitting method.
 
     Returns
     -------
-    rpm: numpy.ndarray
+    rpm : numpy.ndarray
         Rotational speed(1-D).
-    t: numpy.ndarray
+    t : numpy.ndarray
         Time(1-D) expressed in seconds.
-    tp: numpy.ndarray
+    tp : numpy.ndarray
         Pulse locations(1-D) expressed in seconds.
 
     Examples
@@ -211,29 +211,29 @@ def tacho_to_rpm(
 
     # Check inputs
     if not isinstance(x, np.ndarray):
-        raise TypeError("'x' must be array.")
+        raise TypeError("`x` must be array.")
     if len(x.shape) >= 2:
-        raise ValueError("'x' has less than 2 dimensions.")
+        raise ValueError("`x` has less than 2 dimensions.")
 
     if not (isinstance(fs, int) | isinstance(fs, float)):
-        raise TypeError("'fs' must be integer or float.")
+        raise TypeError("`fs` must be integer or float.")
 
     if not (isinstance(state_levels_trh, int) | isinstance(state_levels_trh, float)):
-        raise TypeError("'state_levels_trh' must be integer or float.")
+        raise TypeError("`state_levels_trh` must be integer or float.")
 
     if not isinstance(indices_trh, int):
-        raise TypeError("'indices_trh' must be integer.")
+        raise TypeError("`indices_trh` must be integer.")
 
     if not isinstance(pulses_per_rev, int):
-        raise TypeError("'pulses_per_rev' must be integer.")
+        raise TypeError("`pulses_per_rev` must be integer.")
 
     if not (isinstance(output_fs, int) | isinstance(output_fs, float)):
-        raise TypeError("'output_fs' must be integer or float.")
+        raise TypeError("`output_fs` must be integer or float.")
 
     if not isinstance(fit_type, str):
-        raise TypeError("'fit_type' must be string.")
+        raise TypeError("`fit_type` must be string.")
 
-    # Resample time for the sampling rate of 'output_fs'
+    # Resample time for the sampling rate of `output_fs`
     inc = 1 / output_fs  # incrementals of time
     end_time = (x.size - 1) / fs
     t = np.arange(0, end_time + inc, inc)
