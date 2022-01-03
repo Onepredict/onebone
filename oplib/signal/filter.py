@@ -28,10 +28,10 @@ def lowpass_filter(
         Sampling rate.
     cutoff : Union[int, float]
         Cutoff frequency.
-    order : int
-        Order of butterworth filter. Default is 5.
-    axis : int
-        The axis of the input data array along which to apply the linear filter. Default is -1.
+    order : int, default=5
+        Order of butterworth filter.
+    axis : int, default=-1
+        The axis of the input data array along which to apply the linear filter.
 
     Returns
     -------
@@ -96,10 +96,10 @@ def highpass_filter(
         Sampling rate.
     cutoff : Union[int, float]
         Cutoff frequency.
-    order : int
-        Order of butterworth filter. Default is 5.
-    axis : int
-        The axis of the input data array along which to apply the linear filter. Default is -1.
+    order : int, default=5
+        Order of butterworth filter.
+    axis : int, default=-1
+        The axis of the input data array along which to apply the linear filter.
 
     Returns
     -------
@@ -167,10 +167,10 @@ def bandpass_filter(
         Low cutoff frequency.
     h_cutoff : Union[int, float]
         High cutoff frequency.
-    order : int
-        Order of butterworth filter. Default is 5.
-    axis : int
-        The axis of the input data array along which to apply the linear filter. Default is -1.
+    order : int, default=5
+        Order of butterworth filter.
+    axis : int, default=-1
+        The axis of the input data array along which to apply the linear filter.
 
     Returns
     -------
@@ -242,10 +242,10 @@ def bandstop_filter(
         Low cutoff frequency.
     h_cutoff : Union[int, float]
         High cutoff frequency.
-    order : int
-        Order of butterworth filter. Default is 5.
-    axis : int
-        The axis of the input data array along which to apply the linear filter. Default is -1.
+    order : int, default=5
+        Order of butterworth filter.
+    axis : int, default=-1
+        The axis of the input data array along which to apply the linear filter.
 
     Returns
     -------

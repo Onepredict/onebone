@@ -27,10 +27,10 @@ def minmax_scaling(
     ----------
     x : array-like of shape (n_samples, n_features)
         The data.
-    feature_range : tuple (min, max).
-        Desired range of transformed data. Default is (0, 1)
-    axis : int
-        Axis used to scale along. Default is 0.
+    feature_range : tuple (min, max), default=(0, 1)
+        Desired range of transformed data.
+    axis : int, default=0
+        Axis used to scale along.
 
     Returns
     -------
@@ -65,7 +65,7 @@ def zscore_scaling(x: ArrayLike, axis: int = 0):
     ----------
     x : array-like of shape (n_samples, n_features)
         The data.
-    axis : int
+    axis : int, default=0
         Axis used to compute the means and standard deviations along.
 
     Returns
