@@ -1,8 +1,7 @@
 from typing import Union
 
-import matplotlib.pyplot as plt
 import numpy as np
-from numpy.fft import fft, fftfreq, fftshift, ifft
+from numpy.fft import fft, fftfreq
 
 Fs = 2000  # Sampling frequency
 T = 1 / Fs  # Sample interval time
@@ -51,9 +50,9 @@ def positiv_fft(signal: np.ndarray, hann: bool, fs: Union[int, float]):
     signal = np.squeeze(signal)
 
     if len(signal.shape) > 1:
-        raise ValueError(f"Dimension of signal must be [1,signal_length], [signal_length,]")
+        raise ValueError("Dimension of signal must be less than 2")
 
-    if hann == True:
+    if hann is True:
         signal = signal * np.hanning(signal.shape[0])
 
     X = fft(signal)

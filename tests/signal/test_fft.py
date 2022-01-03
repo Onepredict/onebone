@@ -1,11 +1,10 @@
-from typing import Callable, Union
+from typing import Callable
 
-import matplotlib.pyplot as plt
 import numpy as np
-import pytest
-from numpy.fft import fft, fftfreq, fftshift, ifft
 
 from oplib.signal import positiv_fft
+
+# import pytest
 
 
 def _generate_signal(fs: float):
@@ -28,25 +27,25 @@ def check_signal(fft_: Callable, input_arg: float, hann: bool, expected_return: 
     )
 
 
-def check_array_shape(fft_: Callable, hann: bool, input_arg: float):
+def check_array_shape(fft_: Callable, input_arg: float, hann: bool, expected_return: np.ndarray):
     fs = input_arg
     signal = _generate_signal(fs)
     changed_signal1 = signal.reshape(1, -1)
     changed_signal2 = signal.reshape(-1, 1)
     f_1, mag_1 = positiv_fft(changed_signal1, hann, fs)
     f_2, mag_2 = positiv_fft(changed_signal2, hann, fs)
-
-    try:
-        with pytest.raises(ValueError) as ex:
-            positiv_fft(changed_signal1, hann, fs)
-        assert str(ex.value) == "Dimension of signal must be less than 2."
-    except:
-        assert True
+    Freq_ = f_1[np.where(mag_1 > 10)]
+    assert np.all(np.equal(Freq_, expected_return)), (
+        f"Wrong return: The expected return is {expected_return}, " + f"but output is {Freq_}"
+    )
+    # with pytest.raises(ValueError) as ex:
+    # positiv_fft(changed_signal1, hann, fs)
+    # assert str(ex.value) == "Dimension of signal must be less than 2."
 
 
 def test_fft():
     check_signal(positiv_fft, 2000, False, np.array([60.0, 120.0]))
-    check_array_shape(positiv_fft, False, 2000)
+    check_array_shape(positiv_fft, 2000, False, np.array([60.0, 120.0]))
 
 
 if __name__ == "__main__":
