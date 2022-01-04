@@ -22,20 +22,20 @@ def lowpass_filter(
 
     Parameters
     ----------
-    signal: numpy.ndarray
-        Original time-domain signal. Input shape can be [signal_length,], [n, signal_length,].
-    fs: Union[int, float]
+    signal : numpy.ndarray of shape (signal_length,), (n, signal_length,)
+        Original time-domain signal.
+    fs : Union[int, float]
         Sampling rate.
-    cutoff: Union[int, float]
+    cutoff : Union[int, float]
         Cutoff frequency.
-    order: int
-        Order of butterworth filter. Default is 5.
-    axis: int
-        The axis of the input data array along which to apply the linear filter. Default is -1.
+    order : int, default=5
+        Order of butterworth filter.
+    axis : int, default=-1
+        The axis of the input data array along which to apply the linear filter.
 
     Returns
     -------
-    out: numpy.ndarray
+    out : numpy.ndarray of shape (signal_length,), (n, signal_length,)
         Filtered signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
@@ -90,20 +90,20 @@ def highpass_filter(
 
     Parameters
     ----------
-    signal: numpy.ndarray
-        Original time-domain signal. Input shape can be [signal_length,], [n, signal_length,].
-    fs: Union[int, float]
+    signal : numpy.ndarray of shape (signal_length,), (n, signal_length,)
+        Original time-domain signal.
+    fs : Union[int, float]
         Sampling rate.
-    cutoff: Union[int, float]
+    cutoff : Union[int, float]
         Cutoff frequency.
-    order: int
-        Order of butterworth filter. Default is 5.
-    axis: int
-        The axis of the input data array along which to apply the linear filter. Default is -1.
+    order : int, default=5
+        Order of butterworth filter.
+    axis : int, default=-1
+        The axis of the input data array along which to apply the linear filter.
 
     Returns
     -------
-    out: numpy.ndarray
+    out : numpy.ndarray of shape (signal_length,), (n, signal_length,)
         Filtered signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
@@ -159,22 +159,22 @@ def bandpass_filter(
 
     Parameters
     ----------
-    signal: numpy.ndarray
-        Original time-domain signal. Input shape can be [signal_length,], [n, signal_length,].
-    fs: Union[int, float]
+    signal : numpy.ndarray of shape (signal_length,), (n, signal_length,)
+        Original time-domain signal.
+    fs : Union[int, float]
         Sampling rate.
-    l_cutoff: Union[int, float]
+    l_cutoff : Union[int, float]
         Low cutoff frequency.
-    h_cutoff: Union[int, float]
+    h_cutoff : Union[int, float]
         High cutoff frequency.
-    order: int
-        Order of butterworth filter. Default is 5.
-    axis: int
-        The axis of the input data array along which to apply the linear filter. Default is -1.
+    order : int, default=5
+        Order of butterworth filter.
+    axis : int, default=-1
+        The axis of the input data array along which to apply the linear filter.
 
     Returns
     -------
-    out: numpy.ndarray
+    out : numpy.ndarray of shape (signal_length,), (n, signal_length,)
         Filtered signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
@@ -217,7 +217,7 @@ def bandpass_filter(
     low = l_cutoff / nyq
     high = h_cutoff / nyq
     b, a = butter(order, [low, high], btype="bandpass")
-    signal = lfilter(b, a, signal)
+    signal = lfilter(b, a, signal, axis=axis)
     return signal
 
 
@@ -234,22 +234,22 @@ def bandstop_filter(
 
     Parameters
     ----------
-    signal: numpy.ndarray
-        Original time-domain signal. Input shape can be [signal_length,], [n, signal_length,].
-    fs: Union[int, float]
+    signal : numpy.ndarray of shape (signal_length,), (n, signal_length,)
+        Original time-domain signal.
+    fs : Union[int, float]
         Sampling rate.
-    l_cutoff: Union[int, float]
+    l_cutoff : Union[int, float]
         Low cutoff frequency.
-    h_cutoff: Union[int, float]
+    h_cutoff : Union[int, float]
         High cutoff frequency.
-    order: int
-        Order of butterworth filter. Default is 5.
-    axis: int
-        The axis of the input data array along which to apply the linear filter. Default is -1.
+    order : int, default=5
+        Order of butterworth filter.
+    axis : int, default=-1
+        The axis of the input data array along which to apply the linear filter.
 
     Returns
     -------
-    out: numpy.ndarray
+    out : numpy.ndarray of shape (signal_length,), (n, signal_length,)
         Filtered signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
@@ -292,5 +292,5 @@ def bandstop_filter(
     low = l_cutoff / nyq
     high = h_cutoff / nyq
     b, a = butter(order, [low, high], btype="bandstop")
-    signal = lfilter(b, a, signal)
+    signal = lfilter(b, a, signal, axis=axis)
     return signal
