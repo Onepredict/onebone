@@ -8,17 +8,17 @@ import numpy as np
 import pytest
 from numpy.testing import assert_almost_equal
 
-from oplib.signal.envelope import envelope_analytic
+from oplib.signal import envelope_hilbert
 
 
-def test_bad_args():
+def check_bad_args():
     x = np.array([1.0 + 0.0j])
     with pytest.raises(ValueError) as ex:
-        envelope_analytic(x)
+        envelope_hilbert(x)
     assert ex.value.args[0] == "`x` must be real."
 
 
-def test_envelope_theoretical():
+def check_envelope_theoretical():
     decimal = 14
 
     pi = np.pi
@@ -29,12 +29,16 @@ def test_envelope_theoretical():
     a3 = np.cos(2 * t)
     a = np.vstack([a0, a1, a2, a3])
 
-    e = envelope_analytic(a)
+    e = envelope_hilbert(a)
 
     # The absolute value should be one everywhere, for this input:
     assert_almost_equal(e, np.ones(a.shape), decimal)
 
 
+def test_envelope_hilbert():
+    check_bad_args()
+    check_envelope_theoretical()
+
+
 if __name__ == "__main__":
-    test_bad_args()
-    test_envelope_theoretical()
+    test_envelope_hilbert()
