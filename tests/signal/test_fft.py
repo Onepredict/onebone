@@ -1,51 +1,55 @@
-from typing import Callable
+from typing import Callable, Tuple
 
 import numpy as np
+import pytest
 
-from oplib.signal import positiv_fft
-
-# import pytest
+from oplib.signal import positive_fft
 
 
 def _generate_signal(fs: float):
-    # Generate signal
-    T = 1 / fs
-    t = np.arange(0, 0.5, T)
-    noise = np.random.normal(0, 0.05, len(t))
-    x = 0.6 * np.cos(2 * np.pi * 60 * t + np.pi / 2) + np.cos(2 * np.pi * 120 * t)
-    signal = x + noise
+    N = 600
+    # sample spacing
+    T = 1.0 / fs
+    x = np.linspace(0.0, N * T, N, endpoint=False)
+    signal = 3 * np.sin(50.0 * 2.0 * np.pi * x) + 2 * np.sin(80.0 * 2.0 * np.pi * x)
     return signal
 
 
-def check_signal(fft_: Callable, input_arg: float, hann: bool, expected_return: np.ndarray):
-    fs = input_arg
+def check_signal(fft_: Callable, input_args: Tuple[float, bool, bool], expected_return: np.ndarray):
+    fs = input_args[0]
     signal = _generate_signal(fs)
-    f_, mag_ = fft_(signal, hann, fs)
-    Freq_ = f_[np.where(mag_ > 10)]
-    assert np.all(np.equal(Freq_, expected_return)), (
-        f"Wrong return: The expected return is {expected_return}, " + f"but output is {Freq_}"
+    f_, mag_ = fft_(signal, *input_args)
+    freq_ = np.around(f_[np.where(mag_ > 1)])
+    assert np.all(np.equal(freq_, expected_return)), (
+        f"Wrong return: The expected return is {expected_return}, " + f"but output is {freq_}"
     )
 
 
-def check_array_shape(fft_: Callable, input_arg: float, hann: bool, expected_return: np.ndarray):
-    fs = input_arg
+def check_array_shape(fft_: Callable, input_args: Tuple[float, bool, bool]):
+    fs = input_args[0]
     signal = _generate_signal(fs)
-    changed_signal1 = signal.reshape(1, -1)
-    changed_signal2 = signal.reshape(-1, 1)
-    f_1, mag_1 = positiv_fft(changed_signal1, hann, fs)
-    f_2, mag_2 = positiv_fft(changed_signal2, hann, fs)
-    Freq_ = f_1[np.where(mag_1 > 10)]
-    assert np.all(np.equal(Freq_, expected_return)), (
-        f"Wrong return: The expected return is {expected_return}, " + f"but output is {Freq_}"
+    changed_signal = np.stack([signal] * 3, axis=0)
+    changed_signal = np.stack([changed_signal] * 2, axis=0)
+    # case 1: signal shape [2, 3, data_length] -> ArrayShapeError
+    with pytest.raises(ValueError) as ex:
+        fft_(changed_signal, *input_args)
+    assert str(ex.value) == "Dimension of signal must be less than 3"
+
+
+def check_hann_(fft_: Callable, input_args: Tuple[float, bool, bool], expected_return: np.ndarray):
+    fs = input_args[0]
+    signal = _generate_signal(fs)
+    f_, mag_ = fft_(signal, *input_args)
+    freq_ = f_[np.where(mag_ > 2)]
+    assert np.all(np.equal(freq_, expected_return)), (
+        f"Wrong return: The expected return is {expected_return}, " + f"but output is {freq_}"
     )
-    # with pytest.raises(ValueError) as ex:
-    # positiv_fft(changed_signal1, hann, fs)
-    # assert str(ex.value) == "Dimension of signal must be less than 2."
 
 
 def test_fft():
-    check_signal(positiv_fft, 2000, False, np.array([60.0, 120.0]))
-    check_array_shape(positiv_fft, 2000, False, np.array([60.0, 120.0]))
+    check_signal(positive_fft, (800.0, False, True), np.array([49.0, 51.0, 80.0]))
+    check_array_shape(positive_fft, (800.0, False, True))
+    check_hann_(positive_fft, (800.0, True, True), np.array([]))
 
 
 if __name__ == "__main__":
