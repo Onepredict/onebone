@@ -8,7 +8,7 @@ def positive_fft(
     signal: np.ndarray,
     fs: Union[int, float],
     hann: bool,
-    normalisation: bool,
+    normalization: bool,
     axis: int = -1,
 ):
 
@@ -24,12 +24,12 @@ def positive_fft(
         hanningwindow
     fs: Union[int, float]
         Sampling rate
-    normalisation: bool[True, False]
+    normalization: bool[True, False]
         Normalization after Fourier transform
 
     Returns
     -------
-    out: [numpy.adarray]
+    output:
     f: numpy.ndarray
         frequency(N-D) expressed in Hz.
     x_mag: numpy.ndarray
@@ -61,7 +61,7 @@ def positive_fft(
     f = f[:mid]
 
     # nomalisation
-    if normalisation is True:
+    if normalization is True:
         x_mag = np.abs(x[:mid]) / (n / 2)
     else:
         x_mag = np.abs(x[:mid])
