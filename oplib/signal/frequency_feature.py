@@ -60,7 +60,7 @@ def _get_amp_and_freq(
     if len(freq_range) != 2:
         raise ValueError("'freq_range' requires two elements.")
     if not (isinstance(freq_range[0], (int, float)) & isinstance(freq_range[-1], (int, float))):
-        raise TypeError("The elements of 'freq_range' must be integger or float.")
+        raise TypeError("The elements of 'freq_range' must be integer or float.")
     if not (freq_range[0] < freq_range[-1]):
         raise ValueError("The first element of 'freq_range' must be lower than the second element.")
 
@@ -102,42 +102,85 @@ def _get_amp_and_freq(
 
 
 def mnf(
-    x: np.ndarray, fs: float = None, freq_range: Tuple = None, axis: int = -1
+    x: np.ndarray,
+    fs: float = None,
+    freq_range: Tuple = None,
+    axis: int = -1,
+    keepdims: bool = False,
 ) -> Union[float, np.ndarray]:
     """Compute the mean frequency.
     Mean frequency has a similar definiton as the central frequency."""
     # Get the amplitudes and FFT sample frequencies.
     amp, freq = _get_amp_and_freq(x, fs, freq_range, axis)
 
-    # Get the MNF(mean frequency).
-    mnf = np.sum(freq * amp, axis=axis) / np.sum(amp, axis=axis)
+    # Get the MNF(mean frequency) along the `axis`.
+    mnf = np.sum(freq * amp, axis=axis, keepdims=keepdims) / np.sum(
+        amp, axis=axis, keepdims=keepdims
+    )
 
     return mnf
 
 
-def mdf(x: np.ndarray, fs: float = None, freq_range: Tuple = None, axis: int = -1) -> float:
+def _search_median_frequency(amp, freq, axis, keepdims):
+    # Get the 1-D frequency.
+    if axis == -1:
+        lower_dims, upper_dims = freq.shape[:axis], ()
+    else:
+        lower_dims, upper_dims = freq.shape[:axis], freq.shape[axis + 1 :]
+    freq_shape = (
+        len(lower_dims) * (0,)
+        + np.s_[
+            :,
+        ]
+        + len(upper_dims) * (0,)
+    )
+    freq = freq[freq_shape]
+
+    # Get the MDF(median frequency).
+    cumsum_a = np.cumsum(amp)
+    mdf = freq[cumsum_a >= cumsum_a[-1] / 2][0]
+
+    # When `keepdims` is True, return the result of the list type.
+    if keepdims:
+        return [mdf]
+    else:
+        return mdf
+
+
+def mdf(
+    x: np.ndarray,
+    fs: float = None,
+    freq_range: Tuple = None,
+    axis: int = -1,
+    keepdims: bool = False,
+) -> float:
     """Compute the median frequency."""
     # Get the amplitudes and FFT sample frequencies.
     amp, freq = _get_amp_and_freq(x, fs, freq_range, axis)
 
-    # Get the MDF(median frequency).
-    cumsum_amp = np.cumsum(amp, axis=axis)
-    mdf = np.apply_along_axis(
-        lambda amp, freq: freq[amp <= amp[-1] / 2][-1], axis, cumsum_amp, freq
-    )
+    # Get the MDF(median frequency) along the `axis`.
+    mdf = np.apply_along_axis(_search_median_frequency, axis, amp, *(freq, axis, keepdims))
 
     return mdf
 
 
-def vcf(x: np.ndarray, fs: float = None, freq_range: Tuple = None, axis: int = -1) -> float:
+def vcf(
+    x: np.ndarray,
+    fs: float = None,
+    freq_range: Tuple = None,
+    axis: int = -1,
+    keepdims: bool = False,
+) -> float:
     """Compute the variance of central frequency(mean frequency)."""
     # Get the amplitudes and FFT sample frequencies.
     amp, freq = _get_amp_and_freq(x, fs, freq_range, axis)
 
     # Get the MNF(mean frequency).
-    cf = mnf(x, fs, freq_range, axis)
+    cf = mnf(x, fs, freq_range, axis, keepdims=True)
 
-    # Get the VCF(variance of central frequency).
-    vcf = np.sum(((freq - cf) ** 2) * amp, axis=axis) / np.sum(amp, axis=axis)
+    # Get the VCF(variance of central frequency) along the `axis`.
+    vcf = np.sum(((freq - cf) ** 2) * amp, axis=axis, keepdims=keepdims) / np.sum(
+        amp, axis=axis, keepdims=keepdims
+    )
 
     return vcf
