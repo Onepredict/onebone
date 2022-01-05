@@ -3,64 +3,67 @@ from typing import Union
 import numpy as np
 from numpy.fft import fft, fftfreq
 
-Fs = 2000  # Sampling frequency
-T = 1 / Fs  # Sample interval time
-te = 0.5  # End of time
-t = np.arange(0, te, T)  # Time vector
 
-# Sum of a 50 Hz sinusoid and a 120 Hz sinusoid
-noise = np.random.normal(0, 0.05, len(t))
-x = 0.6 * np.cos(2 * np.pi * 60 * t + np.pi / 2) + np.cos(2 * np.pi * 120 * t)
-y = x + noise
-
-
-def positiv_fft(signal: np.ndarray, hann: bool, fs: Union[int, float]):
+def positive_fft(
+    signal: np.ndarray,
+    fs: Union[int, float],
+    hann: bool,
+    normalisation: bool,
+    axis: int = -1,
+):
 
     """
-    Fourier Transformation
+    positive Fourier Transformation
+    hanning window
 
     Parameters
     ------------
-    signal: numpy.ndarray [signal_length,], [n, signal_length]
+    signal : numpy.ndarray of shape (signal_length,), (n, signal_length)
         Original time-domain signal
     hann: bool[True, False]
         hanningwindow
     fs: Union[int, float]
         Sampling rate
+    normalisation: bool[True, False]
+        Normalization after Fourier transform
 
     Returns
     -------
-    out: numpy.adarray
-        If input shape is [signal_length,], output shape is [signal_length,].
-        If input shape is [1, signal_length], output shape is [signal_length,].
+    out: [numpy.adarray]
+    f: numpy.ndarray
+        frequency(N-D) expressed in Hz.
+    x_mag: numpy.ndarray
+        magnitude(1-D) expressed in scala.
 
+        If input shape is [signal_length,], output shape is
+        f = [signal_length,], x_mag = [signal_length,].
+        If input shape is [n, signal_length,], output shape is
+        f = [n, signal_length,], x_mag = [n, signal_length,].
     Examples
     --------
-    >>> fs = 2000  # Sampling frequency
-    >>> T = 1/Fs # Sample interval time
-    >>> te= 0.5  # End of time
-    >>> t = np.arange(0, te, T)    # Time vector
-
-    >>> noise = np.random.normal(0,0.05,len(t))
-    >>> x = 0.6*np.cos(2*np.pi*60*t+np.pi/2) + np.cos(2*np.pi*120*t)
-    >>> y=x+noise
-
+    >>> N = 600 # array length
+    >>> fs = 8000  # Sampling frequency
+    >>> T = 1 / Fs  # Sample interval time
+    >>> x = np.linspace(0.0, N * T, N, endpoint=False) # time
+    >>> y = 3 * np.sin(50.0 * 2.0 * np.pi * x) + 2 * np.sin(80.0 * 2.0 * np.pi * x)
     """
-    # [signal_length,1], [1, signal_length] -> [signal]
-    signal = np.squeeze(signal)
 
-    if len(signal.shape) > 1:
-        raise ValueError("Dimension of signal must be less than 2")
+    if len(signal.shape) > 2:
+        raise ValueError("Dimension of signal must be less than 3")
 
     if hann is True:
         signal = signal * np.hanning(signal.shape[0])
 
-    X = fft(signal)
-    N = signal.shape[0]
-    f = fftfreq(N, d=1 / fs)
+    x = fft(signal)
+    n = signal.shape[0]
+    f = fftfreq(n, d=1 / fs)
     mid = int(f.shape[0] / 2)
-
     f = f[:mid]
-    X_mag = np.abs(X[:mid])
 
-    return f, X_mag
+    # nomalisation
+    if normalisation is True:
+        x_mag = np.abs(x[:mid]) / (n / 2)
+    else:
+        x_mag = np.abs(x[:mid])
+
+    return f, x_mag
