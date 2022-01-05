@@ -9,8 +9,6 @@ from typing import Union
 import numpy as np
 from scipy.signal import butter, lfilter
 
-# from scipy.signal import butter
-
 
 def lowpass_filter(
     signal: np.ndarray,
