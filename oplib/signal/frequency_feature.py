@@ -38,7 +38,6 @@ def _get_amp_and_freq(
 ) -> Tuple[np.ndarray, np.ndarray]:
     """
     Get the amplitudes and FFT sample frequencies through positive FFT.
-    And you can get results within a specific frequency range.
     """
     # Set default parameter
     if freq_range is None:
@@ -62,11 +61,11 @@ def _get_amp_and_freq(
     if not (freq_range[0] < freq_range[-1]):
         raise ValueError("The first element of 'freq_range' must be lower than the second element.")
 
-    # Do FFT.
+    # Get the amplitudes in frequency domain through FFT.
     amp = np.abs(fft(x, axis=axis))
     n = amp.shape[axis]
 
-    # Return the FFT sample frequencies.
+    # Get the FFT sample frequencies.
     freq = fftfreq(n, d=1 / fs)
 
     # Get the oneside of FFT results along axis.
@@ -107,7 +106,43 @@ def mnf(
     keepdims: bool = False,
 ) -> Union[float, np.ndarray]:
     """Compute the mean frequency.
-    Mean frequency has a similar definiton as the central frequency."""
+
+    Parameters
+    ----------
+    x: numpy.ndarray of shape (signal_length,), (n, signal_length)
+        Input signal.
+    fs: int or float, default=1
+        Sample rate. The sample rate is the number of samples per unit time.
+        If `fs` is 1, then `mnf` is the normalized frequency; (0 ~ 1).
+    freq_range: tuple, default=None
+        Frequency range, specified as a two-element tuple of real values.
+        If `freq_range` is None, then `mnf` uses the entire bandwidth of the input signal.
+        That is, `freq_range` is (0, `fs` / 2).
+    axis: int, default=-1
+        Axis along which `mnf` is performed.
+        The default, `axis`=-1, will calculate the `mnf` along last axis of `x`.
+        If `axis` is negative, it counts from the last to the first axis.
+    keepdims: bool, default=False
+        If this is set to True, the axes which are reduced are left in the result as dimensions with size one.
+
+    Returns
+    -------
+    mnf: float or numpy.ndarray
+        Mean frequency.
+        If `fs` is 1, then `mnf` has units of cycle/sample.
+        But, if you specify the `fs`, then `mnf` has the same units as `fs`. E.g. cycle/sec.
+
+    Examples
+    --------
+    >>> fs = 100
+    >>> t = np.arange(0, 1, 1 / fs)
+    >>> x1 = np.sin(2 * np.pi * 10 * t)
+    >>> x2 = np.sin(2 * np.pi * 20 * t)
+    >>> x3 = np.sin(2 * np.pi * 30 * t)
+    >>> x = x1 + x2 + x3
+    >>> mnf(x, fs)
+    20
+    """
     # Get the amplitudes and FFT sample frequencies.
     amp, freq = _get_amp_and_freq(x, fs, freq_range, axis)
 
@@ -119,7 +154,8 @@ def mnf(
     return mnf
 
 
-def _get_mdf_of_1D_signal(amp, freq, keepdims):
+def _get_mdf_of_1D_signal(amp: np.ndarray, freq: np.ndarray, keepdims: bool = False):
+    """Get the median frequency for the 1-D signal"""
     # Get the MDF(median frequency).
     cumsum_a = np.cumsum(amp)
     mdf = freq[cumsum_a >= cumsum_a[-1] / 2][0]
@@ -138,7 +174,44 @@ def mdf(
     axis: int = -1,
     keepdims: bool = False,
 ) -> float:
-    """Compute the median frequency."""
+    """Compute the median frequency.
+
+    Parameters
+    ----------
+    x: numpy.ndarray of shape (signal_length,), (n, signal_length)
+        Input signal.
+    fs: int or float, default=1
+        Sample rate. The sample rate is the number of samples per unit time.
+        If `fs` is 1, then `mdf` is the normalized frequency; (0 ~ 1).
+    freq_range: tuple, default=None
+        Frequency range, specified as a two-element tuple of real values.
+        If `freq_range` is None, then `mdf` uses the entire bandwidth of the input signal.
+        That is, `freq_range` is (0, `fs` / 2).
+    axis: int, default=-1
+        Axis along which `mdf` is performed.
+        The default, `axis`=-1, will calculate the `mdf` along last axis of `x`.
+        If `axis` is negative, it counts from the last to the first axis.
+    keepdims: bool, default=False
+        If this is set to True, the axes which are reduced are left in the result as dimensions with size one.
+
+    Returns
+    -------
+    mdf: float or numpy.ndarray
+        Median frequency.
+        If `fs` is 1, then `mdf` has units of cycle/sample.
+        But, if you specify the `fs`, then `mdf` has the same units as `fs`. E.g. cycle/sec.
+
+    Examples
+    --------
+    >>> fs = 100
+    >>> t = np.arange(0, 1, 1 / fs)
+    >>> x1 = np.sin(2 * np.pi * 10 * t)
+    >>> x2 = np.sin(2 * np.pi * 20 * t)
+    >>> x3 = np.sin(2 * np.pi * 30 * t)
+    >>> x = x1 + x2 + x3
+    >>> mdf(x, fs)
+    20
+    """
     # Get the amplitudes and FFT sample frequencies.
     amp, freq = _get_amp_and_freq(x, fs, freq_range, axis)
 
@@ -169,7 +242,44 @@ def vcf(
     axis: int = -1,
     keepdims: bool = False,
 ) -> float:
-    """Compute the variance of central frequency(mean frequency)."""
+    """Compute the variance of central frequency(mean frequency).
+
+    Parameters
+    ----------
+    x: numpy.ndarray of shape (signal_length,), (n, signal_length)
+        Input signal.
+    fs: int or float, default=1
+        Sample rate. The sample rate is the number of samples per unit time.
+        If `fs` is 1, then `vcf` is the normalized frequency; (0 ~ 1).
+    freq_range: tuple, default=None
+        Frequency range, specified as a two-element tuple of real values.
+        If `freq_range` is None, then `vcf` uses the entire bandwidth of the input signal.
+        That is, `freq_range` is (0, `fs` / 2).
+    axis: int, default=-1
+        Axis along which `vcf` is performed.
+        The default, `axis`=-1, will calculate the `vcf` along last axis of `x`.
+        If `axis` is negative, it counts from the last to the first axis.
+    keepdims: bool, default=False
+        If this is set to True, the axes which are reduced are left in the result as dimensions with size one.
+
+    Returns
+    -------
+    vcf: float or numpy.ndarray
+        Median frequency.
+        If `fs` is 1, then `vcf` has units of cycle/sample.
+        But, if you specify the `fs`, then `vcf` has the same units as `fs`. E.g. cycle/sec.
+
+    Examples
+    --------
+    >>> fs = 100
+    >>> t = np.arange(0, 1, 1 / fs)
+    >>> x1 = np.sin(2 * np.pi * 10 * t)
+    >>> x2 = np.sin(2 * np.pi * 20 * t)
+    >>> x3 = np.sin(2 * np.pi * 30 * t)
+    >>> x = x1 + x2 + x3
+    >>> vcf(x, fs)
+    66.666
+    """
     # Get the amplitudes and FFT sample frequencies.
     amp, freq = _get_amp_and_freq(x, fs, freq_range, axis)
 
