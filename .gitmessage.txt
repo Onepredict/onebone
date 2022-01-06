@@ -1,4 +1,4 @@
-[type]: [subject](issue number)
+[type]: [Subject](issue number)
 
 [-- body --]
 
