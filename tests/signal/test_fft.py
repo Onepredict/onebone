@@ -18,10 +18,10 @@ def _generate_signal(fs: float):
 def check_signal(fft_: Callable, input_args: Tuple[float, bool, bool], expected_return: np.ndarray):
     fs = input_args[0]
     signal = _generate_signal(fs)
-    f_, mag_ = fft_(signal, *input_args)
-    freq_ = np.around(f_[np.where(mag_ > 1)])
-    assert np.all(np.equal(freq_, expected_return)), (
-        f"Wrong return: The expected return is {expected_return}, " + f"but output is {freq_}"
+    f, mag = fft_(signal, *input_args)
+    freq = np.around(f[np.where(mag[0] > 1)])
+    assert np.all(np.equal(freq, expected_return)), (
+        f"Wrong return: The expected return is {expected_return}, " + f"but output is {freq}"
     )
 
 
@@ -39,10 +39,10 @@ def check_array_shape(fft_: Callable, input_args: Tuple[float, bool, bool]):
 def check_hann_(fft_: Callable, input_args: Tuple[float, bool, bool], expected_return: np.ndarray):
     fs = input_args[0]
     signal = _generate_signal(fs)
-    f_, mag_ = fft_(signal, *input_args)
-    freq_ = f_[np.where(mag_ > 2)]
-    assert np.all(np.equal(freq_, expected_return)), (
-        f"Wrong return: The expected return is {expected_return}, " + f"but output is {freq_}"
+    f, mag = fft_(signal, *input_args)
+    freq = f[np.where(mag[0] > 2)]
+    assert np.all(np.equal(freq, expected_return)), (
+        f"Wrong return: The expected return is {expected_return}, " + f"but output is {freq}"
     )
 
 
