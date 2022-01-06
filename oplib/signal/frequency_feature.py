@@ -34,15 +34,13 @@ def _index_along_axis(x: np.ndarray, s: slice, axis: int):
 
 
 def _get_amp_and_freq(
-    x: np.ndarray, fs: float = None, freq_range: Tuple = None, axis: int = -1
+    x: np.ndarray, fs: Union[int, float] = 1, freq_range: Tuple = None, axis: int = -1
 ) -> Tuple[np.ndarray, np.ndarray]:
     """
     Get the amplitudes and FFT sample frequencies through positive FFT.
     And you can get results within a specific frequency range.
     """
     # Set default parameter
-    if fs is None:
-        fs = 1  # `fs`` for normalized mean frequency.
     if freq_range is None:
         freq_range = (0, fs / 2)
 
@@ -103,7 +101,7 @@ def _get_amp_and_freq(
 
 def mnf(
     x: np.ndarray,
-    fs: float = None,
+    fs: Union[int, float] = 1,
     freq_range: Tuple = None,
     axis: int = -1,
     keepdims: bool = False,
@@ -121,21 +119,7 @@ def mnf(
     return mnf
 
 
-def _search_median_frequency(amp, freq, axis, keepdims):
-    # Get the 1-D frequency.
-    if axis == -1:
-        lower_dims, upper_dims = freq.shape[:axis], ()
-    else:
-        lower_dims, upper_dims = freq.shape[:axis], freq.shape[axis + 1 :]
-    freq_shape = (
-        len(lower_dims) * (0,)
-        + np.s_[
-            :,
-        ]
-        + len(upper_dims) * (0,)
-    )
-    freq = freq[freq_shape]
-
+def _get_mdf_of_1D_signal(amp, freq, keepdims):
     # Get the MDF(median frequency).
     cumsum_a = np.cumsum(amp)
     mdf = freq[cumsum_a >= cumsum_a[-1] / 2][0]
@@ -149,7 +133,7 @@ def _search_median_frequency(amp, freq, axis, keepdims):
 
 def mdf(
     x: np.ndarray,
-    fs: float = None,
+    fs: Union[int, float] = 1,
     freq_range: Tuple = None,
     axis: int = -1,
     keepdims: bool = False,
@@ -158,15 +142,29 @@ def mdf(
     # Get the amplitudes and FFT sample frequencies.
     amp, freq = _get_amp_and_freq(x, fs, freq_range, axis)
 
+    # Get the 1-D sample frequencies.
+    if axis == -1:
+        lower_dims, upper_dims = freq.shape[:axis], ()
+    else:
+        lower_dims, upper_dims = freq.shape[:axis], freq.shape[axis + 1 :]
+    freq_shape = (
+        len(lower_dims) * (0,)
+        + np.s_[
+            :,
+        ]
+        + len(upper_dims) * (0,)
+    )
+    freq = freq[freq_shape]
+
     # Get the MDF(median frequency) along the `axis`.
-    mdf = np.apply_along_axis(_search_median_frequency, axis, amp, *(freq, axis, keepdims))
+    mdf = np.apply_along_axis(_get_mdf_of_1D_signal, axis, amp, *(freq, keepdims))
 
     return mdf
 
 
 def vcf(
     x: np.ndarray,
-    fs: float = None,
+    fs: Union[int, float] = 1,
     freq_range: Tuple = None,
     axis: int = -1,
     keepdims: bool = False,
