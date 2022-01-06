@@ -1,4 +1,4 @@
-from typing import Union
+from typing import Tuple, Union
 
 import numpy as np
 from numpy.fft import fft, fftfreq
@@ -10,7 +10,7 @@ def positive_fft(
     hann: bool,
     normalization: bool,
     axis: int = -1,
-):
+) -> Tuple[np.ndarray, np.ndarray]:
 
     """
     positive Fourier Transformation
