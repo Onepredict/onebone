@@ -4,6 +4,28 @@ import numpy as np
 from numpy.fft import fft, fftfreq
 
 
+def _index_along_axis(x: np.ndarray, s: slice, axis: int):
+    """Index under certain conditions along the axis you specify."""
+    x = x.copy()  # shallow copy
+    if axis == -1:
+        lower_ndim, upper_ndim = len(x.shape[:axis]), 0
+    else:
+        lower_ndim, upper_ndim = len(x.shape[:axis]), len(x.shape[axis + 1 :])
+    indices = (
+        lower_ndim
+        * np.s_[
+            :,
+        ]
+        + (s,)
+        + upper_ndim
+        * np.s_[
+            :,
+        ]
+    )
+    x = x[indices]
+    return x
+
+
 def positive_fft(
     signal: np.ndarray,
     fs: Union[int, float],
@@ -50,22 +72,23 @@ def positive_fft(
 
     if len(signal.shape) > 2:
         raise ValueError("Dimension of signal must be less than 3")
-    # change numpy.ndarray of shape (signal_length,) to (1, signal_length)
-    if len(signal.shape) == 1:
-        signal = signal.reshape(1, -1)
+    # # change numpy.ndarray of shape (signal_length,) to (1, signal_length)
+    # if len(signal.shape) == 1:
+    #     signal = signal.reshape(1, -1)
     if hann is True:
-        signal = signal * np.hanning(signal.shape[0])
+        signal = signal * np.hanning(signal.shape[axis])
 
     x = fft(signal, axis=axis)
-    n = signal.shape[-1]
+    x_half = _index_along_axis(x, np.s_[: signal.shape[axis] // 2], axis=axis)
+    n = signal.shape[axis]
     f = fftfreq(n, d=1 / fs)
-    mid = int(f.shape[0] / 2)
+    mid = int(n / 2)
     f = f[:mid]
 
     # nomalization
     if normalization is True:
-        x_mag = np.abs(x[:, :mid]) / (n / 2)
+        x_mag = np.abs(x_half) / (n / 2)
     else:
-        x_mag = np.abs(x[:, :mid])
+        x_mag = np.abs(x_half)
 
     return f, x_mag

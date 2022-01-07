@@ -7,10 +7,10 @@ from oplib.signal import positive_fft
 
 
 def generate_signal(fs: float):
-    N = 600
+    n = 600
     # sample spacing
-    T = 1.0 / fs
-    x = np.linspace(0.0, N * T, N, endpoint=False)
+    t = 1.0 / fs
+    x = np.linspace(0.0, n * t, n, endpoint=False)
     signal = 3 * np.sin(50.0 * 2.0 * np.pi * x) + 2 * np.sin(80.0 * 2.0 * np.pi * x)
     return signal
 
@@ -19,7 +19,7 @@ def check_signal(fft: Callable, input_args: Tuple[float, bool, bool], expected_r
     fs = input_args[0]
     signal = generate_signal(fs)
     f, mag = fft(signal, *input_args)
-    freq = np.around(f[np.where(mag[0] > 1)])
+    freq = np.around(f[np.where(mag > 1)])
     assert np.all(np.equal(freq, expected_return)), (
         f"Wrong return: The expected return is {expected_return}, " + f"but output is {freq}"
     )
