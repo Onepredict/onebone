@@ -72,9 +72,7 @@ def positive_fft(
 
     if len(signal.shape) > 2:
         raise ValueError("Dimension of signal must be less than 3")
-    # # change numpy.ndarray of shape (signal_length,) to (1, signal_length)
-    # if len(signal.shape) == 1:
-    #     signal = signal.reshape(1, -1)
+
     if hann is True:
         signal = signal * np.hanning(signal.shape[axis])
 
