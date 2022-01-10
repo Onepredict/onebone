@@ -7,7 +7,7 @@
 from typing import Tuple, Union
 
 import numpy as np
-from scipy.fft import fft, fftfreq
+from scipy.fft import fftfreq
 
 
 def _index_along_axis(x: np.ndarray, s: slice, axis: int):
@@ -33,21 +33,23 @@ def _index_along_axis(x: np.ndarray, s: slice, axis: int):
     return x
 
 
-def _get_amp_and_freq(
-    x: np.ndarray, fs: Union[int, float] = 1, freq_range: Tuple = None, axis: int = -1
+def _get_amp_and_freq_for_oneside_spectrum(
+    amp: np.ndarray, fs: Union[int, float] = 1, freq_range: Tuple = None, axis: int = -1
 ) -> Tuple[np.ndarray, np.ndarray]:
     """
-    Get the amplitudes and FFT sample frequencies through positive FFT.
+    Get the amplitudes and FFT sample frequencies of the one-side amplitude spectrum.
     """
     # Set default parameter
     if freq_range is None:
         freq_range = (0, fs / 2)
 
     # Check inputs
-    if not isinstance(x, np.ndarray):
-        raise TypeError("'x' must be array.")
-    if len(x.shape) >= 3:
-        raise ValueError("'x' has less than 3 dimensions.")
+    if not isinstance(amp, np.ndarray):
+        raise TypeError("'amp' must be array.")
+    if len(amp.shape) >= 3:
+        raise ValueError("'amp' has less than 3 dimensions.")
+    if np.iscomplexobj(amp):
+        raise ValueError("The elements of 'amp' must be real.")
 
     if not isinstance(fs, (int, float)):
         raise TypeError("'fs' must be integer or float.")
@@ -61,8 +63,7 @@ def _get_amp_and_freq(
     if not (freq_range[0] < freq_range[-1]):
         raise ValueError("The first element of 'freq_range' must be lower than the second element.")
 
-    # Get the amplitudes in frequency domain through FFT.
-    amp = np.abs(fft(x, axis=axis))
+    # Get the size of amplitudes.
     n = amp.shape[axis]
 
     # Get the FFT sample frequencies.
@@ -99,7 +100,7 @@ def _get_amp_and_freq(
 
 
 def mnf(
-    x: np.ndarray,
+    amp: np.ndarray,
     fs: Union[int, float] = 1,
     freq_range: Tuple = None,
     axis: int = -1,
@@ -109,8 +110,8 @@ def mnf(
 
     Parameters
     ----------
-    x: numpy.ndarray of shape (signal_length,), (n, signal_length)
-        Input signal.
+    amp: numpy.ndarray of shape (signal_length,), (n, signal_length)
+        The amplitudes of a spectrum of time-domain signals.
     fs: int or float, default=1
         Sample rate. The sample rate is the number of samples per unit time.
         If `fs` is 1, then `mnf` is the normalized frequency; (0 ~ 1).
@@ -134,17 +135,19 @@ def mnf(
 
     Examples
     --------
+    >>> import numpy as np
     >>> fs = 100
     >>> t = np.arange(0, 1, 1 / fs)
     >>> x1 = np.sin(2 * np.pi * 10 * t)
     >>> x2 = np.sin(2 * np.pi * 20 * t)
     >>> x3 = np.sin(2 * np.pi * 30 * t)
     >>> x = x1 + x2 + x3
-    >>> mnf(x, fs)
+    >>> amp = np.abs(np.fft.fft(x))
+    >>> mnf(amp, fs)
     20
     """
     # Get the amplitudes and FFT sample frequencies.
-    amp, freq = _get_amp_and_freq(x, fs, freq_range, axis)
+    amp, freq = _get_amp_and_freq_for_oneside_spectrum(amp, fs, freq_range, axis)
 
     # Get the MNF(mean frequency) along the `axis`.
     mnf = np.sum(freq * amp, axis=axis, keepdims=keepdims) / np.sum(
@@ -168,7 +171,7 @@ def _get_mdf_of_1D_signal(amp: np.ndarray, freq: np.ndarray, keepdims: bool = Fa
 
 
 def mdf(
-    x: np.ndarray,
+    amp: np.ndarray,
     fs: Union[int, float] = 1,
     freq_range: Tuple = None,
     axis: int = -1,
@@ -178,8 +181,8 @@ def mdf(
 
     Parameters
     ----------
-    x: numpy.ndarray of shape (signal_length,), (n, signal_length)
-        Input signal.
+    amp: numpy.ndarray of shape (signal_length,), (n, signal_length)
+        The amplitudes of a spectrum of time-domain signals.
     fs: int or float, default=1
         Sample rate. The sample rate is the number of samples per unit time.
         If `fs` is 1, then `mdf` is the normalized frequency; (0 ~ 1).
@@ -203,17 +206,19 @@ def mdf(
 
     Examples
     --------
+    >>> import numpy as np
     >>> fs = 100
     >>> t = np.arange(0, 1, 1 / fs)
     >>> x1 = np.sin(2 * np.pi * 10 * t)
     >>> x2 = np.sin(2 * np.pi * 20 * t)
     >>> x3 = np.sin(2 * np.pi * 30 * t)
     >>> x = x1 + x2 + x3
-    >>> mdf(x, fs)
+    >>> amp = np.abs(np.fft.fft(x))
+    >>> mdf(amp, fs)
     20
     """
     # Get the amplitudes and FFT sample frequencies.
-    amp, freq = _get_amp_and_freq(x, fs, freq_range, axis)
+    amp, freq = _get_amp_and_freq_for_oneside_spectrum(amp, fs, freq_range, axis)
 
     # Get the 1-D sample frequencies.
     if axis == -1:
@@ -236,7 +241,7 @@ def mdf(
 
 
 def vcf(
-    x: np.ndarray,
+    amp: np.ndarray,
     fs: Union[int, float] = 1,
     freq_range: Tuple = None,
     axis: int = -1,
@@ -246,8 +251,8 @@ def vcf(
 
     Parameters
     ----------
-    x: numpy.ndarray of shape (signal_length,), (n, signal_length)
-        Input signal.
+    amp: numpy.ndarray of shape (signal_length,), (n, signal_length)
+        The amplitudes of a spectrum of time-domain signals.
     fs: int or float, default=1
         Sample rate. The sample rate is the number of samples per unit time.
         If `fs` is 1, then `vcf` is the normalized frequency; (0 ~ 1).
@@ -271,20 +276,22 @@ def vcf(
 
     Examples
     --------
+    >>> import numpy as np
     >>> fs = 100
     >>> t = np.arange(0, 1, 1 / fs)
     >>> x1 = np.sin(2 * np.pi * 10 * t)
     >>> x2 = np.sin(2 * np.pi * 20 * t)
     >>> x3 = np.sin(2 * np.pi * 30 * t)
     >>> x = x1 + x2 + x3
+    >>> amp = np.abs(np.fft.fft(x))
     >>> vcf(x, fs)
     66.666
     """
-    # Get the amplitudes and FFT sample frequencies.
-    amp, freq = _get_amp_and_freq(x, fs, freq_range, axis)
-
     # Get the MNF(mean frequency).
-    cf = mnf(x, fs, freq_range, axis, keepdims=True)
+    cf = mnf(amp, fs, freq_range, axis, keepdims=True)
+
+    # Get the amplitudes and FFT sample frequencies.
+    amp, freq = _get_amp_and_freq_for_oneside_spectrum(amp, fs, freq_range, axis)
 
     # Get the VCF(variance of central frequency) along the `axis`.
     vcf = np.sum(((freq - cf) ** 2) * amp, axis=axis, keepdims=keepdims) / np.sum(
