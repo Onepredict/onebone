@@ -6,7 +6,7 @@
 
 import numpy as np
 
-from oplib.signal import crestfactor, kurtosis, peak2peak, rms
+from oplib.feature import crestfactor, kurtosis, peak2peak, rms
 
 
 def _generate_sin_signal(fs: float):
@@ -17,5 +17,7 @@ def _generate_sin_signal(fs: float):
 
 
 if __name__ == "__main__":
-    x = _generate_sin_signal(5000.0)
+    x = np.array([[4, 9, 2, 10, 0], [6, 9, 7, 12, 0]])
     p2p = peak2peak(x)
+    rms_ = rms(x)
+    cf = crestfactor(x, axis=0)
