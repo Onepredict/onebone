@@ -58,7 +58,7 @@ def positive_fft(
         magnitude(1-D) expressed in scala.
 
     If input shape is [signal_length,], output shape is
-    f = [signal_length,], x_mag = [1, signal_length,].
+    f = [signal_length,], x_mag = [signal_length,].
     If input shape is [n, signal_length,], output shape is
     f = [signal_length,], x_mag = [n, signal_length,].
     Examples
