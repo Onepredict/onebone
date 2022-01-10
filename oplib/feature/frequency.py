@@ -9,28 +9,7 @@ from typing import Tuple, Union
 import numpy as np
 from scipy.fft import fftfreq
 
-
-def _index_along_axis(x: np.ndarray, s: slice, axis: int):
-    """Index under certain conditions along the axis you specify."""
-    x = x.copy()  # shallow copy
-    if axis == -1:
-        lower_ndim, upper_ndim = len(x.shape[:axis]), 0
-    else:
-        lower_ndim, upper_ndim = len(x.shape[:axis]), len(x.shape[axis + 1 :])
-    indices = (
-        lower_ndim
-        * np.s_[
-            :,
-        ]
-        + (s,)
-        + upper_ndim
-        * np.s_[
-            :,
-        ]
-    )
-    x = x[indices]
-
-    return x
+from oplib.utils import slice_along_axis
 
 
 def _get_amp_and_freq_for_oneside_spectrum(
@@ -70,7 +49,7 @@ def _get_amp_and_freq_for_oneside_spectrum(
     freq = fftfreq(n, d=1 / fs)
 
     # Get the oneside of FFT results along axis.
-    amp = _index_along_axis(amp, np.s_[: n // 2], axis)
+    amp = slice_along_axis(amp, np.s_[: n // 2], axis)
     freq = freq[: n // 2]
 
     # Get frequencies and amplitudes of FFT samples within the frequency range.
@@ -83,7 +62,7 @@ def _get_amp_and_freq_for_oneside_spectrum(
     low_idx = freq_range_indices[0]
     high_idx = freq_range_indices[-1]
 
-    amp = _index_along_axis(amp, np.s_[low_idx : high_idx + 1], axis=axis)
+    amp = slice_along_axis(amp, np.s_[low_idx : high_idx + 1], axis=axis)
     freq = freq[low_idx : high_idx + 1]
 
     # Make the dimensions of 'amp' equal to the dimensions of 'freq'.
@@ -96,7 +75,7 @@ def _get_amp_and_freq_for_oneside_spectrum(
     amp_shape = lower_dims + (1,) + upper_dims
     freq = np.zeros(amp_shape) + freq  # Numpy broadcasting
 
-    return amp, freq
+    return freq, amp
 
 
 def mnf(
@@ -108,30 +87,44 @@ def mnf(
 ) -> Union[float, np.ndarray]:
     """Compute the mean frequency.
 
+    .. math:: MNF = {\sum_{j=1}^M f_{j}A_{j} \over \sum_{j=1}^M A_{j}}^{[1]}
+    Where :math:`f_{j}` is the frequency value of spectrum at the bin :math:`j`,
+    :math:`A_{j}` is the amplitude value of spectrum at the frequency bin :math:`j`,
+    and :math:`M` is the length of frequency bin.
+
     Parameters
     ----------
-    amp: numpy.ndarray of shape (signal_length,), (n, signal_length)
+    amp : numpy.ndarray of shape (signal_length,), (n, signal_length)
         The amplitudes of a spectrum of time-domain signals.
-    fs: int or float, default=1
+    fs : int or float, default=1
         Sample rate. The sample rate is the number of samples per unit time.
         If `fs` is 1, then `mnf` is the normalized frequency; (0 ~ 1).
-    freq_range: tuple, default=None
+    freq_range : tuple, default=None
         Frequency range, specified as a two-element tuple of real values.
         If `freq_range` is None, then `mnf` uses the entire bandwidth of the input signal.
         That is, `freq_range` is (0, `fs` / 2).
-    axis: int, default=-1
+    axis : int, default=-1
         Axis along which `mnf` is performed.
         The default, `axis`=-1, will calculate the `mnf` along last axis of `x`.
         If `axis` is negative, it counts from the last to the first axis.
-    keepdims: bool, default=False
+    keepdims : bool, default=False
         If this is set to True, the axes which are reduced are left in the result as dimensions with size one.
 
     Returns
     -------
-    mnf: float or numpy.ndarray
+    mnf : float or numpy.ndarray
         Mean frequency.
         If `fs` is 1, then `mnf` has units of cycle/sample.
         But, if you specify the `fs`, then `mnf` has the same units as `fs`. E.g. cycle/sec.
+
+    References
+    ----------
+    .. [1] Angkoon Phinyomark, Sirinee Thongpanja, Huosheng Hu,
+       Pornchai Phukpattaranont and Chusak Limsakul (October 17th 2012).
+       The Usefulness of Mean and Median Frequencies in Electromyography Analysis,
+       Computational Intelligence in Electromyography Analysis -
+       A Perspective on Current Applications and Future Challenges, Ganesh R. Naik, IntechOpen,
+       DOI: 10.5772/50639. Available from: https://www.intechopen.com/chapters/40123
 
     Examples
     --------
@@ -147,7 +140,7 @@ def mnf(
     20
     """
     # Get the amplitudes and FFT sample frequencies.
-    amp, freq = _get_amp_and_freq_for_oneside_spectrum(amp, fs, freq_range, axis)
+    freq, amp = _get_amp_and_freq_for_oneside_spectrum(amp, fs, freq_range, axis)
 
     # Get the MNF(mean frequency) along the `axis`.
     mnf = np.sum(freq * amp, axis=axis, keepdims=keepdims) / np.sum(
@@ -179,30 +172,43 @@ def mdf(
 ) -> float:
     """Compute the median frequency.
 
+    .. math:: {\sum_{j=1}^{MDF} A_{j} = \sum_{j=MDF}^{M} A_{j} = {1 \over 2}\sum_{j=1}^M P_{j}}^{[1]}
+    Where :math:`A_{j}` is the amplitude value of spectrum at the frequency bin :math:`j`,
+    and :math:`M` is the length of frequency bin.
+
     Parameters
     ----------
-    amp: numpy.ndarray of shape (signal_length,), (n, signal_length)
+    amp : numpy.ndarray of shape (signal_length,), (n, signal_length)
         The amplitudes of a spectrum of time-domain signals.
-    fs: int or float, default=1
+    fs : int or float, default=1
         Sample rate. The sample rate is the number of samples per unit time.
         If `fs` is 1, then `mdf` is the normalized frequency; (0 ~ 1).
-    freq_range: tuple, default=None
+    freq_range : tuple, default=None
         Frequency range, specified as a two-element tuple of real values.
         If `freq_range` is None, then `mdf` uses the entire bandwidth of the input signal.
         That is, `freq_range` is (0, `fs` / 2).
-    axis: int, default=-1
+    axis : int, default=-1
         Axis along which `mdf` is performed.
         The default, `axis`=-1, will calculate the `mdf` along last axis of `x`.
         If `axis` is negative, it counts from the last to the first axis.
-    keepdims: bool, default=False
+    keepdims : bool, default=False
         If this is set to True, the axes which are reduced are left in the result as dimensions with size one.
 
     Returns
     -------
-    mdf: float or numpy.ndarray
+    mdf : float or numpy.ndarray
         Median frequency.
         If `fs` is 1, then `mdf` has units of cycle/sample.
         But, if you specify the `fs`, then `mdf` has the same units as `fs`. E.g. cycle/sec.
+
+    References
+    ----------
+    .. [1] Angkoon Phinyomark, Sirinee Thongpanja, Huosheng Hu,
+       Pornchai Phukpattaranont and Chusak Limsakul (October 17th 2012).
+       The Usefulness of Mean and Median Frequencies in Electromyography Analysis,
+       Computational Intelligence in Electromyography Analysis -
+       A Perspective on Current Applications and Future Challenges, Ganesh R. Naik, IntechOpen,
+       DOI: 10.5772/50639. Available from: https://www.intechopen.com/chapters/40123
 
     Examples
     --------
@@ -218,20 +224,14 @@ def mdf(
     20
     """
     # Get the amplitudes and FFT sample frequencies.
-    amp, freq = _get_amp_and_freq_for_oneside_spectrum(amp, fs, freq_range, axis)
+    freq, amp = _get_amp_and_freq_for_oneside_spectrum(amp, fs, freq_range, axis)
 
     # Get the 1-D sample frequencies.
     if axis == -1:
         lower_dims, upper_dims = freq.shape[:axis], ()
     else:
         lower_dims, upper_dims = freq.shape[:axis], freq.shape[axis + 1 :]
-    freq_shape = (
-        len(lower_dims) * (0,)
-        + np.s_[
-            :,
-        ]
-        + len(upper_dims) * (0,)
-    )
+    freq_shape = len(lower_dims) * (0,) + (np.s_[:],) + len(upper_dims) * (0,)
     freq = freq[freq_shape]
 
     # Get the MDF(median frequency) along the `axis`.
@@ -249,30 +249,46 @@ def vcf(
 ) -> float:
     """Compute the variance of central frequency(mean frequency).
 
+    .. math:: VCF = {{1 \over \sum_{j=1}^{M} A_{j}}\sum_{j=1}^{M} A_{j}(f_{j} - MNF)^2}^{[1]}
+    Where :math:`f_{j}` is the frequency value of spectrum at the bin :math:`j`,
+    :math:`A_{j}` is the amplitude value of spectrum at the frequency bin :math:`j`,
+    :math:`M` is the length of frequency bin,
+    :math:`MNF` is the mean frequency.
+
+
     Parameters
     ----------
-    amp: numpy.ndarray of shape (signal_length,), (n, signal_length)
+    amp : numpy.ndarray of shape (signal_length,), (n, signal_length)
         The amplitudes of a spectrum of time-domain signals.
-    fs: int or float, default=1
+    fs : int or float, default=1
         Sample rate. The sample rate is the number of samples per unit time.
         If `fs` is 1, then `vcf` is the normalized frequency; (0 ~ 1).
-    freq_range: tuple, default=None
+    freq_range : tuple, default=None
         Frequency range, specified as a two-element tuple of real values.
         If `freq_range` is None, then `vcf` uses the entire bandwidth of the input signal.
         That is, `freq_range` is (0, `fs` / 2).
-    axis: int, default=-1
+    axis : int, default=-1
         Axis along which `vcf` is performed.
         The default, `axis`=-1, will calculate the `vcf` along last axis of `x`.
         If `axis` is negative, it counts from the last to the first axis.
-    keepdims: bool, default=False
+    keepdims : bool, default=False
         If this is set to True, the axes which are reduced are left in the result as dimensions with size one.
 
     Returns
     -------
-    vcf: float or numpy.ndarray
+    vcf : float or numpy.ndarray
         Median frequency.
         If `fs` is 1, then `vcf` has units of cycle/sample.
         But, if you specify the `fs`, then `vcf` has the same units as `fs`. E.g. cycle/sec.
+
+    References
+    ----------
+    .. [1] Angkoon Phinyomark, Sirinee Thongpanja, Huosheng Hu,
+       Pornchai Phukpattaranont and Chusak Limsakul (October 17th 2012).
+       The Usefulness of Mean and Median Frequencies in Electromyography Analysis,
+       Computational Intelligence in Electromyography Analysis -
+       A Perspective on Current Applications and Future Challenges, Ganesh R. Naik, IntechOpen,
+       DOI: 10.5772/50639. Available from: https://www.intechopen.com/chapters/40123
 
     Examples
     --------
@@ -291,7 +307,7 @@ def vcf(
     cf = mnf(amp, fs, freq_range, axis, keepdims=True)
 
     # Get the amplitudes and FFT sample frequencies.
-    amp, freq = _get_amp_and_freq_for_oneside_spectrum(amp, fs, freq_range, axis)
+    freq, amp = _get_amp_and_freq_for_oneside_spectrum(amp, fs, freq_range, axis)
 
     # Get the VCF(variance of central frequency) along the `axis`.
     vcf = np.sum(((freq - cf) ** 2) * amp, axis=axis, keepdims=keepdims) / np.sum(
