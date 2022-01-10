@@ -68,6 +68,11 @@ def positive_fft(
     >>> T = 1 / Fs  # Sample interval time
     >>> x = np.linspace(0.0, N * T, N, endpoint=False) # time
     >>> y = 3 * np.sin(50.0 * 2.0 * np.pi * x) + 2 * np.sin(80.0 * 2.0 * np.pi * x)
+    >>> signal = y
+    >>> f, x_mag = positive_fft(signal, fs,  hann = false, normalization = false, axix = -1)
+    >>> freq = np.around(f[np.where(mag > 1)])
+    >>> freq
+    [49.0, 51.0, 80.0]
     """
 
     if len(signal.shape) > 2:
