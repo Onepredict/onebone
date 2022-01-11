@@ -10,6 +10,7 @@ oplib
 .. toctree::
    :maxdepth: 1
 
+   oplib.feature
    oplib.math
    oplib.preprocessing
    oplib.rotary

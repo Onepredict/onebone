@@ -11,8 +11,8 @@ from scipy.stats import kurtosis as scipy_kurtosis
 def peak2peak(x, axis: int = None) -> np.ndarray:
     """
     .. note:: This method uses `numpy.ptp`_ method as it is.
-    .. _numpy.p2p: \
-        https://numpy.org/doc/stable/reference/generated/numpy.ptp.html?highlight=ptp#
+    .. _numpy.ptp: \
+        https://numpy.org/doc/stable/reference/generated/numpy.ptp.html
 
     Maximum to minimum difference along an axis.
 
@@ -83,8 +83,8 @@ def rms(x: np.ndarray, axis: int = None) -> np.ndarray:
 def crestfactor(x: np.ndarray, axis: int = None) -> np.ndarray:
     """
     Peak to average ratio along an axis.
-    
-    .. math:: crestfactor = {x_peak \over x_rms}
+
+    .. math:: crestfactor = {|x_{peak}| \over {x_rms}}
 
     Parameters
     ----------
@@ -114,7 +114,7 @@ def crestfactor(x: np.ndarray, axis: int = None) -> np.ndarray:
     if not (isinstance(axis, int) | (axis is None)):
         raise TypeError(f"Argument 'axis' must be of type int or None, not {type(axis)}")
 
-    p2p = peak2peak(x, axis=axis)
+    p2p = np.abs(peak2peak(x, axis=axis))
     rms_ = rms(x, axis=axis) + 1e-6
     crest_factor = p2p / rms_
     return crest_factor
