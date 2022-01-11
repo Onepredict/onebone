@@ -6,8 +6,8 @@ Explain oplib.
 
 import pkg_resources
 
-from . import gear, math, preprocessing, rotary, signal
+from . import feature, math, preprocessing, rotary, signal
 
 __version__ = pkg_resources.get_distribution("oplib").version
 
-__all__ = ["math", "preprocessing", "rotary", "signal", "gear"]
+__all__ = ["math", "preprocessing", "rotary", "signal", "feature"]

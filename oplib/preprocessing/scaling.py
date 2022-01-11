@@ -7,13 +7,10 @@
 from typing import Tuple
 
 import numpy as np
-from numpy.typing import ArrayLike
 from sklearn.preprocessing import minmax_scale, scale
 
 
-def minmax_scaling(
-    x: ArrayLike, feature_range: Tuple[int, int] = (0, 1), axis: int = 0
-) -> np.ndarray:
+def minmax_scaling(x, feature_range: Tuple[int, int] = (0, 1), axis: int = 0) -> np.ndarray:
     """
     .. note:: This method uses `sklearn.preprocessing.minmax_scale`_ method as it is.
     .. _sklearn.preprocessing.minmax_scale: \
@@ -25,7 +22,7 @@ def minmax_scaling(
 
     Parameters
     ----------
-    x : array-like of shape (n_samples, n_features)
+    x : array_like of shape (n_samples, n_features)
         The data.
     feature_range : tuple (min, max), default=(0, 1)
         Desired range of transformed data.
@@ -48,7 +45,7 @@ def minmax_scaling(
     return minmax_scale(x, feature_range=feature_range, axis=axis)
 
 
-def zscore_scaling(x: ArrayLike, axis: int = 0):
+def zscore_scaling(x, axis: int = 0):
     """
     .. note:: This method uses `sklearn.preprocessing.scale`_ method as it is.
     .. _sklearn.preprocessing.scale: \
@@ -63,7 +60,7 @@ def zscore_scaling(x: ArrayLike, axis: int = 0):
 
     Parameters
     ----------
-    x : array-like of shape (n_samples, n_features)
+    x : array_like of shape (n_samples, n_features)
         The data.
     axis : int, default=0
         Axis used to compute the means and standard deviations along.
