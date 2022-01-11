@@ -3,27 +3,7 @@ from typing import Tuple, Union
 import numpy as np
 from numpy.fft import fft, fftfreq
 
-
-def _index_along_axis(x: np.ndarray, s: slice, axis: int):
-    """Index under certain conditions along the axis you specify."""
-    x = x.copy()  # shallow copy
-    if axis == -1:
-        lower_ndim, upper_ndim = len(x.shape[:axis]), 0
-    else:
-        lower_ndim, upper_ndim = len(x.shape[:axis]), len(x.shape[axis + 1 :])
-    indices = (
-        lower_ndim
-        * np.s_[
-            :,
-        ]
-        + (s,)
-        + upper_ndim
-        * np.s_[
-            :,
-        ]
-    )
-    x = x[indices]
-    return x
+from oplib.utils import slice_along_axis
 
 
 def positive_fft(
@@ -51,16 +31,14 @@ def positive_fft(
 
     Returns
     -------
-    output :
     f : numpy.ndarray
-        frequency(N-D) expressed in Hz.
+        frequency
+        If input shape is [signal_length,], output shape is f = [signal_length,].
+        If input shape is [n, signal_length,], output shape is f = [signal_length,].
     x_mag : numpy.ndarray
-        magnitude(1-D) expressed in scala.
-
-    If input shape is [signal_length,], output shape is
-    f = [signal_length,], x_mag = [signal_length,].
-    If input shape is [n, signal_length,], output shape is
-    f = [signal_length,], x_mag = [n, signal_length,].
+        magnitude
+        If input shape is [signal_length,], output shape is x_mag = [signal_length,].
+        If input shape is [n, signal_length,], output shape is x_mag = [n, signal_length,].
 
     Examples
     --------
@@ -83,7 +61,7 @@ def positive_fft(
         signal = signal * np.hanning(signal.shape[axis])
 
     x = fft(signal, axis=axis)
-    x_half = _index_along_axis(x, np.s_[: signal.shape[axis] // 2], axis=axis)
+    x_half = slice_along_axis(x, np.s_[: signal.shape[axis] // 2], axis=axis)
     n = signal.shape[axis]
     f = fftfreq(n, d=1 / fs)
     mid = int(n / 2)

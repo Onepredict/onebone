@@ -30,6 +30,7 @@ sphinx-start:
 	sphinx quick-start docs
 
 sphinx-build:
+	git reset --hard HEAD
 	rm -rf docs/build/html
 	find docs/source -type f -name "*.rst" -not -name "index.rst" -delete
 	sphinx-apidoc -fMT -o docs/source oplib -t docs/templates
