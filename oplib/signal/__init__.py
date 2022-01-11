@@ -7,6 +7,9 @@ __all__ = [
     "highpass_filter",
     "bandpass_filter",
     "bandstop_filter",
+    "mnf",
+    "mdf",
+    "vcf",
     "envelope_hilbert",
     "positive_fft",
 ]
