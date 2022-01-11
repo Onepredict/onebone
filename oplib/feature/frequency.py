@@ -85,7 +85,8 @@ def mnf(
     axis: int = -1,
     keepdims: bool = False,
 ) -> Union[float, np.ndarray]:
-    """Compute the mean frequency.
+    """
+    Compute the mean frequency.
 
     .. math:: MNF = {\sum_{j=1}^M f_{j}A_{j} \over \sum_{j=1}^M A_{j}}^{[1]}
     Where :math:`f_{j}` is the frequency value of spectrum at the bin :math:`j`,
@@ -170,7 +171,8 @@ def mdf(
     axis: int = -1,
     keepdims: bool = False,
 ) -> float:
-    """Compute the median frequency.
+    """
+    Compute the median frequency.
 
     .. math:: {\sum_{j=1}^{MDF} A_{j} = \sum_{j=MDF}^{M} A_{j} = {1 \over 2}\sum_{j=1}^M P_{j}}^{[1]}
     Where :math:`A_{j}` is the amplitude value of spectrum at the frequency bin :math:`j`,
@@ -247,7 +249,8 @@ def vcf(
     axis: int = -1,
     keepdims: bool = False,
 ) -> float:
-    """Compute the variance of central frequency(mean frequency).
+    """
+    Compute the variance of central frequency(mean frequency).
 
     .. math:: VCF = {{1 \over \sum_{j=1}^{M} A_{j}}\sum_{j=1}^{M} A_{j}(f_{j} - MNF)^2}^{[1]}
     Where :math:`f_{j}` is the frequency value of spectrum at the bin :math:`j`,

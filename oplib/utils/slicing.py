@@ -2,7 +2,8 @@ import numpy as np
 
 
 def slice_along_axis(arr: np.ndarray, s: slice, axis: int) -> np.ndarray:
-    """Slice the values of the array within a certain range on the axis.
+    """
+    Slice the values of the array within a certain range on the axis.
 
     Parameters
     ----------
