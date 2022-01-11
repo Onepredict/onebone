@@ -13,6 +13,8 @@ jobs:
     - name: Pull & Document build
       working-directory: /home/kyunghwan/opt/oplib
       run: |
+        rm -rf docs/build/html
+        find docs/source -type f -name "*.rst" -not -name "index.rst" -delete
         git pull origin main
         pyenv local oplib
         make sphinx-build
