@@ -39,6 +39,9 @@ def peak2peak(x, axis: int = None) -> np.ndarray:
     >>> ptp(x)
     10
     """
+    if not (isinstance(axis, int) | (axis is None)):
+        raise TypeError(f"Argument 'axis' must be of type int or None, not {type(axis)}")
+
     return np.ptp(x, axis=axis)
 
 
@@ -71,6 +74,8 @@ def rms(x: np.ndarray, axis: int = None) -> np.ndarray:
     """
     if not isinstance(x, np.ndarray):
         raise TypeError(f"Argument 'x' must be of type numpy.ndarray, not {type(x)}")
+    if not (isinstance(axis, int) | (axis is None)):
+        raise TypeError(f"Argument 'axis' must be of type int or None, not {type(axis)}")
 
     return np.sqrt(np.mean(x ** 2, axis=axis))
 
@@ -78,6 +83,8 @@ def rms(x: np.ndarray, axis: int = None) -> np.ndarray:
 def crestfactor(x: np.ndarray, axis: int = None) -> np.ndarray:
     """
     Peak to average ratio along an axis.
+    
+    .. math:: crestfactor = {x_peak \over x_rms}
 
     Parameters
     ----------
@@ -95,9 +102,17 @@ def crestfactor(x: np.ndarray, axis: int = None) -> np.ndarray:
     --------
     >>> x = np.array([[4, 9, 2, 10],
     ...               [6, 9, 7, 12]])
+    >>> crestfactor(x, axis=0)
+    array([0.39223219, 0.        , 0.97128567, 0.18107148])
+    >>> crestfactor(x, axis=1)
+    array([1.12855283, 0.68155412])
+    >>> crestfactor(x)
+    1.2512223376239555
     """
     if not isinstance(x, np.ndarray):
         raise TypeError(f"Argument 'x' must be of type numpy.ndarray, not {type(x)}")
+    if not (isinstance(axis, int) | (axis is None)):
+        raise TypeError(f"Argument 'axis' must be of type int or None, not {type(axis)}")
 
     p2p = peak2peak(x, axis=axis)
     rms_ = rms(x, axis=axis) + 1e-6
@@ -105,7 +120,7 @@ def crestfactor(x: np.ndarray, axis: int = None) -> np.ndarray:
     return crest_factor
 
 
-def kurtosis(x: np.ndarray) -> np.float64:
+def kurtosis(x: np.ndarray, axis: int = 0, fisher: bool = True, bias: bool = True) -> np.ndarray:
     """
     .. note:: This method uses `scipy.stats.kurtosis`_ method as it is.
     .. _scipy.stats.kurtosis: \
@@ -115,12 +130,29 @@ def kurtosis(x: np.ndarray) -> np.float64:
 
     Parameters
     ----------
+    x : numpy.ndarray
+        The data.
+    axis : None or int, default=0
+        Axis along which the kurtosis is calculated. If None, compute over the whole array a.
+
+    fisher : bool, default=True
+        If True, Fisher’s definition is used (normal ==> 0.0).
+        If False, Pearson’s definition is used (normal ==> 3.0).
+
+    bias : bool, default=True
+    If False, then the calculations are corrected for statistical bias.
 
     Returns
     -------
+    kurtosis : numpy.ndarray
+        The kurtosis of values along an axis.
+        If all values are equal, return -3 for Fisher’s definition and 0 for Pearson’s definition.
 
     Examples
     --------
-
+    >>> x = np.array([[4, 9, 2, 10],
+    ...               [6, 9, 7, 12]])
+    >>> kurtosis(x)
+    array([-2., -3., -2., -2.])
     """
-    return np.float64(scipy_kurtosis(x))
+    return scipy_kurtosis(x, axis, fisher, bias)
