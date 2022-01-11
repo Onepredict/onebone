@@ -33,9 +33,8 @@ def positive_fft(
     normalization: bool = False,
     axis: int = -1,
 ) -> Tuple[np.ndarray, np.ndarray]:
-
     """
-    Positive fourier transformation
+    Positive fourier transformation.
 
     Parameters
     ------------
@@ -49,6 +48,7 @@ def positive_fft(
         Normalization after Fourier transform
     axis : int, default=-1
         The axis of the input data array along which to apply the fourier Transformation.
+
     Returns
     -------
     output :
@@ -61,10 +61,11 @@ def positive_fft(
     f = [signal_length,], x_mag = [signal_length,].
     If input shape is [n, signal_length,], output shape is
     f = [signal_length,], x_mag = [n, signal_length,].
+
     Examples
     --------
-    >>> N = 600 # array length
-    >>> fs = 8000  # Sampling frequency
+    >>> N = 400  # array length
+    >>> fs = 800  # Sampling frequency
     >>> T = 1 / Fs  # Sample interval time
     >>> x = np.linspace(0.0, N * T, N, endpoint=False) # time
     >>> y = 3 * np.sin(50.0 * 2.0 * np.pi * x) + 2 * np.sin(80.0 * 2.0 * np.pi * x)
@@ -72,7 +73,7 @@ def positive_fft(
     >>> f, x_mag = positive_fft(signal, fs,  hann = false, normalization = false, axix = -1)
     >>> freq = np.around(f[np.where(mag > 1)])
     >>> freq
-    [49.0, 51.0, 80.0]
+    [50., 80.]
     """
 
     if len(signal.shape) > 2:
