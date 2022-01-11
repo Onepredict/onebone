@@ -21,7 +21,7 @@ def check_1d_signal(
     fs = input_args[0]
     signal = generate_signal(fs)
     f, mag = fft(signal, *input_args)
-    freq = np.around(f[np.where(mag > 10)])
+    freq = np.around(f[np.where(mag > 2)])
     assert np.all(np.equal(freq, expected_return)), (
         f"Wrong return: The expected return is {expected_return}, " + f"but output is {freq}"
     )
@@ -36,7 +36,7 @@ def check_2d_signal_axis_zero(
     signal_2d = signal_2d.T
     f, mag = fft(signal_2d, *input_args)
     # mag.shape = (n,1)
-    freq = np.around(f[np.where(mag[:, 0] > 10)])
+    freq = np.around(f[np.where(mag[:, 0] > 2)])
     assert np.all(np.equal(freq, expected_return)), (
         f"Wrong return: The expected return is {expected_return}, " + f"but output is {freq}"
     )
@@ -50,7 +50,7 @@ def check_2d_signal_axis_one(
     signal_2d = np.stack([signal] * 2)
     f, mag = fft(signal_2d, *input_args)
     # mag.shape = (1,n)
-    freq = np.around(f[np.where(mag[0] > 10)])
+    freq = np.around(f[np.where(mag[0] > 1)])
     assert np.all(np.equal(freq, expected_return)), (
         f"Wrong return: The expected return is {expected_return}, " + f"but output is {freq}"
     )
@@ -70,7 +70,7 @@ def check_array_shape(fft: Callable, input_args: Tuple[float, bool, bool]):
 def test_fft():
     check_1d_signal(positive_fft, (800.0, False, False), np.array([50, 80.0]))
     check_2d_signal_axis_zero(positive_fft, (800.0, False, False, 0), np.array([50, 80.0]))
-    check_2d_signal_axis_one(positive_fft, (800.0, False, False, 1), np.array([50, 80.0]))
+    check_2d_signal_axis_one(positive_fft, (800.0, False, True, 1), np.array([50, 80.0]))
     check_array_shape(positive_fft, (800.0, False, True))
 
 

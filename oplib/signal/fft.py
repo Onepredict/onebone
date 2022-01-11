@@ -29,8 +29,8 @@ def _index_along_axis(x: np.ndarray, s: slice, axis: int):
 def positive_fft(
     signal: np.ndarray,
     fs: Union[int, float],
-    hann: False,
-    normalization: False,
+    hann: bool = False,
+    normalization: bool = False,
     axis: int = -1,
 ) -> Tuple[np.ndarray, np.ndarray]:
 
