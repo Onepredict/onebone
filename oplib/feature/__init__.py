@@ -1,5 +1,5 @@
 from .frequency import mdf, mnf, vcf
-from .time import crestfactor, kurtosis, peak2peak, rms
+from .time import crest_factor, kurtosis, peak2peak, rms
 
 __all__ = [
     "mdf",
@@ -7,6 +7,6 @@ __all__ = [
     "vcf",
     "peak2peak",
     "rms",
-    "crestfactor",
+    "crest_factor",
     "kurtosis",
 ]

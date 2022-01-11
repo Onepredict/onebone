@@ -40,7 +40,7 @@ def peak2peak(x, axis: int = None) -> np.ndarray:
     10
     """
     if not (isinstance(axis, int) | (axis is None)):
-        raise TypeError(f"Argument 'axis' must be of type int or None, not {type(axis)}")
+        raise TypeError(f"Argument 'axis' must be of type int or None, not {type(axis).__name__}")
 
     return np.ptp(x, axis=axis)
 
@@ -73,48 +73,48 @@ def rms(x: np.ndarray, axis: int = None) -> np.ndarray:
     7.99218368157289
     """
     if not isinstance(x, np.ndarray):
-        raise TypeError(f"Argument 'x' must be of type numpy.ndarray, not {type(x)}")
+        raise TypeError(f"Argument 'x' must be of type numpy.ndarray, not {type(x).__name__}")
     if not (isinstance(axis, int) | (axis is None)):
-        raise TypeError(f"Argument 'axis' must be of type int or None, not {type(axis)}")
+        raise TypeError(f"Argument 'axis' must be of type int or None, not {type(axis).__name__}")
 
     return np.sqrt(np.mean(x ** 2, axis=axis))
 
 
-def crestfactor(x: np.ndarray, axis: int = None) -> np.ndarray:
+def crest_factor(x: np.ndarray, axis: int = None) -> np.ndarray:
     """
     Peak to average ratio along an axis.
 
-    .. math:: crestfactor = {|x_{peak}| \over {x_rms}}
+    .. math:: crest_factor = {|x_{peak}| \over {x_rms}}
 
     Parameters
     ----------
     x : numpy.ndarray
         The data.
     axis : None or int, default=None
-        Axis along which to calculate crestfactor. By default, flatten the array.
+        Axis along which to calculate crest factor. By default, flatten the array.
 
     Returns
     -------
-    crestfactor : numpy.ndarray
+    crest_factor : numpy.ndarray
         Peak to average ratio of x.
 
     Examples
     --------
     >>> x = np.array([[4, 9, 2, 10],
     ...               [6, 9, 7, 12]])
-    >>> crestfactor(x, axis=0)
+    >>> crest_factor(x, axis=0)
     array([0.39223219, 0.        , 0.97128567, 0.18107148])
-    >>> crestfactor(x, axis=1)
+    >>> crest_factor(x, axis=1)
     array([1.12855283, 0.68155412])
-    >>> crestfactor(x)
+    >>> crest_factor(x)
     1.2512223376239555
     """
     if not isinstance(x, np.ndarray):
-        raise TypeError(f"Argument 'x' must be of type numpy.ndarray, not {type(x)}")
+        raise TypeError(f"Argument 'x' must be of type numpy.ndarray, not {type(x).__name__}")
     if not (isinstance(axis, int) | (axis is None)):
-        raise TypeError(f"Argument 'axis' must be of type int or None, not {type(axis)}")
+        raise TypeError(f"Argument 'axis' must be of type int or None, not {type(axis).__name__}")
 
-    p2p = np.abs(peak2peak(x, axis=axis))
+    p2p = peak2peak(x, axis=axis)
     rms_ = rms(x, axis=axis) + 1e-6
     crest_factor = p2p / rms_
     return crest_factor

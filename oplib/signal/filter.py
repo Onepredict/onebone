@@ -60,13 +60,17 @@ def lowpass_filter(
     [ 20.]
     """
     if not (isinstance(fs, int) | isinstance(fs, float)):
-        raise TypeError(f"Argument 'fs' must be of type int or float, not {type(fs)}")
+        raise TypeError(f"Argument 'fs' must be of type int or float, not {type(fs).__name__}")
     if not (isinstance(cutoff, int) | isinstance(cutoff, float)):
-        raise TypeError(f"Argument 'cutoff' must be of type int or float, not {type(cutoff)}")
+        raise TypeError(
+            f"Argument 'cutoff' must be of type int or float, not {type(cutoff).__name__}"
+        )
     if not isinstance(order, int):
-        raise TypeError(f"Argument 'order' must be of type int or float, not {type(order)}")
+        raise TypeError(
+            f"Argument 'order' must be of type int or float, not {type(order).__name__}"
+        )
     if not isinstance(axis, int):
-        raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis)}")
+        raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis).__name__}")
 
     if len(signal.shape) > 2:
         raise ValueError("Dimension of signal must be less than 3.")
@@ -128,13 +132,17 @@ def highpass_filter(
     [ 100.]
     """
     if not (isinstance(fs, int) | isinstance(fs, float)):
-        raise TypeError(f"Argument 'fs' must be of type int or float, not {type(fs)}")
+        raise TypeError(f"Argument 'fs' must be of type int or float, not {type(fs).__name__}")
     if not (isinstance(cutoff, int) | isinstance(cutoff, float)):
-        raise TypeError(f"Argument 'cutoff' must be of type int or float, not {type(cutoff)}")
+        raise TypeError(
+            f"Argument 'cutoff' must be of type int or float, not {type(cutoff).__name__}"
+        )
     if not isinstance(order, int):
-        raise TypeError(f"Argument 'order' must be of type int or float, not {type(order)}")
+        raise TypeError(
+            f"Argument 'order' must be of type int or float, not {type(order).__name__}"
+        )
     if not isinstance(axis, int):
-        raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis)}")
+        raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis).__name__}")
 
     if len(signal.shape) > 2:
         raise ValueError("Dimension of signal must be less than 3.")
@@ -200,15 +208,21 @@ def bandpass_filter(
     [ 100.]
     """
     if not (isinstance(fs, int) | isinstance(fs, float)):
-        raise TypeError(f"Argument 'fs' must be of type int or float, not {type(fs)}")
+        raise TypeError(f"Argument 'fs' must be of type int or float, not {type(fs).__name__}")
     if not (isinstance(l_cutoff, int) | isinstance(l_cutoff, float)):
-        raise TypeError(f"Argument 'l_cutoff' must be of type int or float, not {type(l_cutoff)}")
+        raise TypeError(
+            f"Argument 'l_cutoff' must be of type int or float, not {type(l_cutoff).__name__}"
+        )
     if not (isinstance(h_cutoff, int) | isinstance(h_cutoff, float)):
-        raise TypeError(f"Argument 'h_cutoff' must be of type int or float, not {type(h_cutoff)}")
+        raise TypeError(
+            f"Argument 'h_cutoff' must be of type int or float, not {type(h_cutoff).__name__}"
+        )
     if not isinstance(order, int):
-        raise TypeError(f"Argument 'order' must be of type int or float, not {type(order)}")
+        raise TypeError(
+            f"Argument 'order' must be of type int or float, not {type(order).__name__}"
+        )
     if not isinstance(axis, int):
-        raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis)}")
+        raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis).__name__}")
 
     if len(signal.shape) > 2:
         raise ValueError("Dimension of signal must be less than 3.")
@@ -275,15 +289,21 @@ def bandstop_filter(
     [ 20., 500.]
     """
     if not (isinstance(fs, int) | isinstance(fs, float)):
-        raise TypeError(f"Argument 'fs' must be of type int or float, not {type(fs)}")
+        raise TypeError(f"Argument 'fs' must be of type int or float, not {type(fs).__name__}")
     if not (isinstance(l_cutoff, int) | isinstance(l_cutoff, float)):
-        raise TypeError(f"Argument 'l_cutoff' must be of type int or float, not {type(l_cutoff)}")
+        raise TypeError(
+            f"Argument 'l_cutoff' must be of type int or float, not {type(l_cutoff).__name__}"
+        )
     if not (isinstance(h_cutoff, int) | isinstance(h_cutoff, float)):
-        raise TypeError(f"Argument 'h_cutoff' must be of type int or float, not {type(h_cutoff)}")
+        raise TypeError(
+            f"Argument 'h_cutoff' must be of type int or float, not {type(h_cutoff).__name__}"
+        )
     if not isinstance(order, int):
-        raise TypeError(f"Argument 'order' must be of type int or float, not {type(order)}")
+        raise TypeError(
+            f"Argument 'order' must be of type int or float, not {type(order).__name__}"
+        )
     if not isinstance(axis, int):
-        raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis)}")
+        raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis).__name__}")
 
     if len(signal.shape) > 2:
         raise ValueError("Dimension of signal must be less than 3.")
