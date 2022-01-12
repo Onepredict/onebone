@@ -84,7 +84,7 @@ def crest_factor(x: np.ndarray, axis: int = None) -> np.ndarray:
     """
     Peak to average ratio along an axis.
 
-    .. math:: crest_factor = {|x_{peak}| \over {x_rms}}
+    .. math:: crest factor = {|x_{peak}| \over {x_{rms}}}
 
     Parameters
     ----------
