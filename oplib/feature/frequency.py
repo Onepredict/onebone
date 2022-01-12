@@ -89,6 +89,7 @@ def mnf(
     Compute the mean frequency.
 
     .. math:: MNF = {\sum_{j=1}^M f_{j}A_{j} \over \sum_{j=1}^M A_{j}}^{[1]}
+
     Where :math:`f_{j}` is the frequency value of spectrum at the bin :math:`j`,
     :math:`A_{j}` is the amplitude value of spectrum at the frequency bin :math:`j`,
     and :math:`M` is the length of frequency bin.
@@ -175,6 +176,7 @@ def mdf(
     Compute the median frequency.
 
     .. math:: {\sum_{j=1}^{MDF} A_{j} = \sum_{j=MDF}^{M} A_{j} = {1 \over 2}\sum_{j=1}^M P_{j}}^{[1]}
+
     Where :math:`A_{j}` is the amplitude value of spectrum at the frequency bin :math:`j`,
     and :math:`M` is the length of frequency bin.
 
@@ -253,11 +255,11 @@ def vcf(
     Compute the variance of central frequency(mean frequency).
 
     .. math:: VCF = {{1 \over \sum_{j=1}^{M} A_{j}}\sum_{j=1}^{M} A_{j}(f_{j} - MNF)^2}^{[1]}
+
     Where :math:`f_{j}` is the frequency value of spectrum at the bin :math:`j`,
     :math:`A_{j}` is the amplitude value of spectrum at the frequency bin :math:`j`,
     :math:`M` is the length of frequency bin,
     :math:`MNF` is the mean frequency.
-
 
     Parameters
     ----------

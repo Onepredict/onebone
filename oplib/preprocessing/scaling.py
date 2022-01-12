@@ -53,8 +53,6 @@ def zscore_scaling(x, axis: int = 0):
 
     Transform input data so that they can be described as a normal distribution.
 
-    Notes
-    -----
     .. math:: x' = {(x - x_{mean}) \over x_{std}}
 
 
@@ -76,7 +74,7 @@ def zscore_scaling(x, axis: int = 0):
     >>> a
     [0, 1, 2, 3, 4, 5, 6, 7, 8]
     >>> zscore_scaling(a)
-    array([-1.54919334, -1.161895  , -0.77459667, -0.38729833,  0.        ,
+    array([-1.54919334, -1.161895  , -0.77459667, -0.38729833,  0.,
             0.38729833,  0.77459667,  1.161895  ,  1.54919334])
     """
     return scale(x, axis=axis)
