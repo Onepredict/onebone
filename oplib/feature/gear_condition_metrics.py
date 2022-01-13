@@ -21,7 +21,8 @@ def na4(
     """
     Calculate NA4 metric.
 
-    NA4 indicates the onset of damage and continues to react to the damage as it spreads and increases in magnitude.
+    NA4 indicates the onset of damage and continues to react to the damage
+    as it spreads and increases in magnitude.
     .. math::
         {NA4 = {N\sum_{i=1}^N (r_{i}-\\bar{r})^4 \over \left\{\\frac{1}{M}
         \sum_{j=1}^M \left[\sum_{i=1}^N (r_{ij}-\\bar{r_j})^2\\right] \\right\}^2}
