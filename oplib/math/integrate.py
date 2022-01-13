@@ -9,7 +9,7 @@ from typing import Union
 import numpy as np
 
 
-def integrate_trapezoid(y, x=None, dx=1.0, axis=-1) -> Union[float, np.ndarray]:
+def integrate_trapezoid(y, x=None, dx: float = 1.0, axis: int = -1) -> Union[float, np.ndarray]:
     """
     .. note:: This method uses `numpy.trapz`_ method as it is.
     .. _numpy.trapz: https://numpy.org/doc/stable/reference/generated/numpy.trapz.html
@@ -29,13 +29,12 @@ def integrate_trapezoid(y, x=None, dx=1.0, axis=-1) -> Union[float, np.ndarray]:
     ----------
     y : array_like
         Input array to integrate.
-    x : array_like, optional
+    x : array_like, optional, default=None
         The sample points corresponding to the `y` values. If `x` is None,
-        the sample points are assumed to be evenly spaced `dx` apart. The
-        default is None.
-    dx : scalar, optional
-        The spacing between sample points when `x` is None. The default is 1.
-    axis : int, optional
+        the sample points are assumed to be evenly spaced `dx` apart.
+    dx : float, optional, default=1
+        The spacing between sample points when `x` is None.
+    axis : int, optional, default=-1
         The axis along which to integrate.
 
     Returns
@@ -45,6 +44,18 @@ def integrate_trapezoid(y, x=None, dx=1.0, axis=-1) -> Union[float, np.ndarray]:
         a single axis by the trapezoidal rule. If 'y' is a 1-dimensional array,
         then the result is a float. If 'n' is greater than 1, then the result
         is an 'n-1' dimensional array.
+
+    See Also
+    --------
+    numpy.sum, numpy.cumsum
+
+    Notes
+    -----
+    Image [2]_ illustrates trapezoidal rule -- y-axis locations of points
+    will be taken from `y` array, by default x-axis distances between
+    points will be 1.0, alternatively they can be provided with `x` array
+    or with `dx` scalar.  Return value will be equal to combined area under
+    the red lines.
 
     References
     ----------
