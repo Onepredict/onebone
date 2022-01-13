@@ -23,20 +23,15 @@
 .. py:module:: {{ pkgname }}
 {% endif %}
 
-{%- if modulefirst and not is_namespace %}
-{{ automodule(pkgname, automodule_options) }}
-{% endif %}
-
 {%- if subpackages %}
-
 {{ toctree(subpackages) }}
 {% endif %}
 
-
-
-{%- if not modulefirst and not is_namespace %}
-Module contents
----------------
-
-{{ automodule(pkgname, automodule_options) }}
+{%- if submodules %}
+{%- for submodule in submodules %}
+{% if show_headings %}
+{{- [submodule] | join(" ") | e | heading(2) }}
 {% endif %}
+{{ automodule(submodule, automodule_options) }}
+{% endfor %}
+{%- endif %}
