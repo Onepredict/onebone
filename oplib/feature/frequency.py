@@ -88,7 +88,7 @@ def mnf(
     """
     Compute the mean frequency.
 
-    .. math:: MNF = {\sum_{j=1}^M f_{j}A_{j} \over \sum_{j=1}^M A_{j}}^{[1]}
+    .. math:: {MNF = {\sum_{j=1}^M f_{j}A_{j} \over \sum_{j=1}^M A_{j}}}^{[1]}
 
     Where :math:`f_{j}` is the frequency value of spectrum at the bin :math:`j`,
     :math:`A_{j}` is the amplitude value of spectrum at the frequency bin :math:`j`,
@@ -254,7 +254,7 @@ def vcf(
     """
     Compute the variance of central frequency(mean frequency).
 
-    .. math:: VCF = {{1 \over \sum_{j=1}^{M} A_{j}}\sum_{j=1}^{M} A_{j}(f_{j} - MNF)^2}^{[1]}
+    .. math:: {VCF = {1 \over \sum_{j=1}^M A_{j}}{\sum_{j=1}^M A_{j}(f_{j} - MNF)^2}}^{[1]}
 
     Where :math:`f_{j}` is the frequency value of spectrum at the bin :math:`j`,
     :math:`A_{j}` is the amplitude value of spectrum at the frequency bin :math:`j`,
