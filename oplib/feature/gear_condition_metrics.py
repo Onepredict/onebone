@@ -21,6 +21,7 @@ def na4(
     """
     Calculate NA4 metric.
 
+    NA4 indicates the onset of damage and continues to react to the damage as it spreads and increases in magnitude.
     .. math::
         {NA4 = {N\sum_{i=1}^N (r_{i}-\\bar{r})^4 \over \left\{\\frac{1}{M}
         \sum_{j=1}^M \left[\sum_{i=1}^N (r_{ij}-\\bar{r_j})^2\\right] \\right\}^2}
@@ -37,7 +38,7 @@ def na4(
     ----------
     x : numpy.ndarray of shape (length of `x`,)
         Time-synchronous-averaged signal (recommended)
-    prev_info : tuple of int and float
+    prev_info : tuple of (int, float)
         The information for the 'previous time record number' in run ensemble.
         The first element of `prev_info` is the 'previous time record number'(M-1).
         The second element of `prev_info` is the average of each 2th central moment
@@ -58,7 +59,7 @@ def na4(
     na4 : float
         A metric to not only detect the onset of damage,
         but also to continue to react to the damage as it increases.
-    cur_info : tuple of int and float
+    cur_info : tuple of (int, float)
         The information for the 'current time record number' in run ensemble.
         The first element of `cur_info` is the 'current time record number'(M).
         The second element of `cur_info` is the average of each 2th central moment of M residual signals.
@@ -111,7 +112,6 @@ def na4(
         raise TypeError("`x_tsa` must be array.")
     if len(x_tsa.shape) >= 2:
         raise ValueError("`x_tsa` has less than 2 dimensions.")
-
     if not isinstance(prev_info, Tuple):
         raise TypeError("`prev_info` must be tuple.")
     if len(prev_info) != 2:
@@ -124,19 +124,15 @@ def na4(
         )
     if not (prev_info[-1] >= 0):
         raise ValueError("'The time record number' must be more than zero.")
-
     if not isinstance(fs, (int, float)):
         raise TypeError("`fs` must be integer or float.")
-
     if not isinstance(rpm, (int, float)):
         raise TypeError("`rpm` must be integer or float.")
-
     if not isinstance(freq_list, Tuple):
         raise TypeError("`freq_list` must be tuple or None.")
     for e in freq_list:
         if not isinstance(e, (int, float)):
             raise TypeError("The elements of `freq_list` must be integer or float.")
-
     if not isinstance(n_harmonics, int):
         raise TypeError("`n_harmonics` must be integer.")
 
