@@ -1,5 +1,7 @@
 <p align="center">
-<img src="https://user-images.githubusercontent.com/79968466/149269606-6b401104-4a5a-4456-b924-558d233131f2.png" align="center" width="50%;">
+<img src="https://user-images.githubusercontent.com/79968466/149269606-6b401104-4a5a-4456-b924-558d233131f2.png" align="center" width="50%">
+<!--TODO: Change image more beautiful.-->
+<!--TODO: Add badges.-->
 
 <!--TODO: Change the name of this library, oplib.-->
 # Summary
