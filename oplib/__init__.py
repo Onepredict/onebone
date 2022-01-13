@@ -1,7 +1,5 @@
 """
 oplib: Onepredict Library
-
-Explain oplib.
 """
 
 import pkg_resources
