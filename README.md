@@ -1,4 +1,6 @@
-![onepredict_NEW_CI_blue_black](https://user-images.githubusercontent.com/79968466/149269606-6b401104-4a5a-4456-b924-558d233131f2.png)
+<p align="center">
+<img src="https://user-images.githubusercontent.com/79968466/149269606-6b401104-4a5a-4456-b924-558d233131f2.png" align="center" width="50%;">
+
 <!--TODO: Change the name of this library, oplib.-->
 # Summary
 `oplib` is an open-source software for signal analysis about predictive maintenance, being used for research activities at [ⓒ ONEPREDICT Corp.](https://onepredict.ai/). It includes modules for preprocessing, health feature, and more. If you need to analyze signals for industrial equipments like turbines, a rotary machinery or componets like gears, bearings, give oplib a try!.
@@ -33,9 +35,9 @@ oplib can be installed via pip from [PyPI](https://pypi.org/)
 $ pip install --extra-index-url http://10.10.30.16:8008 --trusted-host 10.10.30.16:8008 oplib
 ```
 It can be checked as follows whether the oplib has been installed.
-``` bash
-$ pip list | grep oplib
-oplib {oplib_version}
+``` python
+>>> import oplib
+>>> oplib.__version__
 ```
 
 ## Usage
@@ -45,6 +47,7 @@ You can import directly the function, for example:
 ``` python
 >>> from oplib.feature import tacho_to_rpm
 ```
+
 # Call for contribute
 We appreciate and welcome contributions. Small improvements or fixes are always appreciated; issues labeled as "good first issue" may be a good starting point.
 
@@ -61,6 +64,7 @@ If you want to use an code for signal analysis, but it's not in oplib, make a is
 If you are new to contributing to open source, [this guide](https://opensource.guide/how-to-contribute/) helps explain why, what, and how to get involved.
 
 If you want to contribute oplib, follow [this guide](https://github.com/Onepredict/oplib/blob/main/wiki/development_guide.md).
+
 # References
 - [Numpy](https://numpy.org/)
 - [Scipy](https://scipy.org/)
