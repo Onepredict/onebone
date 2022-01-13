@@ -23,10 +23,12 @@ def na4(
 
     NA4 indicates the onset of damage and continues to react to the damage
     as it spreads and increases in magnitude.
+
     .. math::
         {NA4 = {N\sum_{i=1}^N (r_{i}-\\bar{r})^4 \over \left\{\\frac{1}{M}
         \sum_{j=1}^M \left[\sum_{i=1}^N (r_{ij}-\\bar{r_j})^2\\right] \\right\}^2}
         = {({\mu}_4)_M \over {\\frac{1}{M}\sum_{j=1}^M ({\mu}_2)_j}}}^{[1]}
+
     Where :math:`r` is residual signal, :math:`\\bar{r}` is mean value of residual signal,
     :math:`N` is total number of data points in time record,
     :math:`M` is current time record in run ensemble,
