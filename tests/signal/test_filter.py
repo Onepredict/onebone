@@ -9,7 +9,12 @@ from typing import Callable, Tuple
 import numpy as np
 import pytest
 
-from oplib.signal import bandpass_filter, highpass_filter, lowpass_filter
+from oplib.signal import (
+    bandpass_filter,
+    bandstop_filter,
+    highpass_filter,
+    lowpass_filter,
+)
 
 
 def _generate_sin_signal(fs: float):
@@ -92,7 +97,14 @@ def test_bandpass_filter():
     check_array_shape(bandpass_filter, (5000.0, 50, 300))
 
 
+def test_bandstop_filter():
+    check_1d_signal(bandstop_filter, (5000.0, 50, 300), np.array([10.0, 20.0, 500.0]))
+    check_2d_signal(bandstop_filter, (5000.0, 50, 300), np.array([10.0, 20.0, 500.0]))
+    check_array_shape(bandstop_filter, (5000.0, 50, 300))
+
+
 if __name__ == "__main__":
     test_lowpass_filter()
     test_highpass_filter()
     test_bandpass_filter()
+    test_bandstop_filter()
