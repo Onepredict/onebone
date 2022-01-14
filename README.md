@@ -84,7 +84,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/Kangwhi-Kim"><img src="https://avatars.githubusercontent.com/u/79968466?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kangwhi Kim</b></sub></a><br /><a href="https://github.com/Onepredict/oplib/commits?author=Kangwhi-Kim" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Kangwhi-Kim"><img src="https://avatars.githubusercontent.com/u/79968466?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kangwhi Kim</b></sub></a><br /><a href="https://github.com/Onepredict/oplib/commits?author=Kangwhi-Kim" title="Code">💻</a> <a href="https://github.com/Onepredict/oplib/commits?author=Kangwhi-Kim" title="Documentation">📖</a> <a href="https://github.com/Onepredict/oplib/pulls?q=is%3Apr+reviewed-by%3AKangwhi-Kim" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
