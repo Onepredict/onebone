@@ -3,7 +3,7 @@
 <!--TODO: Change image more beautiful.-->
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 <!--TODO: Change the name of this library, oplib.-->
@@ -38,6 +38,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/kyunghwan-onepredict"><img src="https://avatars.githubusercontent.com/u/86699249?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kyunghwan Kim</b></sub></a><br /><a href="https://github.com/Onepredict/oplib/commits?author=kyunghwan-onepredict" title="Code">💻</a> <a href="https://github.com/Onepredict/oplib/commits?author=kyunghwan-onepredict" title="Documentation">📖</a> <a href="https://github.com/Onepredict/oplib/pulls?q=is%3Apr+reviewed-by%3Akyunghwan-onepredict" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/Kangwhi-Kim"><img src="https://avatars.githubusercontent.com/u/79968466?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kangwhi Kim</b></sub></a><br /><a href="https://github.com/Onepredict/oplib/commits?author=Kangwhi-Kim" title="Code">💻</a> <a href="https://github.com/Onepredict/oplib/commits?author=Kangwhi-Kim" title="Documentation">📖</a> <a href="https://github.com/Onepredict/oplib/pulls?q=is%3Apr+reviewed-by%3AKangwhi-Kim" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/DaeyeopN"><img src="https://avatars.githubusercontent.com/u/80095250?v=4?s=100" width="100px;" alt=""/><br /><sub><b>DaeyeopN</b></sub></a><br /><a href="https://github.com/Onepredict/oplib/commits?author=DaeyeopN" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/isingmodel"><img src="https://avatars.githubusercontent.com/u/31462012?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kibum Fred Kim</b></sub></a><br /><a href="https://github.com/Onepredict/oplib/pulls?q=is%3Apr+reviewed-by%3Aisingmodel" title="Reviewed Pull Requests">👀</a></td>
   </tr>
 </table>
 
