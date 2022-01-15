@@ -32,7 +32,7 @@ def moving_average(
 
     Returns
     -------
-    out : numpy.ndarray
+    ma : numpy.ndarray
         Moving average signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
