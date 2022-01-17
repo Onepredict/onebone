@@ -1,6 +1,5 @@
 <p align="center">
-<img src="https://user-images.githubusercontent.com/79968466/149269606-6b401104-4a5a-4456-b924-558d233131f2.png" align="center" width="50%">
-<!--TODO: Change image more beautiful.-->
+<img src="https://user-images.githubusercontent.com/79968466/149683786-52ad7fc8-df64-4778-8381-35663c100c77.png" align="center" width="50%" alt="onepredict logo">
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
