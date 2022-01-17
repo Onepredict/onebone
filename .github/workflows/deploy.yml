@@ -28,6 +28,9 @@ jobs:
       run: poetry install --no-interaction --no-root
     - name: Install library
       run: poetry install --no-interaction
+    - name: Check version
+      run: |
+        sh tools/check_version.sh ${GITHUB_REF#refs/*/}
     - name: Build & Deploy
       run: |
         poetry build
