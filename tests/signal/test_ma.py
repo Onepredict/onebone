@@ -84,12 +84,12 @@ def test_moving_average():
     check_1d_signal_with_weights(
         moving_average,
         (3, False, np.array([0, 1, 2])),
-        np.array([4, 7, 10, 13, 16, 19, 22, 25]) / 3,
+        np.array([8, 11, 14, 17, 20, 23, 26, 29]) / 3,
     )
     check_2d_signal_wth_all(
         moving_average,
         (3, True, np.array([0, 1, 2])),
-        np.stack([np.array([3, 3, 4, 7, 10, 13, 16, 19, 22, 25]) / 3] * 2),
+        np.stack([np.array([3, 5, 8, 11, 14, 17, 20, 23, 26, 29]) / 3] * 2),
     )
     check_array_shape(moving_average, (3,))
 
