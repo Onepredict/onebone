@@ -91,6 +91,15 @@ def moving_average(
     ma = []
     if len(signal.shape) == 1:
         signal = np.expand_dims(signal, axis=0)
+    # if len(signal.shape) == 1:
+    #     signal = np.atleast_2d(signal)
+    # ma = np.apply_along_axis(
+    #     lambda x: np.convolve(np.pad(x, (window_size - 1, 0), mode="edge"), weights, mode="valid")
+    #     if pad
+    #     else np.convolve(x, weights, mode="valid"),
+    #     axis=1,
+    #     arr=signal,
+    # )
     for idx in range(signal.shape[0]):
         each_arr = signal[idx, :]
         if pad:
