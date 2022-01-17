@@ -82,11 +82,14 @@ def moving_average(
     if weights is not None:
         if weights.shape[0] != window_size:
             raise ValueError(f"Length of weights must be {window_size}.")
+        if len(weights.shape) >= 2:
+            raise ValueError("Dimension of weights must be less than 2.")
 
     if weights is None:
         weights = np.ones(window_size) / window_size
     else:
         weights = weights / np.sum(weights)
+    weights = weights[::-1]
 
     ma = []
     if len(signal.shape) == 1:
