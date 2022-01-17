@@ -30,7 +30,7 @@ jobs:
       run: poetry install --no-interaction
     - name: Check version
       run: |
-        source .venv/bin/activate
+        pyenv local oplib
         sh tools/check_version.sh ${GITHUB_REF#refs/*/}
     - name: Build & Deploy
       run: |
