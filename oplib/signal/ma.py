@@ -49,14 +49,14 @@ def moving_average(
 
     >>> signal = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     >>> window_size = 3
-    >>> moving_average(signal, window_size, mode='same')
+    >>> moving_average(signal, window_size, pad=True)
     [1, 1.33333333, 2, 3, 4, 5, 6, 7, 8, 9]
 
     >>> signal = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     >>> window_size = 3
     >>> weights = np.array([0, 1, 2])
     >>> moving_average(signal, window_size, weights=weights)
-    [1.33333333, 2.33333333, 3.33333333, 4.33333333, 5.33333333, 6.33333333, 7.33333333, 8.33333333]
+    [2.66666667, 3.66666667, 4.66666667, 5.66666667, 6.66666667, 7.66666667, 8.66666667, 9.66666667]
 
     """
     if not isinstance(signal, np.ndarray):
@@ -91,25 +91,25 @@ def moving_average(
         weights = weights / np.sum(weights)
     weights = weights[::-1]
 
-    ma = []
     if len(signal.shape) == 1:
-        signal = np.expand_dims(signal, axis=0)
-    # if len(signal.shape) == 1:
-    #     signal = np.atleast_2d(signal)
-    # ma = np.apply_along_axis(
-    #     lambda x: np.convolve(np.pad(x, (window_size - 1, 0), mode="edge"), weights, mode="valid")
-    #     if pad
-    #     else np.convolve(x, weights, mode="valid"),
-    #     axis=1,
-    #     arr=signal,
-    # )
-    for idx in range(signal.shape[0]):
-        each_arr = signal[idx, :]
+        signal = np.atleast_2d(signal)
+
+    def _ma_1d(signal_1d: np.ndarray) -> np.ndarray:
         if pad:
-            each_arr = np.pad(each_arr, (window_size - 1, 0), mode="edge")
-        ma.append(np.convolve(each_arr, weights, mode="valid"))
-    ma = np.array(ma)
+            signal_1d = np.pad(signal_1d, (window_size - 1, 0), mode="edge")
+        ma_1d = np.convolve(signal_1d, weights, mode="valid")
+
+        return ma_1d
+
+    ma = np.apply_along_axis(_ma_1d, axis=1, arr=signal)
     if signal.shape[0] == 1:
         ma = ma.squeeze()
 
     return ma
+
+
+if __name__ == "__main__":
+    signal = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+    window_size = 3
+    weights = np.array([0, 1, 2])
+    print(moving_average(signal, window_size, pad=True))
