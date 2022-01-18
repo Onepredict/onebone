@@ -44,6 +44,12 @@ And, enter the following instructions in the shell:
 $ make setup
 ```
 *Note*: If you develop in Windows OS, the `make` command may not work. Then, this [link](http://gnuwin32.sourceforge.net/packages/make.htm) will be helpful.
+## Documentation
+This section is about something you need to know about writing docstrings, which are rendered to produce HTML documentation using [Sphinx](https://www.sphinx-doc.org/en/master/).
+Please use the [formatting standard](https://numpydoc.readthedocs.io/en/latest/format.html#format) of `numpydoc` as shown in their [example](https://numpydoc.readthedocs.io/en/latest/example.html#example).
+
+## Unit tests
+`oplib` follows the `numpy`'s [Testing Guidelines](https://numpy.org/devdocs/reference/testing.html) which is the definitive guide to writing unit tests of SciPy code.
 
 ## You should do something before `git push`
 ### Auto-Format
@@ -58,7 +64,7 @@ $ make format
 ```
 ### Test
 You should make test code for the function you have been developed. If you want to know testing codes in python, follow the [link](https://realpython.com/python-testing/#testing-your-code).
-Assuming that you have added a feature to the A.py file in the directory '{root}\oplib\feature\', you should create a test code 'test_A.py' in the directory '{root}\tests\feature\'.
+Assuming that you have added a feature to the A.py file in the directory `{root}\oplib\feature\`, you should create a test code `test_A.py` in the directory `{root}\tests\feature\`.
 
 We use the Python code formatter [black](https://github.com/psf/black), [isort](https://github.com/PyCQA/isort).
 And, you can use the make command like this:
