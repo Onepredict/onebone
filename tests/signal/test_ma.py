@@ -1,4 +1,4 @@
-"""Test Moving Average
+"""Test Moving Average.
 
 - Author: Kibum Park
 - Contact: kibum.park@onepredict.com
