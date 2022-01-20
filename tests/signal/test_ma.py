@@ -81,7 +81,7 @@ def test_moving_average():
         moving_average, (3,), np.array([2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0])
     )
     check_1d_signal_with_pad(
-        moving_average, (3, True), np.array([1.0, 5 / 3, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0])
+        moving_average, (3, True), np.array([1.0, 1.5, 2.0, 3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0])
     )
     check_1d_signal_with_weights(
         moving_average,
@@ -91,7 +91,7 @@ def test_moving_average():
     check_2d_signal_wth_all(
         moving_average,
         (3, True, np.array([1, 1, 2])),
-        np.stack([np.array([2, 5, 9, 13, 17, 21, 25, 29, 33, 37]) / 4] * 2),
+        np.stack([np.array([4, 20 / 3, 9, 13, 17, 21, 25, 29, 33, 37]) / 4] * 2),
     )
     check_array_shape(moving_average, (3,))
 

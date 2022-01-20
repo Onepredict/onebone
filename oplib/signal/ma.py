@@ -51,7 +51,7 @@ def moving_average(
     >>> signal = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     >>> window_size = 3
     >>> moving_average(signal, window_size, pad=True)
-    [1, 1.66666666, 2, 3, 4, 5, 6, 7, 8, 9]
+    [1, 1.5, 2, 3, 4, 5, 6, 7, 8, 9]
 
     >>> signal = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     >>> window_size = 3
@@ -85,8 +85,8 @@ def moving_average(
             raise ValueError(f"Length of weights must be {window_size}.")
         if len(weights.shape) >= 2:
             raise ValueError("Dimension of weights must be less than 2.")
-    if weights[0] == 0:
-        raise ValueError("First element of weights must be non-zero. Remove first 0 element.")
+        if weights[0] == 0:
+            raise ValueError("First element of weights must be non-zero. Remove first 0 element.")
 
     if weights is None:
         weights = np.ones(window_size)
@@ -105,7 +105,6 @@ def moving_average(
                 [np.cumsum(weights), np.repeat(np.sum(weights), signal_1d.shape[0] - window_size)],
                 axis=0,
             )
-            print(convolve_1d)
             ma_1d = convolve_1d / div_arr
 
         else:
@@ -120,3 +119,12 @@ def moving_average(
         ma = ma.squeeze()
 
     return ma
+
+
+if __name__ == "__main__":
+    signal = np.arange(1, 11)
+    window_size = 3
+    weights = np.arange(1, 4)
+    print(moving_average(signal, window_size))
+    print(moving_average(signal, window_size, pad=True))
+    print(moving_average(signal, window_size, weights=weights))
