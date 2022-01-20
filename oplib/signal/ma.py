@@ -17,6 +17,7 @@ def moving_average(
 ) -> np.ndarray:
     """
     Weighted moving average.
+    .. math:: WMA(x, n, w) = \\sum_{i=0}^{n-1} w_i x_i
 
     Parameters
     ----------
