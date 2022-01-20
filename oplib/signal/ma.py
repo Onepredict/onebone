@@ -50,13 +50,13 @@ def moving_average(
     >>> signal = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     >>> window_size = 3
     >>> moving_average(signal, window_size, pad=True)
-    [1, 1.33333333, 2, 3, 4, 5, 6, 7, 8, 9]
+    [1, 1.66666666, 2, 3, 4, 5, 6, 7, 8, 9]
 
     >>> signal = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     >>> window_size = 3
-    >>> weights = np.array([0, 1, 2])
+    >>> weights = np.array([1, 2, 3])
     >>> moving_average(signal, window_size, weights=weights)
-    [2.66666667, 3.66666667, 4.66666667, 5.66666667, 6.66666667, 7.66666667, 8.66666667, 9.66666667]
+    [2.33333333, 3.33333333, 4.33333333, 5.33333333, 6.33333333, 7.33333333, 8.33333333, 9.33333333]
 
     """
     if not isinstance(signal, np.ndarray):
@@ -84,20 +84,33 @@ def moving_average(
             raise ValueError(f"Length of weights must be {window_size}.")
         if len(weights.shape) >= 2:
             raise ValueError("Dimension of weights must be less than 2.")
+    if weights[0] == 0:
+        raise ValueError("First element of weights must be non-zero. Remove first 0 element.")
 
     if weights is None:
-        weights = np.ones(window_size) / window_size
-    else:
-        weights = weights / np.sum(weights)
+        weights = np.ones(window_size)
     weights = weights[::-1]
 
     if len(signal.shape) == 1:
         signal = np.atleast_2d(signal)
 
     def _ma_1d(signal_1d: np.ndarray) -> np.ndarray:
+        nonlocal weights, pad, window_size
+        pad_size = window_size - 1
+
         if pad:
-            signal_1d = np.pad(signal_1d, (window_size - 1, 0), mode="edge")
-        ma_1d = np.convolve(signal_1d, weights, mode="valid")
+            convolve_1d = np.convolve(signal_1d, weights, mode="full")[:-pad_size]
+            div_arr = np.concatenate(
+                [np.cumsum(weights), np.repeat(np.sum(weights), signal_1d.shape[0] - window_size)],
+                axis=0,
+            )
+            print(convolve_1d)
+            ma_1d = convolve_1d / div_arr
+
+        else:
+            convolve_1d = np.convolve(signal_1d, weights, mode="full")[pad_size:-pad_size]
+            div_arr = np.repeat(np.sum(weights), signal_1d.shape[0] - window_size + 1)
+            ma_1d = convolve_1d / div_arr
 
         return ma_1d
 
