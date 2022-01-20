@@ -7,6 +7,7 @@
 from typing import Union
 
 import numpy as np
+from scipy.signal import convolve
 
 
 def moving_average(
@@ -98,7 +99,7 @@ def moving_average(
         pad_size = window_size - 1
 
         if pad:
-            convolve_1d = np.convolve(signal_1d, weights, mode="full")[:-pad_size]
+            convolve_1d = convolve(signal_1d, weights)[:-pad_size]
             div_arr = np.concatenate(
                 [np.cumsum(weights), np.repeat(np.sum(weights), signal_1d.shape[0] - window_size)],
                 axis=0,
@@ -106,7 +107,7 @@ def moving_average(
             ma_1d = convolve_1d / div_arr
 
         else:
-            convolve_1d = np.convolve(signal_1d, weights, mode="full")[pad_size:-pad_size]
+            convolve_1d = convolve(signal_1d, weights)[pad_size:-pad_size]
             div_arr = np.repeat(np.sum(weights), signal_1d.shape[0] - window_size + 1)
             ma_1d = convolve_1d / div_arr
 
