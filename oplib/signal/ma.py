@@ -72,12 +72,10 @@ def moving_average(
         raise TypeError(
             f"Argument 'weights' must be numpy.ndarray or None, not {type(weights).__name__}."
         )
-    if len(signal.shape) == 1:
-        if signal.shape[0] < window_size:
-            raise ValueError("Length of signal must be greater than window_size.")
-    elif len(signal.shape) == 2:
-        if signal.shape[1] < window_size:
-            raise ValueError("Length of signal must be greater than window_size.")
+    if (len(signal.shape) == 1) and (signal.shape[0] < window_size):
+        raise ValueError("Length of signal must be greater than window_size.")
+    elif (len(signal.shape) == 2) and (signal.shape[1] < window_size):
+        raise ValueError("Length of signal must be greater than window_size.")
     if len(signal.shape) > 2:
         raise ValueError("Dimension of signal must be less than 3.")
     if weights is not None:
