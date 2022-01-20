@@ -119,12 +119,3 @@ def moving_average(
         ma = ma.squeeze()
 
     return ma
-
-
-if __name__ == "__main__":
-    signal = np.arange(1, 11)
-    window_size = 3
-    weights = np.arange(1, 4)
-    print(moving_average(signal, window_size))
-    print(moving_average(signal, window_size, pad=True))
-    print(moving_average(signal, window_size, weights=weights))
