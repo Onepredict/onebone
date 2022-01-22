@@ -72,6 +72,11 @@ You can import directly the function, for example:
 >>> from oplib.feature import tacho_to_rpm
 ```
 
+## API reference
+<!--TODO: Changes the documentation link to public accessible link.-->
+<!--TODO: Add the reference for modules like this link(https://numpy.org/doc/stable/reference/index.html)-->
+This reference manual details functions included in oplib, describing what they are and what they do. For learning how to use oplib, see the complete [documentation](http://10.10.30.16/).
+
 # Call for contribute
 We appreciate and welcome contributions. Small improvements or fixes are always appreciated; issues labeled as "good first issue" may be a good starting point.
 
