@@ -31,13 +31,16 @@ def moving_average(
     ----------
     signal : numpy.ndarray of shape (signal_length,), (n, signal_length,)
         Original time-domain signal.
-    window_size : Union[int, float]
+    window_size : Union[int, float], optional, default=10
         Window size.
+        One of `window_size`,`weights` must be specified.
     pad : bool, default=False
         Padding method.
         If True, Pads with the edge values of array is added. So the shape of output is same as `signal`.
     weights : Union[numpy.ndarray of shape (window_size,), None], optional, default=None
-        Weighting coefficients. If None, the `weights` are uniform.
+        Weighting coefficients.
+        If None, the `weights` are uniform.
+        One of `window_size`,`weights` must be specified.
 
     Returns
     -------
@@ -84,7 +87,7 @@ def moving_average(
         raise ValueError("Length of signal must be greater than window_size.")
     elif (len(signal.shape) == 2) and (signal.shape[1] < window_size):
         raise ValueError("Length of signal must be greater than window_size.")
-    if len(signal.shape) > 2:
+    elif len(signal.shape) > 2:
         raise ValueError("Dimension of signal must be less than 3.")
     if weights is not None:
         if weights.shape[0] != window_size:
@@ -93,6 +96,8 @@ def moving_average(
             raise ValueError("Dimension of weights must be less than 2.")
         if weights[0] == 0:
             raise ValueError("First element of weights must be non-zero. Remove first 0 element.")
+        if window_size is None:
+            window_size = weights.shape[0]
 
     if weights is None:
         weights = np.ones(window_size)
