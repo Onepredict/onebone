@@ -18,7 +18,14 @@ def moving_average(
 ) -> np.ndarray:
     """
     Weighted moving average.
-    .. math:: WMA(x, n, w) = \\sum_{i=0}^{n-1} w_i x_i
+    .. math:: WMA(x, w, t, n) = \\sum_{i=n-t+1}^{n} w_i x_i,
+    where :math:`x` is the input array,
+    :math:`w_i` is the weight of the :math:`i`-th element,
+    :math:`t` is the window size,
+    :math:`n` is the :math:`n`th value of the input array,
+    if pad is True and :math: `n` is smaller than :math:`t`, :math:`i` is set to :math:`0`.
+
+
 
     Parameters
     ----------
