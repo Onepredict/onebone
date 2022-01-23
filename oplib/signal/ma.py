@@ -38,8 +38,8 @@ def moving_average(
         Moving average signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
-        If mode is 'valid', output shape is [signal_length - window_size + 1,].
-        If mode is 'same', output shape is [signal_length,].
+        If pad is False, output shape is [signal_length - window_size + 1,].
+        If pad is True, output shape is [signal_length,].
 
     Examples
     --------
