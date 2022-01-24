@@ -155,9 +155,8 @@ def moving_average(
     if (axis == 0) or (axis == -2):
         signal = signal.T
 
-    print(signal, window_size, pad, weights, axis)
     ma = np.apply_along_axis(_moving_average_1d, 1, signal, *(window_size, pad, weights))
-    print(ma)
+
     if (len(signal.shape) == 2) and ((axis == 0) or (axis == -2)):
         ma = ma.T
 
