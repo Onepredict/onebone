@@ -15,6 +15,7 @@ def moving_average(
     window_size: Union[int, float],
     pad: bool = False,
     weights: Union[np.ndarray, None] = None,
+    axis: Union[int, float] = -1,
 ) -> np.ndarray:
     """
     Weighted moving average.
@@ -41,13 +42,16 @@ def moving_average(
         Weighting coefficients.
         If None, the `weights` are uniform.
         One of `window_size`,`weights` must be specified.
+    axis : Union[int, float], optional, default=-1
+        The axis of the input data array along which to apply the moving average.
 
     Returns
     -------
     ma : numpy.ndarray
         Moving average signal.
         If input shape is [signal_length,], output shape is [signal_length,].
-        If input shape is [n, signal_length,], output shape is [n, signal_length,].
+        If input shape is [n, signal_length,] and axis is 1, output shape is [n, signal_length,].
+        If input shape is [signal_length, n] and axis is 0, output shape is [signal_length, n].
         If pad is False, output shape is [signal_length - window_size + 1,].
         If pad is True, output shape is [signal_length,].
 
@@ -83,21 +87,34 @@ def moving_average(
         raise TypeError(
             f"Argument 'weights' must be numpy.ndarray or None, not {type(weights).__name__}."
         )
-    if (len(signal.shape) == 1) and (signal.shape[0] < window_size):
-        raise ValueError("Length of signal must be greater than window_size.")
-    elif (len(signal.shape) == 2) and (signal.shape[1] < window_size):
-        raise ValueError("Length of signal must be greater than window_size.")
+    if not isinstance(axis, int) or isinstance(axis, float):
+        raise TypeError(f"Argument 'axis' must be int or float, not {type(axis).__name__}.")
+
+    if len(signal.shape) == 1:
+        if signal.shape[0] < window_size:
+            raise ValueError("Length of signal must be greater than window_size.")
+        elif np.abs(axis) > 1:
+            raise ValueError("Axis must be smaller than signal dimmesion.")
+    elif len(signal.shape) == 2:
+        if signal.shape[1] < window_size:
+            raise ValueError("Length of signal must be greater than window_size.")
+        elif np.abs(axis) > 2:
+            raise ValueError("Axis must be smaller than signal dimmesion.")
     elif len(signal.shape) > 2:
         raise ValueError("Dimension of signal must be less than 3.")
+
     if weights is not None:
         if weights.shape[0] != window_size:
             raise ValueError(f"Length of weights must be {window_size}.")
-        if len(weights.shape) >= 2:
+        elif len(weights.shape) >= 2:
             raise ValueError("Dimension of weights must be less than 2.")
-        if weights[0] == 0:
+        elif weights[0] == 0:
             raise ValueError("First element of weights must be non-zero. Remove first 0 element.")
-        if window_size is None:
+        elif window_size is None:
             window_size = weights.shape[0]
+
+    if (len(signal.shape) == 2) and ((axis == 0) or (axis == -2)):
+        signal = signal.T
 
     if weights is None:
         weights = np.ones(window_size)
@@ -128,5 +145,7 @@ def moving_average(
     ma = np.apply_along_axis(_ma_1d, axis=1, arr=signal)
     if signal.shape[0] == 1:
         ma = ma.squeeze()
+    if (len(signal.shape) == 2) and ((axis == 0) or (axis == -2)):
+        ma = ma.T
 
     return ma
