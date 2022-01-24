@@ -98,7 +98,7 @@ You can import directly the function, for example:
 
 We appreciate and welcome contributions. Small improvements or fixes are always appreciated; issues labeled as "good first issue" may be a good starting point.
 
-Writing code isn't the only wat to contribute to oplib. You can also:
+Writing code isn't the only way to contribute to oplib. You can also:
 
 - triage issues
 - review pull requests
