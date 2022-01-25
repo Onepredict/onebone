@@ -13,6 +13,9 @@ from scipy.signal import convolve
 def _moving_average_1d(
     signal_1d: np.ndarray, window_size: Union[int, float], pad: bool, weights: np.ndarray
 ) -> np.ndarray:
+    """Weighted moving average of 1d signal.
+    This method is used for numpy.apply_along axis() in moving_average().
+    """
     pad_size = window_size - 1
 
     if pad:
@@ -38,6 +41,7 @@ def _moving_average_check(
     weights: np.ndarray,
     axis: Union[int, float],
 ) -> None:
+    """Check the validity of the input parameters for moving average."""
     if not isinstance(signal, np.ndarray):
         raise TypeError(f"signal must be numpy.ndarray, not {type(signal).__name__}")
     if not (isinstance(window_size, int) or isinstance(window_size, float)):
