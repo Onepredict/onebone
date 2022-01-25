@@ -30,9 +30,9 @@ jobs:
       run: poetry install --no-interaction
     - name: Check version
       run: |
-        pyenv local oplib
+        pyenv local onebone
         sh tools/check_version.sh ${GITHUB_REF#refs/*/}
     - name: Build & Deploy
       run: |
         poetry build
-        poetry publish -r oplib
+        poetry publish -r onebone

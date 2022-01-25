@@ -3,7 +3,7 @@ from typing import Callable, Tuple
 import numpy as np
 import pytest
 
-from oplib.signal import positive_fft
+from onebone.signal import positive_fft
 
 
 def generate_signal(fs: float):

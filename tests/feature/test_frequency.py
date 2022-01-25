@@ -7,7 +7,7 @@
 import numpy as np
 from numpy.testing import assert_almost_equal, assert_array_almost_equal
 
-from oplib.feature import mdf, mnf, vcf
+from onebone.feature import mdf, mnf, vcf
 
 
 def _generate_sin_signal(amp, f, fs=None):

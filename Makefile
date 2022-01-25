@@ -15,8 +15,8 @@ test:
 	black . --check
 
 	rm -rf .pytest_cache
-	flake8 oplib tests
-	poetry run pytest --cov=oplib
+	flake8 onebone tests
+	poetry run pytest --cov=onebone
 
 pre-commit-test:
 	sh scripts/pre_commit_test.sh
@@ -32,7 +32,7 @@ sphinx-start:
 sphinx-build:
 	rm -rf docs/build/html
 	find docs/source -type f -name "*.rst" -not -name "index.rst" -delete
-	sphinx-apidoc -fMT -o docs/source oplib -t docs/templates
+	sphinx-apidoc -fMT -o docs/source onebone -t docs/templates
 	sphinx-build -b html docs/source/ docs/build/html
 
 sphinx-server-docker-build:

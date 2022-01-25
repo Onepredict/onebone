@@ -9,7 +9,7 @@ from typing import Callable, Tuple
 import numpy as np
 import pytest
 
-from oplib.signal import moving_average
+from onebone.signal import moving_average
 
 
 def _generate_sin_signal() -> np.ndarray:

@@ -11,10 +11,10 @@ jobs:
       with:
         ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
     - name: Pull & Document build
-      working-directory: /home/kyunghwan/opt/oplib
+      working-directory: /home/kyunghwan/opt/onebone
       run: |
         rm -rf docs/build/html
         find docs/source -type f -name "*.rst" -not -name "index.rst" -delete
         git pull origin main
-        pyenv local oplib
+        pyenv local onebone
         make sphinx-build

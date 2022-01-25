@@ -9,7 +9,7 @@ from typing import Callable, Tuple
 import numpy as np
 import pytest
 
-from oplib.signal import (
+from onebone.signal import (
     bandpass_filter,
     bandstop_filter,
     highpass_filter,

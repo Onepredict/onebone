@@ -9,7 +9,7 @@ from typing import Tuple, Union
 import numpy as np
 from scipy.fft import fftfreq
 
-from oplib.utils import slice_along_axis
+from onebone.utils import slice_along_axis
 
 
 def _get_amp_and_freq_for_oneside_spectrum(

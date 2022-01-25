@@ -3,7 +3,7 @@ from typing import Tuple, Union
 import numpy as np
 from numpy.fft import fft, fftfreq
 
-from oplib.utils import slice_along_axis
+from onebone.utils import slice_along_axis
 
 
 def positive_fft(
