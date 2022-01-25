@@ -34,7 +34,7 @@ def _moving_average_1d(
     return moving_average_1d
 
 
-def _moving_average_check(
+def _check_moving_average_args(
     signal: np.ndarray,
     pad: bool,
     window_size: Union[int, float],
@@ -144,7 +144,7 @@ def moving_average(
     [2.33333333, 3.33333333, 4.33333333, 5.33333333, 6.33333333, 7.33333333, 8.33333333, 9.33333333]
 
     """
-    _moving_average_check(signal, pad, window_size, weights, axis)
+    _check_moving_average_args(signal, pad, window_size, weights, axis)
 
     if window_size is None:
         window_size = weights.shape[0]
