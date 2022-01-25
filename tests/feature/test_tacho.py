@@ -10,7 +10,7 @@ import numpy as np
 import pytest
 from scipy.interpolate import interp1d
 
-from oplib.feature import tacho_to_angle, tacho_to_rpm
+from onebone.feature import tacho_to_angle, tacho_to_rpm
 
 # TEST_PARAMS = [rpm_level, profile_type, tacho_fs, state_levels, state_levels_trh]
 TEST_PARAMS = [

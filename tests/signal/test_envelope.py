@@ -8,7 +8,7 @@ import numpy as np
 import pytest
 from numpy.testing import assert_almost_equal
 
-from oplib.signal import envelope_hilbert
+from onebone.signal import envelope_hilbert
 
 
 def check_bad_args():

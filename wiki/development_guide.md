@@ -1,6 +1,6 @@
 # Development Guide
 
-This guide is designed to help you quickly find the information you need about oplib development. If you're new to this and want to start coding ASAP, you've found the right place.
+This guide is designed to help you quickly find the information you need about onebone development. If you're new to this and want to start coding ASAP, you've found the right place.
 
 ## Development environment
 
@@ -27,8 +27,8 @@ For windows powershell:
 Fork a copy of the main SciPy repository in Github onto your own account and then create your local repository via:
 
 ```bash
-$ git clone https://github.com/Onepredict/oplib.git oplib
-$ cd oplib
+$ git clone https://github.com/Onepredict/onebone.git onebone
+$ cd onebone
 ```
 
 ### 3. Python version and virtualenv manangement
@@ -40,8 +40,8 @@ The quick usage for pyenv is:
 
 ```bash
 $ pyenv install {python_version}
-$ pyenv virtualenv {python_version} oplib
-$ pyenv local oplib
+$ pyenv virtualenv {python_version} onebone
+$ pyenv local onebone
 ```
 
 ### 4. Make setup
@@ -70,7 +70,7 @@ Please use the [formatting standard](https://numpydoc.readthedocs.io/en/latest/f
 
 ## Unit tests
 
-`oplib` follows the `numpy`'s [Testing Guidelines](https://numpy.org/devdocs/reference/testing.html) which is the definitive guide to writing unit tests of SciPy code.
+`onebone` follows the `numpy`'s [Testing Guidelines](https://numpy.org/devdocs/reference/testing.html) which is the definitive guide to writing unit tests of SciPy code.
 
 ## You should do something before `git push`
 
@@ -92,7 +92,7 @@ $ make format
 ### Test
 
 You should make test code for the function you have been developed. If you want to know testing codes in python, follow the [link](https://realpython.com/python-testing/#testing-your-code).
-Assuming that you have added a feature to the A.py file in the directory `{root}/oplib/feature/`, you should create a test code `test_A.py` in the directory `{root}/tests/feature/`.
+Assuming that you have added a feature to the A.py file in the directory `{root}/onebone/feature/`, you should create a test code `test_A.py` in the directory `{root}/tests/feature/`.
 
 We use the Python code formatter [black](https://github.com/psf/black), [isort](https://github.com/PyCQA/isort).
 And, you can use the make command like this:

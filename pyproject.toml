@@ -1,7 +1,7 @@
 [tool.poetry]
-name = "oplib"
-version = "1.0.0"
-description = "Signal analysis algorithm in Onepredict"
+name = "onebone"
+version = "1.0.1"
+description = "Base algorithm in Onepredict"
 authors = ["Kyunghwan Kim <kyunghwan.kim@onepredict.com>"]
 
 [tool.poetry.dependencies]

@@ -18,7 +18,7 @@ sys.path.insert(0, os.path.abspath("../.."))
 
 # -- Project information -----------------------------------------------------
 
-project = "oplib"
+project = "onebone"
 copyright = "2021, Kyunghwan Kim"
 author = "Kyunghwan Kim"
 

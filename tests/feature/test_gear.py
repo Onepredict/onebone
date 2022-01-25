@@ -7,7 +7,7 @@
 import numpy as np
 from numpy.testing import assert_almost_equal, assert_array_almost_equal
 
-from oplib.feature import na4
+from onebone.feature import na4
 
 
 def _generate_gear_signal():

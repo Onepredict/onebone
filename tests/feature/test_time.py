@@ -7,7 +7,7 @@
 import numpy as np
 from numpy.testing import assert_almost_equal
 
-from oplib.feature import crest_factor, rms
+from onebone.feature import crest_factor, rms
 
 
 def test_rms():
