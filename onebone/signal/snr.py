@@ -5,7 +5,8 @@ from scipy import signal
 def snr_feature(x: np.ndarray, fs: float) -> np.ndarray:
     """
     Extract the SNR(Signal-to-Noise-Ratio) feature from the signal using the 'STFT'.
-    SNR is the ratio between max power intensity of frequency and power of other frequencies at time t in the STFT spetrum.
+    SNR is the ratio between max power intensity of frequency and power of other frequencies 
+    at time t in the STFT spetrum.
 
     Parameters
     ----------
