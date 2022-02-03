@@ -2,6 +2,7 @@ from .envelope import envelope_hilbert
 from .fft import positive_fft
 from .filter import bandpass_filter, bandstop_filter, highpass_filter, lowpass_filter
 from .smoothing import moving_average
+from .snr import snr_feature
 
 __all__ = [
     "lowpass_filter",
@@ -14,4 +15,5 @@ __all__ = [
     "envelope_hilbert",
     "positive_fft",
     "moving_average",
+    "snr_feature",
 ]
