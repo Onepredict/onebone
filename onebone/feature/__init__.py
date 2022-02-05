@@ -2,6 +2,7 @@ from .frequency import mdf, mnf, vcf
 from .gear import na4
 from .tacho import tacho_to_angle, tacho_to_rpm
 from .time import crest_factor, kurtosis, peak2peak, rms
+from .track_rpm import track_rpm
 
 __all__ = [
     "mdf",
@@ -14,4 +15,5 @@ __all__ = [
     "na4",
     "tacho_to_angle",
     "tacho_to_rpm",
+    "track_rpm",
 ]
