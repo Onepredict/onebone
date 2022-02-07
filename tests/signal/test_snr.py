@@ -31,7 +31,7 @@ def check_snr(snr_feature: Callable, fs: float, expected_return: np.float64):
 
 def test_snr():
     check_bad_args()
-    check_snr(snr_feature, 1000.0, 3.49)
+    check_snr(snr_feature, 1000.0, 7.16)
 
 
 if __name__ == "__main__":
