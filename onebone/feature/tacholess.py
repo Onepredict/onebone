@@ -137,7 +137,7 @@ def estimate_if(
     window='hann', nperseg=4096, noverlap=3985)
 
     Plot the instaneous frequency profile.
-    
+
     >>> time = np.arange(x.size) / fs
     >>> time = time[:-1]
     >>> plt.plot(time, inst_freq)
@@ -151,7 +151,7 @@ def estimate_if(
     if not isinstance(x, np.ndarray):
         raise TypeError("`x` must be array.")
     if len(x.shape) >= 2:
-        raise ValueError("`x` has less than 2 dimensions.")
+        raise ValueError("`x` must have 1 dimension.")
     if not isinstance(fs, (int, float)):
         raise TypeError("`fs` must be integer or float.")
     if not isinstance(fs, (int, float)):
@@ -167,14 +167,14 @@ def estimate_if(
     f, t, zxx = stft(x, fs, window, nperseg, noverlap, **kwargs)
 
     # Extract the frequency components along time using the two-step method.
-    freq_components = _track_local_maxima(f, t, zxx, f_start, f_tol)
+    freq_comp_tracked = _track_local_maxima(f, t, zxx, f_start, f_tol)
 
     # Make the size of frequency components equal to the size of the signal.
-    freq_components = interp1d(np.linspace(0, 1, t.size), freq_components)
-    freq_components = freq_components(np.linspace(0, 1, n))
+    freq_comp_interp = interp1d(np.linspace(0, 1, t.size), freq_comp_tracked)
+    freq_comp = freq_comp_interp(np.linspace(0, 1, n))
 
     # Convert frequency components into phase components.
-    phase_components = 2 * np.pi * np.cumsum(freq_components) / fs
+    phase_components = 2 * np.pi * np.cumsum(freq_comp) / fs
 
     # Filter components excluding the above frequency components.
     x_pc = x * np.exp(-1j * phase_components)
