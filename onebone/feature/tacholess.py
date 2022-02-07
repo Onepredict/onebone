@@ -1,3 +1,9 @@
+""" Track and extract a instaneous frequency profile from vibration signal
+
+- Author: Kangwhi Kim
+- Contact: kangwhi.kim@onepredict.com
+"""
+
 from typing import Union
 
 import numpy as np
@@ -33,7 +39,7 @@ def _track_local_maxima(
     return inst_freq
 
 
-def track_rpm(
+def estimate_if(
     x: np.ndarray,
     fs: Union[int, float],
     f_start: Union[int, float],

@@ -1,4 +1,4 @@
-"""Test code for track_rpm.py
+"""Test code for estimate_if.py
 
 - Author: Kangwhi Kim
 - Contact: kangwhi.kim@onepredict.com
@@ -7,7 +7,7 @@
 import numpy as np
 from numpy.testing import assert_almost_equal
 
-from onebone.feature import track_rpm
+from onebone.feature import estimate_if
 
 
 def _generate_signal():
@@ -20,7 +20,7 @@ def _generate_signal():
     return signal
 
 
-def _check_track_rpm_output():
+def _check_estimate_if_output():
     x = _generate_signal()
     fs = 1e4
     f_start = 3e3
@@ -30,15 +30,15 @@ def _check_track_rpm_output():
     nperseg = 4096
     noverlap = nperseg * 0.8
     # Get the estimated rpm.
-    rpm = track_rpm(x, fs, f_start, f_tol, filter_bw, window, nperseg, noverlap)
+    rpm = estimate_if(x, fs, f_start, f_tol, filter_bw, window, nperseg, noverlap)
 
     # Check the output
     assert_almost_equal(np.mean(rpm), 3e3, decimal=0)
 
 
-def test_track_rpm():
-    _check_track_rpm_output()
+def test_estimate_if():
+    _check_estimate_if_output()
 
 
 if __name__ == "__main__":
-    test_track_rpm()
+    test_estimate_if()
