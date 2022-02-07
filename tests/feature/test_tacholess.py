@@ -28,12 +28,12 @@ def _check_estimate_if_output():
     filter_bw = 5
     window = "hann"
     nperseg = 4096
-    noverlap = nperseg * 0.8
-    # Get the estimated rpm.
-    rpm = estimate_if(x, fs, f_start, f_tol, filter_bw, window, nperseg, noverlap)
+    noverlap = 3985
+    # Get the estimated inst_freq.
+    inst_freq = estimate_if(x, fs, f_start, f_tol, filter_bw, window, nperseg, noverlap)
 
     # Check the output
-    assert_almost_equal(np.mean(rpm), 3e3, decimal=0)
+    assert_almost_equal(np.mean(inst_freq), 3e3, decimal=0)
 
 
 def test_estimate_if():
