@@ -1,4 +1,4 @@
-""" Track and extract a instaneous frequency profile from vibration signal
+""" Track and extract a instantaneous frequency(IF) profile from vibration signal
 
 - Author: Kangwhi Kim
 - Contact: kangwhi.kim@onepredict.com
@@ -51,7 +51,7 @@ def estimate_if(
     **kwargs
 ) -> np.ndarray:
     """
-    Track and extract a instaneous frequency(IF) profile from vibration signal, based on Two-step method.
+    Track and extract a instantaneous frequency(IF) profile from vibration signal, based on Two-step method.
 
     .. note:: If you have a tachometer pulse signal, use `tacho_to_rpm` function.
 
@@ -106,7 +106,7 @@ def estimate_if(
     Returns
     -------
     inst_freq : numpy.ndarray of shape (`x.size` - 1,)
-        Estimated instaneous frequency(IF) profile.
+        A estimated instantaneous frequency(IF) profile.
         For improved results try to manipulate `f_tol` and `f_tol` parameters.
         You might also change spectrogram options.
 
@@ -131,17 +131,17 @@ def estimate_if(
     >>> carrier = 3 * np.sin(2 * np.pi * 3e3 * time + mod)
     >>> x = carrier + np.random.rand(carrier.size) / 5  # test signal
 
-    Estimate a instaneous frequency profile from the signal.
+    Estimate the instantaneous frequency from the signal.
 
     >>> inst_freq = estimate_if(x, fs, f_start=3e3, f_tol=50, filter_bw=5,
     window='hann', nperseg=4096, noverlap=3985)
 
-    Plot the instaneous frequency profile.
+    Plot the instantaneous frequency(IF) profile.
 
     >>> time = np.arange(x.size) / fs
     >>> time = time[:-1]
     >>> plt.plot(time, inst_freq)
-    >>> plt.title('Estimated a instaneous frequency(IF) profile')
+    >>> plt.title('Estimated the instantaneous frequency(IF) profile')
     >>> plt.ylabel('Frequency [Hz]')
     >>> plt.xlabel('Time [sec]')
     >>> plt.show()
@@ -183,7 +183,7 @@ def estimate_if(
     fft_x_pc[indices_filtered:-indices_filtered] = 0
     xf = np.fft.ifft(2 * fft_x_pc) * np.exp(1j * phase_components)
 
-    # Get the instaneous frequency of signal.
+    # Get the instantaneous frequency of signal.
     phase = np.unwrap(np.angle(xf))
     inst_freq = np.diff(phase) / (1 / fs) / (2 * np.pi)
 

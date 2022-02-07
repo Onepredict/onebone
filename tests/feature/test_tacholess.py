@@ -29,7 +29,7 @@ def _check_estimate_if_output():
     window = "hann"
     nperseg = 4096
     noverlap = 3985
-    # Get the estimated inst_freq.
+    # Get the estimated instantaneous frequencies.
     inst_freq = estimate_if(x, fs, f_start, f_tol, filter_bw, window, nperseg, noverlap)
 
     # Check the output
