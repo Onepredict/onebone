@@ -1,4 +1,4 @@
-"""Test code for estimate_if.py
+"""Test code for two_step_if.py
 
 - Author: Kangwhi Kim
 - Contact: kangwhi.kim@onepredict.com
@@ -7,7 +7,7 @@
 import numpy as np
 from numpy.testing import assert_almost_equal
 
-from onebone.feature import estimate_if
+from onebone.feature import two_step_if
 
 
 def _generate_signal():
@@ -20,7 +20,7 @@ def _generate_signal():
     return signal
 
 
-def _check_estimate_if_output():
+def _check_two_step_if_output():
     x = _generate_signal()
     fs = 1e4
     f_start = 3e3
@@ -30,15 +30,15 @@ def _check_estimate_if_output():
     nperseg = 4096
     noverlap = 3985
     # Get the estimated instantaneous frequencies.
-    inst_freq = estimate_if(x, fs, f_start, f_tol, filter_bw, window, nperseg, noverlap)
+    inst_freq = two_step_if(x, fs, f_start, f_tol, filter_bw, window, nperseg, noverlap)
 
     # Check the output
     assert_almost_equal(np.mean(inst_freq), 3e3, decimal=0)
 
 
-def test_estimate_if():
-    _check_estimate_if_output()
+def test_two_step_if():
+    _check_two_step_if_output()
 
 
 if __name__ == "__main__":
-    test_estimate_if()
+    test_two_step_if()

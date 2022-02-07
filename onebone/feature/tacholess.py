@@ -14,12 +14,12 @@ from scipy.signal import stft
 def _track_local_maxima(
     f: np.ndarray,
     t: np.ndarray,
-    zxx: np.ndarray,
+    coeff_matrix: np.ndarray,
     f_start: Union[int, float],
     f_tol: Union[int, float],
 ) -> np.ndarray:
     """Track the maximum frequency components over time in a local frequency range."""
-    zxx = np.abs(zxx)
+    amp_matrix = np.abs(coeff_matrix)
     n = t.size
     inst_freq = np.zeros(n)
     inst_freq[0] = f_start
@@ -32,14 +32,14 @@ def _track_local_maxima(
                  Set `f_tol` or `nperseg` to a higher value than the current value."
             )
         f_range = f[f_range_indices]
-        zxx_maxima_indices = np.argmax(zxx[f_range_indices, i])
-        f_max = f_range[zxx_maxima_indices]
+        maxima_amp_indices_matrix = np.argmax(amp_matrix[f_range_indices, i])
+        f_max = f_range[maxima_amp_indices_matrix]
         inst_freq[i] = f_max
 
     return inst_freq
 
 
-def estimate_if(
+def two_step_if(
     x: np.ndarray,
     fs: Union[int, float],
     f_start: Union[int, float],
@@ -55,7 +55,7 @@ def estimate_if(
 
     .. note:: If you have a tachometer pulse signal, use `tacho_to_rpm` function.
 
-    `estimate_if` uses the local maxima technique :math:`{}^{[1]}` for IF estimation, as follows;
+    `two_step_if` uses the local maxima technique :math:`{}^{[1]}` for IF estimation, as follows;
 
     .. math::
         f_{max}(t) = \\underset{f}{Argmax}{\\left|{X(t,f)}\\right|}^2,\
@@ -106,7 +106,7 @@ def estimate_if(
     Returns
     -------
     inst_freq : numpy.ndarray of shape (`x.size` - 1,)
-        A estimated instantaneous frequency(IF) profile.
+        A instantaneous frequency(IF) profile.
         For improved results try to manipulate `f_tol` and `f_tol` parameters.
         You might also change spectrogram options.
 
@@ -131,9 +131,9 @@ def estimate_if(
     >>> carrier = 3 * np.sin(2 * np.pi * 3e3 * time + mod)
     >>> x = carrier + np.random.rand(carrier.size) / 5  # test signal
 
-    Estimate the instantaneous frequency from the signal.
+    Extract the instantaneous frequency from the signal.
 
-    >>> inst_freq = estimate_if(x, fs, f_start=3e3, f_tol=50, filter_bw=5,
+    >>> inst_freq = two_step_if(x, fs, f_start=3e3, f_tol=50, filter_bw=5,
     window='hann', nperseg=4096, noverlap=3985)
 
     Plot the instantaneous frequency(IF) profile.
@@ -164,24 +164,24 @@ def estimate_if(
     # Get the size of the signal.
     n = x.size
     # Compute the Short Time Fourier Transform (STFT).
-    f, t, zxx = stft(x, fs, window, nperseg, noverlap, **kwargs)
+    f, t, coeff_matrix = stft(x, fs, window, nperseg, noverlap, **kwargs)
 
-    # Extract the frequency components along time using the two-step method.
-    freq_comp_tracked = _track_local_maxima(f, t, zxx, f_start, f_tol)
+    # Estimate the preliminary instantaneous frequency using the two-step method.
+    pre_inst_freq = _track_local_maxima(f, t, coeff_matrix, f_start, f_tol)
 
-    # Make the size of frequency components equal to the size of the signal.
-    freq_comp_interp = interp1d(np.linspace(0, 1, t.size), freq_comp_tracked)
+    # Make the size of preliminary instantaneous frequency equal to the size of the signal.
+    freq_comp_interp = interp1d(np.linspace(0, 1, t.size), pre_inst_freq)
     freq_comp = freq_comp_interp(np.linspace(0, 1, n))
 
-    # Convert frequency components into phase components.
-    phase_components = 2 * np.pi * np.cumsum(freq_comp) / fs
+    # Convert the preliminary instantaneous frequency into the instaneous phase.
+    inst_phase = 2 * np.pi * np.cumsum(freq_comp) / fs
 
-    # Filter components excluding the above frequency components.
-    x_pc = x * np.exp(-1j * phase_components)
+    # Filter the signal around the harmonic component of interest in a narrow angular frequency band.
+    x_pc = x * np.exp(-1j * inst_phase)
     fft_x_pc = np.fft.fft(x_pc)
     indices_filtered = np.ceil((filter_bw / 2) / (fs / n)).astype(int)
     fft_x_pc[indices_filtered:-indices_filtered] = 0
-    xf = np.fft.ifft(2 * fft_x_pc) * np.exp(1j * phase_components)
+    xf = np.fft.ifft(2 * fft_x_pc) * np.exp(1j * inst_phase)
 
     # Get the instantaneous frequency of signal.
     phase = np.unwrap(np.angle(xf))

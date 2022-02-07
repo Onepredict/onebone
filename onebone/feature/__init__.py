@@ -1,7 +1,7 @@
 from .frequency import mdf, mnf, vcf
 from .gear import na4
 from .tacho import tacho_to_angle, tacho_to_rpm
-from .tacholess import estimate_if
+from .tacholess import two_step_if
 from .time import crest_factor, kurtosis, peak2peak, rms
 
 __all__ = [
@@ -15,5 +15,5 @@ __all__ = [
     "na4",
     "tacho_to_angle",
     "tacho_to_rpm",
-    "estimate_if",
+    "two_step_if",
 ]
