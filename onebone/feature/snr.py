@@ -12,10 +12,16 @@ def snr(
     SNR is the ratio between max power intensity of frequency and power of other frequencies
     at time t in the STFT spectrum.
 
+    .. math::
+    P_{signal}(t) = max(|STFT(t,f)|)
+
+    SNR(t) = {P_{signal}(t) \over \sum_{f}|STFT(t,f)| - P_{signal}(t)
+
+
     Parameters
     ----------
     x : numpy.ndarray
-        1d-Signal data. Must be real.
+        1d-signal data. Must be real.
     fs : int or float
         Sampling rate.
     nperseg : int, default=256
