@@ -13,10 +13,10 @@ def snr(
     at time t in the STFT spectrum.
 
     .. math::
-    P_{signal}(t) = max(|STFT(t,f)|)
+        P_{signal}(t) = max(|STFT(t,f)|)
 
-    SNR(t) = {P_{signal}(t) \over \sum_{f}|STFT(t,f)| - P_{signal}(t)
-
+    .. math::
+        SNR(t) = {P_{signal}(t) \over {\sum_{f}|STFT(t,f)|} - P_{signal}(t)}
 
     Parameters
     ----------
@@ -43,10 +43,10 @@ def snr(
 
     Notes
     --------
-    1. Get a snr array by using snr_feature for one of given signals
+    1. Get a snr array by using snr_feature for one of given signals.
     2. Make the segments of snr array and get the mean of each segment.
-    3. Compare the mean of SNR between normal states and fault states
-    e.g. SNR_fault = np.mean(SNR_fault_array), SNR_normal = np.mean(SNR_normal_array)
+    3. Compare the mean of SNR between normal states and fault states. \
+        e.g. SNR_fault = np.mean(SNR_fault_array), SNR_normal = np.mean(SNR_normal_array)
     4. Typically, SNR_fault is smaller than SNR_normal.
     """
 
