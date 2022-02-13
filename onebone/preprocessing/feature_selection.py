@@ -11,7 +11,7 @@ import scipy.signal as signal
 def fs_crosscorrelation(x: np.ndarray, refer: np.ndarray, output_col_num: int) -> np.ndarray:
     """
     .. note:: This method uses `scipy.signal.correlate`.
-    .. scipy.signal.correlate: 
+    .. scipy.signal.correlate:
         https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.correlate.html
 
     Transform input data so that they can be described as a normal distribution.
