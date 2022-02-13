@@ -10,27 +10,27 @@ import scipy.signal as signal
 
 def fs_crosscorrelation(x: np.ndarray, refer: np.ndarray, output_col_num: int) -> np.ndarray:
     """
-    .. note:: This method uses `scipy.signal.correlate`_ method as it is.
-    .. _scipy.signal.correlate: \
-        https://docs.scipy.org/doc/scipy-0.14.0/reference/generated/scipy.signal.correlate.html
+    .. note:: This method uses `scipy.signal.correlate`.
+    .. scipy.signal.correlate: 
+        https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.correlate.html
 
     Transform input data so that they can be described as a normal distribution.
-    Reduce the dimension of input data by removing the signals\
+    Reduce the dimension of input data by removing the signals
     which have small cross correlation with reference signal.
 
 
     Parameters
     ----------
-    x : numpy.ndarray of shape (n_time, n_features)
+    x : numpy.ndarray of shape (data_length, n_features)
         The data.
-    refer : numpy.ndarray of shape (n_time)
+    refer : numpy.ndarray of shape (data_length)
         The reference data.
     output_col_num : int
         Number of columns after dimension reduction.
 
     Returns
     -------
-    x_tr : numpy.ndarray of shape (n_time, n_features)
+    x_tr : numpy.ndarray of shape (data_length, n_features)
         The data after dimension reduction.
 
     Examples
