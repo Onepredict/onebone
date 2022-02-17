@@ -31,25 +31,25 @@ def positive_fft(
 
     Returns
     -------
-    f : numpy.ndarray
+    freq : numpy.ndarray
         frequency
-        If input shape is [signal_length,], output shape is f = [signal_length,].
-        If input shape is [n, signal_length,], output shape is f = [signal_length,].
-    x_mag : numpy.ndarray
+        If input shape is [signal_length,], output shape is freq = [signal_length,].
+        If input shape is [n, signal_length,], output shape is freq = [signal_length,].
+    mag : numpy.ndarray
         magnitude
-        If input shape is [signal_length,], output shape is x_mag = [signal_length,].
-        If input shape is [n, signal_length,], output shape is x_mag = [n, signal_length,].
+        If input shape is [signal_length,], output shape is mag = [signal_length,].
+        If input shape is [n, signal_length,], output shape is mag = [n, signal_length,].
 
     Examples
     --------
     >>> N = 400  # array length
     >>> fs = 800  # Sampling frequency
-    >>> T = 1 / Fs  # Sample interval time
-    >>> x = np.linspace(0.0, N * T, N, endpoint=False) # time
+    >>> t = 1 / fs  # Sample interval time
+    >>> x = np.linspace(0.0, N * t, N, endpoint=False) # time
     >>> y = 3 * np.sin(50.0 * 2.0 * np.pi * x) + 2 * np.sin(80.0 * 2.0 * np.pi * x)
     >>> signal = y
-    >>> f, x_mag = positive_fft(signal, fs,  hann = false, normalization = false, axix = -1)
-    >>> freq = np.around(f[np.where(mag > 1)])
+    >>> freq, mag = positive_fft(signal, fs,  hann = False, normalization = False, axis = -1)
+    >>> freq = np.around(freq[np.where(mag > 1)])
     >>> freq
     [50., 80.]
     """
@@ -63,14 +63,14 @@ def positive_fft(
     x = fft(signal, axis=axis)
     x_half = slice_along_axis(x, np.s_[: signal.shape[axis] // 2], axis=axis)
     n = signal.shape[axis]
-    f = fftfreq(n, d=1 / fs)
+    freq = fftfreq(n, d=1 / fs)
     mid = int(n / 2)
-    f = f[:mid]
+    freq = freq[:mid]
 
     # nomalization
     if normalization is True:
-        x_mag = np.abs(x_half) / (n / 2)
+        mag = np.abs(x_half) / (n / 2)
     else:
-        x_mag = np.abs(x_half)
+        mag = np.abs(x_half)
 
-    return f, x_mag
+    return freq, mag
