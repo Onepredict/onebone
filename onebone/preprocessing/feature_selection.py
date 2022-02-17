@@ -23,7 +23,7 @@ def fs_crosscorrelation(x: np.ndarray, refer: np.ndarray, output_col_num: int) -
     ----------
     x : numpy.ndarray of shape (data_length, n_features)
         The data.
-    refer : numpy.ndarray of shape (data_length)
+    refer : numpy.ndarray of shape (data_length,)
         The reference data.
     output_col_num : int
         Number of columns after dimension reduction.
