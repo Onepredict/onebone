@@ -71,21 +71,11 @@ def check_3d_signal():
             )
 
 
-def check_array_shape():
-    fs = 800
-    signal = generate_signal()
-    changed_signal = np.stack([signal] * 3, axis=0)
-    changed_signal = np.stack([changed_signal] * 2, axis=0)
-    # case 1: signal shape (2, 3, data_length) -> ArrayShapeError
-    positive_fft(changed_signal, fs=fs, hann=False, normalization=True)
-
-
 def test_fft():
     check_1d_signal()
     check_2d_signal_axis_zero()
     check_2d_signal_axis_one()
     check_3d_signal()
-    check_array_shape()
 
 
 if __name__ == "__main__":
