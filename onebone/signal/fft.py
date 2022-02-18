@@ -1,3 +1,9 @@
+"""The module about fast fourier transform.
+
+- Author: Daeyeop Na, Kangwhi Kim
+- Contact: daeyeop.na@onepredict.com, kangwhi.kim@onepredict.com
+"""
+
 from typing import Tuple, Union
 
 import numpy as np
