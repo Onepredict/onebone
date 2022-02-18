@@ -1,7 +1,12 @@
+"""The module about fast fourier transform.
+
+- Author: Daeyeop Na, Kangwhi Kim
+- Contact: daeyeop.na@onepredict.com, kangwhi.kim@onepredict.com
+"""
+
 from typing import Tuple, Union
 
 import numpy as np
-from numpy.fft import fft, fftfreq
 
 from onebone.utils import slice_along_axis
 
@@ -42,10 +47,10 @@ def positive_fft(
 
     Examples
     --------
-    >>> N = 400  # array length
+    >>> n = 400  # array length
     >>> fs = 800  # Sampling frequency
     >>> t = 1 / fs  # Sample interval time
-    >>> x = np.linspace(0.0, N * t, N, endpoint=False) # time
+    >>> x = np.linspace(0.0, n * t, n, endpoint=False) # time
     >>> y = 3 * np.sin(50.0 * 2.0 * np.pi * x) + 2 * np.sin(80.0 * 2.0 * np.pi * x)
     >>> signal = y
     >>> freq, mag = positive_fft(signal, fs,  hann = False, normalization = False, axis = -1)
@@ -54,23 +59,20 @@ def positive_fft(
     [50., 80.]
     """
 
-    if len(signal.shape) > 2:
-        raise ValueError("Dimension of signal must be less than 3")
-
     if hann is True:
         signal = signal * np.hanning(signal.shape[axis])
 
-    x = fft(signal, axis=axis)
-    x_half = slice_along_axis(x, np.s_[: signal.shape[axis] // 2], axis=axis)
     n = signal.shape[axis]
-    freq = fftfreq(n, d=1 / fs)
-    mid = int(n / 2)
-    freq = freq[:mid]
+    freq = np.fft.fftfreq(n, d=1 / fs)
+    freq = np.abs(freq[: n // 2])
 
-    # nomalization
+    fft_x = np.fft.fft(signal, axis=axis)
+    fft_x_half = slice_along_axis(fft_x, np.s_[: n // 2], axis=axis)
+
+    # Normalization
     if normalization is True:
-        mag = np.abs(x_half) / (n / 2)
+        mag = np.abs(fft_x_half) / n * 2
     else:
-        mag = np.abs(x_half)
+        mag = np.abs(fft_x_half)
 
     return freq, mag
