@@ -1,4 +1,4 @@
 from .slicing import slice_along_axis
-from .timer import timer
+from .timer import Timer
 
-__all__ = ["slice_along_axis", "timer"]
+__all__ = ["slice_along_axis", "Timer"]
