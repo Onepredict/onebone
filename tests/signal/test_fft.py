@@ -76,7 +76,6 @@ def test_fft():
     check_2d_signal_axis_zero()
     check_2d_signal_axis_one()
     check_3d_signal()
-    print("test")
 
 
 if __name__ == "__main__":
