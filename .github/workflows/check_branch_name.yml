@@ -1,8 +1,8 @@
 name: Check branch name
-on:
-  pull_request:
-    branches: [main]
-    types: [opened, edited, synchronize, reopened]
+on: push
+  # pull_request:
+  #   branches: [main]
+  #   types: [opened, edited, synchronize, reopened]
 jobs:
   branch-naming-rules:
     runs-on: ubuntu-latest
