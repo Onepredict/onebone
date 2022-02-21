@@ -1,4 +1,4 @@
-name: PR title & Branch naming rules
+name: Naming rules
 on:
   pull_request:
     types: [opened, edited, synchronize, reopened]
