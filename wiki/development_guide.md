@@ -22,7 +22,7 @@ For windows powershell:
 (Invoke-WebRequest -Uri https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py -UseBasicParsing).Content | python -
 ```
 
-### 2. Clone git repository.
+### 2. Clone git repository
 
 Fork a copy of the main SciPy repository in Github onto your own account and then create your local repository via:
 
@@ -30,6 +30,15 @@ Fork a copy of the main SciPy repository in Github onto your own account and the
 $ git clone https://github.com/Onepredict/onebone.git onebone
 $ cd onebone
 ```
+
+#### 2-1. Create new branch
+
+You can create new branch to contribute new feature. The branch naming rule is below:
+
+  - `feature/<contents>`: When you add simple features.
+  - `hotfix/<contents>`: When you fix critical issues.
+
+The branch name is checked by github action when you create Pull Request.
 
 ### 3. Python version and virtualenv manangement
 
