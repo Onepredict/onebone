@@ -15,13 +15,3 @@ jobs:
         min_length: 10 # Min length of the title
         max_length: 80 # Max length of the title
         github_token: ${{ github.token }} # Default: ${{ github.token }}
-  # branch-naming-rules:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: deepakputhraya/action-branch-name@master
-  #       with:
-  #         regex: '([a-z])\/([a-z])+' # Regex the branch should match. This example enforces grouping
-  #         allowed_prefixes: 'feature,fix,hotfix,release,' # All branches should start with the given prefix
-  #         ignore: main,master,develop # Ignore exactly matching branch names from convention
-  #         min_length: 5 # Min length of the branch name
-  #         max_length: 20 # Max length of the branch name

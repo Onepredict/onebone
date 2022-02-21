@@ -1,8 +1,8 @@
 name: Check branch name
-on: push
-  # pull_request:
-  #   branches: [main]
-  #   types: [opened, edited, synchronize, reopened]
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, edited, synchronize, reopened]
 jobs:
   branch-naming-rules:
     runs-on: ubuntu-latest
@@ -10,7 +10,12 @@ jobs:
       - uses: deepakputhraya/action-branch-name@master
         with:
           regex: '([a-z])\/([a-z])+' # Regex the branch should match. This example enforces grouping
+<<<<<<< Updated upstream
           allowed_prefixes: 'feature,fix,hotfix,release,' # All branches should start with the given prefix
           ignore: main,master,develop # Ignore exactly matching branch names from convention
+=======
+          allowed_prefixes: feature,hotfix,release # All branches should start with the given prefix
+          ignore: main # Ignore exactly matching branch names from convention
+>>>>>>> Stashed changes
           min_length: 5 # Min length of the branch name
           max_length: 20 # Max length of the branch name
