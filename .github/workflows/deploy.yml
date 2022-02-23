@@ -14,7 +14,6 @@ jobs:
         installer-parallel: true
     - name: Check version
       run: |
-        pyenv local onebone
         sh tools/check_version.sh ${GITHUB_REF#refs/*/}
     - name: Build & Deploy
       run: |
