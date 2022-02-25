@@ -23,7 +23,7 @@ def positive_fft(
 
     Parameters
     ------------
-    signal : numpy.ndarray of shape (signal_length,), (n, signal_length)
+    signal : numpy.ndarray
         Original time-domain signal
     fs : Union[int, float]
         Sampling rate

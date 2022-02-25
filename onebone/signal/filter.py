@@ -22,7 +22,7 @@ def lowpass_filter(
 
     Parameters
     ----------
-    signal : numpy.ndarray of shape (signal_length,), (n, signal_length,)
+    signal : numpy.ndarray
         Original time-domain signal.
     fs : Union[int, float]
         Sampling rate.
@@ -35,10 +35,8 @@ def lowpass_filter(
 
     Returns
     -------
-    out : numpy.ndarray of shape (signal_length,), (n, signal_length,)
+    out : numpy.ndarray
         Filtered signal.
-        If input shape is [signal_length,], output shape is [signal_length,].
-        If input shape is [n, signal_length,], output shape is [n, signal_length,].
 
     Examples
     --------
@@ -46,15 +44,28 @@ def lowpass_filter(
     >>> t = np.linspace(0, 1, int(fs))
     >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
     >>> signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
-
+    >>> signal.shape
+    (5000,)
     >>> freq_x = np.fft.rfftfreq(signal.size, 1 / fs)[:-1]
     >>> origin_fft_mag = abs((np.fft.rfft(signal) / signal.size)[:-1] * 2)
     >>> origin_freq = freq_x[np.where(origin_fft_mag > 0.5)]
     >>> origin_freq
     [ 20., 100.]
-
-    >>> filtered_signal = highpass_filter(signal, fs, cutoff=50)
+    >>> filtered_signal = lowpass_filter(signal, fs, cutoff=50)
     >>> filtered_fft_mag = abs((np.fft.rfft(filtered_signal) / signal.size)[:-1] * 2)
+    >>> filtered_freq = freq_x[np.where(filtered_fft_mag > 0.5)]
+    >>> filtered_freq
+    [ 20.]
+
+    >>> fs = 5000.0
+    >>> t = np.linspace(0, 1, int(fs))
+    >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
+    >>> signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
+    >>> signal = np.stack([signal, signal]).T
+    >>> signal.shape
+    (5000, 2)
+    >>> filtered_signal = lowpass_filter(signal, fs, cutoff=50, axis=0)
+    >>> filtered_fft_mag = abs((np.fft.rfft(filtered_signal[:, 0]) / signal.size)[:-1] * 2)
     >>> filtered_freq = freq_x[np.where(filtered_fft_mag > 0.5)]
     >>> filtered_freq
     [ 20.]
@@ -72,12 +83,10 @@ def lowpass_filter(
     if not isinstance(axis, int):
         raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis).__name__}")
 
-    if len(signal.shape) > 2:
-        raise ValueError("Dimension of signal must be less than 3.")
-
     nyq = 0.5 * float(fs)
     cutoff = cutoff / nyq
     b, a = butter(order, cutoff, btype="low")
+
     signal = lfilter(b, a, signal, axis=axis)
     return signal
 
@@ -94,7 +103,7 @@ def highpass_filter(
 
     Parameters
     ----------
-    signal : numpy.ndarray of shape (signal_length,), (n, signal_length,)
+    signal : numpy.ndarray
         Original time-domain signal.
     fs : Union[int, float]
         Sampling rate.
@@ -107,10 +116,8 @@ def highpass_filter(
 
     Returns
     -------
-    out : numpy.ndarray of shape (signal_length,), (n, signal_length,)
+    out : numpy.ndarray
         Filtered signal.
-        If input shape is [signal_length,], output shape is [signal_length,].
-        If input shape is [n, signal_length,], output shape is [n, signal_length,].
 
     Examples
     --------
@@ -118,15 +125,28 @@ def highpass_filter(
     >>> t = np.linspace(0, 1, int(fs))
     >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
     >>> signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
-
+    >>> signal.shape
+    (5000,)
     >>> freq_x = np.fft.rfftfreq(signal.size, 1 / fs)[:-1]
     >>> origin_fft_mag = abs((np.fft.rfft(signal) / signal.size)[:-1] * 2)
     >>> origin_freq = freq_x[np.where(origin_fft_mag > 0.5)]
     >>> origin_freq
     [ 20., 100.]
-
-    >>> filtered_signal = lowpass_filter(signal, fs, cutoff=50)
+    >>> filtered_signal = highpass_filter(signal, fs, cutoff=50)
     >>> filtered_fft_mag = abs((np.fft.rfft(filtered_signal) / signal.size)[:-1] * 2)
+    >>> filtered_freq = freq_x[np.where(filtered_fft_mag > 0.5)]
+    >>> filtered_freq
+    [ 100.]
+
+    >>> fs = 5000.0
+    >>> t = np.linspace(0, 1, int(fs))
+    >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
+    >>> signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
+    >>> signal = np.stack([signal, signal]).T
+    >>> signal.shape
+    (5000, 2)
+    >>> filtered_signal = highpass_filter(signal, fs, cutoff=50, axis=0)
+    >>> filtered_fft_mag = abs((np.fft.rfft(filtered_signal[:, 0]) / signal.size)[:-1] * 2)
     >>> filtered_freq = freq_x[np.where(filtered_fft_mag > 0.5)]
     >>> filtered_freq
     [ 100.]
@@ -143,9 +163,6 @@ def highpass_filter(
         )
     if not isinstance(axis, int):
         raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis).__name__}")
-
-    if len(signal.shape) > 2:
-        raise ValueError("Dimension of signal must be less than 3.")
 
     nyq = 0.5 * fs
     cutoff = cutoff / nyq
@@ -167,7 +184,7 @@ def bandpass_filter(
 
     Parameters
     ----------
-    signal : numpy.ndarray of shape (signal_length,), (n, signal_length,)
+    signal : numpy.ndarray
         Original time-domain signal.
     fs : Union[int, float]
         Sampling rate.
@@ -182,7 +199,7 @@ def bandpass_filter(
 
     Returns
     -------
-    out : numpy.ndarray of shape (signal_length,), (n, signal_length,)
+    out : numpy.ndarray
         Filtered signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
@@ -194,15 +211,28 @@ def bandpass_filter(
     >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
     >>> signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
     >>> signal += 5.0 * np.sin(2 * np.pi * 500.0 * t)
-
+    >>> signal.shape
+    (5000,)
     >>> freq_x = np.fft.rfftfreq(signal.size, 1 / fs)[:-1]
     >>> origin_fft_mag = abs((np.fft.rfft(signal) / signal.size)[:-1] * 2)
     >>> origin_freq = freq_x[np.where(origin_fft_mag > 0.5)]
     >>> origin_freq
     [ 20., 100., 500.]
-
     >>> filtered_signal = bandpass_filter(signal, fs, l_cutoff=50, h_cutoff=300)
     >>> filtered_fft_mag = abs((np.fft.rfft(filtered_signal) / signal.size)[:-1] * 2)
+    >>> filtered_freq = freq_x[np.where(filtered_fft_mag > 0.5)]
+    >>> filtered_freq
+    [ 100.]
+
+    >>> fs = 5000.0
+    >>> t = np.linspace(0, 1, int(fs))
+    >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
+    >>> signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
+    >>> signal = np.stack([signal, signal]).T
+    >>> signal.shape
+    (5000, 2)
+    >>> filtered_signal = bandpass_filter(signal, fs, l_cutoff=50, h_cutoff=300, axis=0)
+    >>> filtered_fft_mag = abs((np.fft.rfft(filtered_signal[:, 0]) / signal.size)[:-1] * 2)
     >>> filtered_freq = freq_x[np.where(filtered_fft_mag > 0.5)]
     >>> filtered_freq
     [ 100.]
@@ -223,9 +253,6 @@ def bandpass_filter(
         )
     if not isinstance(axis, int):
         raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis).__name__}")
-
-    if len(signal.shape) > 2:
-        raise ValueError("Dimension of signal must be less than 3.")
 
     nyq = 0.5 * fs
     low = l_cutoff / nyq
@@ -248,7 +275,7 @@ def bandstop_filter(
 
     Parameters
     ----------
-    signal : numpy.ndarray of shape (signal_length,), (n, signal_length,)
+    signal : numpy.ndarray
         Original time-domain signal.
     fs : Union[int, float]
         Sampling rate.
@@ -263,7 +290,7 @@ def bandstop_filter(
 
     Returns
     -------
-    out : numpy.ndarray of shape (signal_length,), (n, signal_length,)
+    out : numpy.ndarray
         Filtered signal.
         If input shape is [signal_length,], output shape is [signal_length,].
         If input shape is [n, signal_length,], output shape is [n, signal_length,].
@@ -275,15 +302,28 @@ def bandstop_filter(
     >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
     >>> signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
     >>> signal += 5.0 * np.sin(2 * np.pi * 500.0 * t)
-
+    >>> signal.shape
+    (5000,)
     >>> freq_x = np.fft.rfftfreq(signal.size, 1 / fs)[:-1]
     >>> origin_fft_mag = abs((np.fft.rfft(signal) / signal.size)[:-1] * 2)
     >>> origin_freq = freq_x[np.where(origin_fft_mag > 0.5)]
     >>> origin_freq
     [ 20., 100., 500.]
-
     >>> filtered_signal = bandstop_filter(signal, fs, l_cutoff=50, h_cutoff=300)
     >>> filtered_fft_mag = abs((np.fft.rfft(filtered_signal) / signal.size)[:-1] * 2)
+    >>> filtered_freq = freq_x[np.where(filtered_fft_mag > 0.5)]
+    >>> filtered_freq
+    [ 20., 500.]
+
+    >>> fs = 5000.0
+    >>> t = np.linspace(0, 1, int(fs))
+    >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
+    >>> signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
+    >>> signal = np.stack([signal, signal]).T
+    >>> signal.shape
+    (5000, 2)
+    >>> filtered_signal = bandstop_filter(signal, fs, l_cutoff=50, h_cutoff=300, axis=0)
+    >>> filtered_fft_mag = abs((np.fft.rfft(filtered_signal[:, 0]) / signal.size)[:-1] * 2)
     >>> filtered_freq = freq_x[np.where(filtered_fft_mag > 0.5)]
     >>> filtered_freq
     [ 20., 500.]
@@ -304,9 +344,6 @@ def bandstop_filter(
         )
     if not isinstance(axis, int):
         raise TypeError(f"Argument 'axis' must be of type int or float, not {type(axis).__name__}")
-
-    if len(signal.shape) > 2:
-        raise ValueError("Dimension of signal must be less than 3.")
 
     nyq = 0.5 * fs
     low = l_cutoff / nyq
