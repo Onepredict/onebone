@@ -19,7 +19,7 @@ def positive_fft(
     axis: int = -1,
 ) -> Tuple[np.ndarray, np.ndarray]:
     """
-    Positive fourier transformation.
+    Positive 1D fourier transformation.
 
     Parameters
     ------------

@@ -18,7 +18,7 @@ def lowpass_filter(
     axis: int = -1,
 ) -> np.ndarray:
     """
-    Butterworth lowpass filter.
+    1D Butterworth lowpass filter.
 
     Parameters
     ----------
@@ -40,6 +40,8 @@ def lowpass_filter(
 
     Examples
     --------
+    Apply the filter to 1d signal. And then check the frequency component of the filtered signal.
+
     >>> fs = 5000.0
     >>> t = np.linspace(0, 1, int(fs))
     >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
@@ -56,6 +58,8 @@ def lowpass_filter(
     >>> filtered_freq = freq_x[np.where(filtered_fft_mag > 0.5)]
     >>> filtered_freq
     [ 20.]
+
+    Apply the filter to 2d signal (axis=0).
 
     >>> fs = 5000.0
     >>> t = np.linspace(0, 1, int(fs))
@@ -99,7 +103,7 @@ def highpass_filter(
     axis: int = -1,
 ) -> np.ndarray:
     """
-    Butterworth highpass filter.
+    1D Butterworth highpass filter.
 
     Parameters
     ----------
@@ -121,6 +125,8 @@ def highpass_filter(
 
     Examples
     --------
+    Apply the filter to 1d signal. And then check the frequency component of the filtered signal.
+
     >>> fs = 5000.0
     >>> t = np.linspace(0, 1, int(fs))
     >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
@@ -137,6 +143,8 @@ def highpass_filter(
     >>> filtered_freq = freq_x[np.where(filtered_fft_mag > 0.5)]
     >>> filtered_freq
     [ 100.]
+
+    Apply the filter to 2d signal (axis=0).
 
     >>> fs = 5000.0
     >>> t = np.linspace(0, 1, int(fs))
@@ -180,7 +188,7 @@ def bandpass_filter(
     axis: int = -1,
 ) -> np.ndarray:
     """
-    Butterworth bandpass filter.
+    1D Butterworth bandpass filter.
 
     Parameters
     ----------
@@ -206,6 +214,8 @@ def bandpass_filter(
 
     Examples
     --------
+    Apply the filter to 1d signal. And then check the frequency component of the filtered signal.
+
     >>> fs = 5000.0
     >>> t = np.linspace(0, 1, int(fs))
     >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
@@ -223,6 +233,8 @@ def bandpass_filter(
     >>> filtered_freq = freq_x[np.where(filtered_fft_mag > 0.5)]
     >>> filtered_freq
     [ 100.]
+
+    Apply the filter to 2d signal (axis=0).
 
     >>> fs = 5000.0
     >>> t = np.linspace(0, 1, int(fs))
@@ -271,7 +283,7 @@ def bandstop_filter(
     axis: int = -1,
 ) -> np.ndarray:
     """
-    Butterworth bandstop filter.
+    1D Butterworth bandstop filter.
 
     Parameters
     ----------
@@ -297,6 +309,8 @@ def bandstop_filter(
 
     Examples
     --------
+    Apply the filter to 1d signal. And then check the frequency component of the filtered signal.
+
     >>> fs = 5000.0
     >>> t = np.linspace(0, 1, int(fs))
     >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
@@ -314,6 +328,8 @@ def bandstop_filter(
     >>> filtered_freq = freq_x[np.where(filtered_fft_mag > 0.5)]
     >>> filtered_freq
     [ 20., 500.]
+
+    Apply the filter to 2d signal (axis=0).
 
     >>> fs = 5000.0
     >>> t = np.linspace(0, 1, int(fs))
