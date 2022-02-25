@@ -5,7 +5,7 @@ PACKAGE_NAME="onebone"
 
 echo "A tag triggered build. $TAG"
 
-VERSION=`python -c "import onebone; print(onebone.__version__)"`
+VERSION=`poetry version -s`
 echo "The version is $VERSION"
 
 if [ "$VERSION" = "$TAG" ]; then
