@@ -21,7 +21,7 @@ def envelope_hilbert(x, axis: int = -1) -> np.ndarray:
         Axis along which to do the transformation.
 
     Returns
-    ----------
+    -------
     y : numpy.ndarray
         Envelope of the `x`, of each 1-D array along `axis`
     """
