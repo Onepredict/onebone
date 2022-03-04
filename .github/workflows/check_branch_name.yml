@@ -13,4 +13,4 @@ jobs:
           allowed_prefixes: feature,hotfix,release # All branches should start with the given prefix
           ignore: main # Ignore exactly matching branch names from convention
           min_length: 5 # Min length of the branch name
-          max_length: 20 # Max length of the branch name
+          max_length: 35 # Max length of the branch name

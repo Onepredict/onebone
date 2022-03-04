@@ -19,11 +19,11 @@ def positive_fft(
     axis: int = -1,
 ) -> Tuple[np.ndarray, np.ndarray]:
     """
-    Positive fourier transformation.
+    Positive 1D fourier transformation.
 
     Parameters
     ------------
-    signal : numpy.ndarray of shape (signal_length,), (n, signal_length)
+    signal : numpy.ndarray
         Original time-domain signal
     fs : Union[int, float]
         Sampling rate
