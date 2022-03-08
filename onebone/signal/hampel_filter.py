@@ -1,5 +1,7 @@
 import numpy as np 
-def hampel(input_series, window_size, n_sigmas=3, Autowindow = False):
+## hampel filter 함수 명령어를 참고함 
+
+def hampel_filt(input_series, window_size, n_sigmas=3, Autowindow = False):
     
     filtered_series = input_series.copy()
     k = 1.4826 # scale factor for Gaussian distribution
@@ -16,4 +18,5 @@ def hampel(input_series, window_size, n_sigmas=3, Autowindow = False):
             if (np.abs(input_series[i] - window_median) > n_sigmas * S_k):
                 filtered_series[i] = window_median
                 indices.append(i)
+                ##
     return filtered_series, indices
