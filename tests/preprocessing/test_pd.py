@@ -1,44 +1,34 @@
-"""Test code for two_step_if.py
+"""Test code for pd.py
 
-- Author: Kangwhi Kim
-- Contact: kangwhi.kim@onepredict.com
+- Author: Hyunjae Kim
+- Contact: hyunjae.kim@onepredict.com
 """
 
+from typing import Tuple
+
 import numpy as np
-from numpy.testing import assert_almost_equal
 
-from onebone.feature import two_step_if
-
-
-def _generate_signal():
-    fs = 1e4
-    n = 1e5
-    time = np.arange(n) / fs
-    mod = 500 * np.cos(2 * np.pi * 0.1 * time)
-    carrier = 3 * np.sin(2 * np.pi * 3e3 * time + mod)
-    signal = carrier + np.random.rand(carrier.size) / 5
-    return signal
+from onebone.preprocessing import pd
 
 
-def _check_two_step_if_output():
-    x = _generate_signal()
-    fs = 1e4
-    f_start = 3e3
-    f_tol = 50
-    filter_bw = 5
-    window = "hann"
-    nperseg = 4096
-    noverlap = 3985
-    # Get the estimated instantaneous frequencies.
-    inst_freq = two_step_if(x, fs, f_start, f_tol, filter_bw, window, nperseg, noverlap)
+def _generate_pspd(coord_point: Tuple[int, int], cum_value: int) -> Tuple[np.ndarray, np.ndarray]:
+    prps = np.zeros([3600, 128])
+    prpd = np.zeros([128, 128])
+    return prps, prpd
 
+
+def _check_ps2pd():
+    coord = (3, 12)
+    cum_value = 50
+    prps, prpd = _generate_pspd(coord, cum_value)
+    prpd_transformed = pd.ps2pd(prps)
     # Check the output
-    assert_almost_equal(np.mean(inst_freq), 3e3, decimal=0)
+    assert (prpd_transformed == prpd).all()
 
 
-def test_two_step_if():
-    _check_two_step_if_output()
+def test_ps2pd():
+    _check_ps2pd()
 
 
 if __name__ == "__main__":
-    test_two_step_if()
+    test_ps2pd()
