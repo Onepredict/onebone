@@ -29,7 +29,7 @@ def wavelet_denoising(
     axis : int, default=-1
         Axis over which to compute the DWT.
     level : int, default=None
-        If level is None, (default) then it will be calculated using
+        If level is None, then it will be calculated using
         the ``pywt.dwt_max_level`` function.
 
     Returns
