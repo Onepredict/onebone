@@ -13,9 +13,10 @@ def wavelet_denoising(
 ) -> np.ndarray:
     """
     Denoise signal using Discrete Wavelet Transform(DWT).
-    1. Multilevel Wavelet Decomposition.
-    2. Identify a thresholding technique.
-    3. Threshold and Reconstruct.
+
+        1. Multilevel Wavelet Decomposition.
+        2. Identify a thresholding technique.
+        3. Threshold and Reconstruct.
 
     Parameters
     ----------
@@ -23,7 +24,8 @@ def wavelet_denoising(
         Input signal.
     wavelet : str
         Wavelet name.
-        Reference: http://wavelets.pybytes.com/
+        See this `page <http://wavelets.pybytes.com/>`_.
+
     axis : int, default=-1
         Axis over which to compute the DWT.
     level : int, default=None
