@@ -1,3 +1,9 @@
+"""Condition metrics for gear.
+
+- Author: Kibum Kim
+- Contact: kibum.kim@onepredict.com
+"""
+
 from typing import Tuple, Union
 
 import numpy as np
