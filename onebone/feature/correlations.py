@@ -9,23 +9,23 @@ def phase_alignment(y: np.ndarray, fs: Union[int, float]) -> Tuple[np.ndarray, n
 
     .. math:: {PA_{f} = {1 \over n}abs(\prod_j{e^{iw_{j,f}}})}
 
-    Where :math:`PA_{f}` is phase alignment value at frequency math:`f`,
-    :math:`n' is the number of signals, and :math:`j' is the index of each signals.
-    :math:`w_{j, f}' denotes phase of singal :math:`j' at frequency :math:`f'
+    Where :math:`PA_{f}` is phase alignment value at frequency :math:`f`,
+    :math:`n` is the number of signals, and :math:`j` is the index of each signals.
+    :math:`w_{j, f}` denotes phase of singal :math:`j` at frequency :math:`f`
 
     Parameters
     ----------
     y : numpy.ndarray of shape (n, signal_length)
         n denotes the number of signals, and each signal shold be 1D time domain.
     fs : int or float, default=1
-    Sample rate. The sample rate is the number of samples per unit time.
+        Sample rate. The sample rate is the number of samples per unit time.
 
     Returns
     -------
     freq : numpy.ndarray
-    frequency array
+        frequency array
     phase_alignment : numpy.ndarray
-    phase alignment value of each frequcny
+        phase alignment value of each frequency
     """
     if not isinstance(y, np.ndarray):
         raise TypeError(f"Argument 'y' must be of type numpy.ndarray, not {type(y).__name__}")
