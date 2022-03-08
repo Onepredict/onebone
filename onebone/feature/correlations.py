@@ -1,8 +1,9 @@
+from typing import Tuple, Union
+
 import numpy as np
-from typing import Union, Tuple
 
 
-def phase_alignment(y: np.ndarray, fs: Union[int, float] = 1) -> Tuple[float, np.ndarray]:
+def phase_alignment(y: np.ndarray, fs: Union[int, float]) -> Tuple[np.ndarray, np.ndarray]:
     """
     Compute phase alignment(PA) of a set of 1D signals
 
@@ -31,8 +32,8 @@ def phase_alignment(y: np.ndarray, fs: Union[int, float] = 1) -> Tuple[float, np
     if not isinstance(fs, (int, float)):
         raise TypeError("`fs` must be integer or float.")
 
-    freq = np.fft.fftfreq(y.shape[-1], d=1 / fs)[:y.shape[-1] // 2]
-    density = np.fft.fft(y)[:, :y.shape[-1] // 2]
+    freq = np.fft.fftfreq(y.shape[-1], d=1 / fs)[: y.shape[-1] // 2]
+    density = np.fft.fft(y)[:, : y.shape[-1] // 2]
     normed_density = density / np.abs(density)
     phase_alignment = np.abs(np.mean(normed_density, axis=0))
 
