@@ -2,6 +2,7 @@ setup:
 	git config commit.template .gitmessage.txt
 	poetry install
 	pre-commit install
+install: (anything there)
 
 clean:
 	rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info */.pytest_cache .pytest_cache
