@@ -5,25 +5,23 @@
 """
 
 import numpy as np
+import matplotlib.pyplot as plt
 
 from onebone.signal import hampel_filter
-
-## hampel filter 함수 명령어를 참고함
-## Series 만 사용해야하는 단점 존재 (np.array _ 1D 만 가능 )
-
 
 def timeseries_data():
     t = np.linspace(0, 1, 100)
     y = np.sin(2 * np.pi * 10 * t)
-    np.put(y, [9, 13, 24, 30, 45], 4)
+    np.put(y,[9, 13, 24, 30, 45, 51,78],4)
     return y
 
 
 def test_hampel_filter():
-    first_feature = hampel_filter.hampel_filter(timeseries_data(), 3)[0]
-    first_feature
-    second_feature = hampel_filter.hampel_filter(timeseries_data(), 4)[0]
-    second_feature
+    first_feature = hampel_filter.hampel_filter(timeseries_data(), 2)[0]
+    second_feature = hampel_filter.hampel_filter(timeseries_data(), 3)[0]
+    plt.plot(first_feature)
+    plt.plot(second_feature)
+    plt.plot(timeseries_data())
 
 
 if __name__ == "__main__":

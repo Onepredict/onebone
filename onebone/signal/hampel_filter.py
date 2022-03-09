@@ -5,13 +5,10 @@
 
 import numpy as np
 
-## hampel filter 함수 명령어를 참고함
-## Series 만 사용해야하는 단점 존재 (np.array _ 1D 만 가능)
 
+def hampel_filter(series, window_size, n_sigmas=3, autowindow=False):
 
-def hampel_filter(array, window_size, n_sigmas=3, Autowindow=False):
-
-    filtered_series = array.copy()
+    filtered_series = series.copy()
     k = 1.4826  # scale factor for Gaussian distribution
 
     if type(window_size) != int:
@@ -49,28 +46,39 @@ def hampel_filter(array, window_size, n_sigmas=3, Autowindow=False):
     >>> fs = 100.0
     >>> t = np.linspace(0, 1, int(fs))
     >>> y = np.sin(2 * np.pi *10.0 * t)
-    >>> np.put(y,[9,13,24,30,45,78],3)
-    >>> first_hampel_filter_array = hampel_filter(y, 3)[0]
-    >>> second_hampel_filter_array = hampel_filter(y,4)[0]
-    >>> plt.plot(t,x,label='origin_data')
-    >>> plt.plot(t,first_hampel_filter_array, label='window_size : 3')
-    >>> plt.plot(t,second_hampel_filter_array, label='window_size : 4')
-    >>> plt.legend(loc = 'upper right')
+    >>> np.put(y,[9, 13, 24, 30, 45, 51,78],4)
+    >>> first_hampel_filter_array = hampel_filter.hampel_filter(y,2)[0]
+    >>> second_hampel_filter_array = hampel_filter.hampel_filter(y,3)[0]
+
+    >>> ax1 = plt.subplot(2,2,1)
+    >>> plt.plot(t,y,label='origin_data',color='b', alpha=0.5)
+    >>> plt.legend(loc = 'upper right',fontsize=7)
+    >>> ax2 = plt.subplot(2,2,2,sharey=ax1)
+    >>> plt.plot(t,first_hampel_filter_array, label='window_size : 2',color='r', alpha=0.5)
+    >>> plt.legend(loc = 'upper right',fontsize=7)
+    >>> ax3 = plt.subplot(2,2,3,sharey=ax1)
+    >>> plt.plot(t,second_hampel_filter_array, label='window_size : 3',color='g', alpha=0.5)
+    >>> plt.legend(loc = 'upper right',fontsize=7)
+    >>> ax4 = plt.subplot(2,2,4,sharey=ax1)
+    >>> plt.plot(t,y,label='origin_data',color='b', alpha=0.5)
+    >>> plt.plot(t,first_hampel_filter_array, label='window_size : 2',color='r', alpha=0.5)
+    >>> plt.plot(t,second_hampel_filter_array, label='window_size : 3',color='g', alpha=0.5)
+    >>> plt.legend(loc = 'upper right',fontsize=7)
     """
-    if Autowindow is False:
-        for i in range((window_size), (len(array) - window_size)):
-            window_median = np.median(array[(i - window_size) : (i + window_size)])
+    if autowindow is False:
+        for i in range((window_size), (len(filtered_series) - window_size)):
+            window_median = np.median(filtered_series[(i - window_size) : (i + window_size)])
             S_k = k * np.median(
-                np.abs(array[(i - window_size) : (i + window_size)] - window_median)
+                np.abs(filtered_series[(i - window_size) : (i + window_size)] - window_median)
             )
             """
             MAD scale estimate, defined as : S_k = 1.4826 * median_j∈-K,K]{|x_(k-j) - m_k|}.
             """
-            if np.abs(array[i] - window_median) > n_sigmas * S_k:
+            if np.abs(filtered_series[i] - window_median) > n_sigmas * S_k:
                 filtered_series[i] = window_median
                 index.append(i)
         return filtered_series, index
 
-    elif Autowindow is True:
+    elif autowindow is True:
         # window size를 지정 및 가장 유사한 graph로 후보군을 정리해주는 코드 구현 하고싶음
         raise AttributeError("We are preparing to provide a function")
