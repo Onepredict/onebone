@@ -1,4 +1,4 @@
-"""Condition metrics for gear.
+"""Signal correlation features.
 
 - Author: Kibum Kim
 - Contact: kibum.kim@onepredict.com
