@@ -14,7 +14,7 @@ def generate_signal() -> np.ndarray:
     return ys
 
 
-def check_phase_alignment():
+def test_phase_alignment():
     generate_signal()
     ys = generate_signal()
     fs = 1000
@@ -27,4 +27,4 @@ def check_phase_alignment():
 
 
 if __name__ == "__main__":
-    check_phase_alignment()
+    test_phase_alignment()

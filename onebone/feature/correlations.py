@@ -27,7 +27,7 @@ def phase_alignment(y: np.ndarray, fs: Union[int, float]) -> Tuple[np.ndarray, n
     ----------
     y : numpy.ndarray of shape (n, signal_length)
         n denotes the number of signals, and each signal shold be 1D time domain.
-    fs : int or float, default=1
+    fs : int or float
         Sample rate. The sample rate is the number of samples per unit time.
 
     Returns
@@ -36,9 +36,19 @@ def phase_alignment(y: np.ndarray, fs: Union[int, float]) -> Tuple[np.ndarray, n
         frequency array
     phase_alignment : numpy.ndarray
         phase alignment value of each frequency
+
+    Examples
+    --------
+    >>> fs, n = 1000.0, 1000
+    >>> x = np.linspace(0.0, n  / fs, n, endpoint=False)
+    >>> signal = 3 * np.sin(50. * np.pi * x) + 2 * np.sin(80.0 * np.pi * x)
+    >>> y = [signal + np.random.uniform(low=-1, high=1, size=(n,)) for i in range(10)]
+    >>> freq, pa_result = phase_alignment(y, fs)
     """
     if not isinstance(y, np.ndarray):
         raise TypeError(f"Argument 'y' must be of type numpy.ndarray, not {type(y).__name__}")
+    if len(y.shape) != 2:
+        raise TypeError(f"Argument 'y' must be 2D array not {(y.shape)}D.")
     if not isinstance(fs, (int, float)):
         raise TypeError("`fs` must be integer or float.")
 
