@@ -22,25 +22,43 @@ def hampel_filter(array, window_size, n_sigmas=3, Autowindow = False):
     ----------
     x : numpy.ndarray
         1d-timeseries data
-    window_size : int,  
-                  d
 
+    window_size : int
+                  정수형만 가능하며, 자신의 데이터에 맞게 Window size 를 조절해줘야한다.   
 
     Returns
     ----------
-    hampel_filter : numpy.ndarray
-    >>> fs = 1000.0
-    >>> t = np.linspace(0, 1, int(fs))
-    >>> x = 10.0 * np.sin(2 * np.pi * 20.0 * t)
-    >>> snr_array = snr_feature(x, fs)
-    
+    filtered_series : numpy.ndarray
+                      필터로 인해 Outlier 값이 제거된 값이 나오게 됩니다. 
+                      현재는 Window size 에 따라 제거 되거나, 제거되지 않는 결과들이있으며, 
+                      이는 AutoWindow=True 로 개선할 예정입니다. 
+    index : list
+            Outlier 로 판단되어 제거가 된 index 들을 list 로 반환해줍니다. 
+
+    References
+    ----------
+    [1] Pearson, Ronald K., et al. "Generalized hampel filters." 
+    EURASIP Journal on Advances in Signal Processing 2016.1 (2016): 1-18.
+    DOI: 10.1186/s13634-016-0383-6
+    [2] https://github.com/MichaelisTrofficus/hampel_filter
+
     Examples
     --------
-
-
-
-    """
+    >>> import numpy as np
+    >>> import matplotlib.pyplot as plt
+    >>> fs = 100.0
+    >>> t = np.linspace(0, 1, int(fs))
+    >>> y = np.sin(2 * np.pi *10.0 * t)
+    >>> np.put(y,[9,13,24,30,45,78],3)
+    >>> first_hampel_filter_array = hampel_filter(y, 3)[0]
+    >>> second_hampel_filter_array = hampel_filter(y,4)[0]
+    >>> plt.plot(t,x,label='origin_data')
+    >>> plt.plot(t,first_hampel_filter_array, label='window_size : 3')
+    >>> plt.plot(t,second_hampel_filter_array, label='window_size : 4')
+    >>> plt.legend(loc = 'upper right')
     
+    
+    """
     if Autowindow == False:
         for i in range((window_size),(len(array) - window_size)):
             window_median = np.median(array[(i - window_size):(i + window_size)])
