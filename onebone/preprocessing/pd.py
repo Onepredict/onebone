@@ -11,7 +11,7 @@ import numpy as np
 
 def ps2pd(ps, range_amp: Tuple[int, int] = (0, 256), resol_amp: int = 128) -> np.ndarray:
     """
-    Transform prps(phase resolved pulse sequance) to a prpd(phaes resolved partial discharge) by marginalizing time dimension.
+    Transform prps(phase resolved pulse sequence) to a prpd(phaes resolved partial discharge) by marginalizing time dimension.
 
     Parameters
     ----------
