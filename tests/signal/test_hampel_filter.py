@@ -4,15 +4,16 @@
 - Contact: sunjin.kim@onepredict.com
 """
 
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 
 from onebone.signal import hampel_filter
+
 
 def timeseries_data():
     t = np.linspace(0, 1, 100)
     y = np.sin(2 * np.pi * 10 * t)
-    np.put(y,[9, 13, 24, 30, 45, 51,78],4)
+    np.put(y, [9, 13, 24, 30, 45, 51, 78], 4)
     return y
 
 

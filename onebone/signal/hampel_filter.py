@@ -2,35 +2,35 @@
 - Author: Sunjin Kim
 - Contact: sunjin.kim@onepredict.com
 """
-
 import numpy as np
 
+"""
+    A hampel filter removes outliers.
+    Estimate the median and standard deviation of each sample using
+    MAD(Median Absolute Deviation) in the window range set by the user.
+    If the MAD > 3 * sigma condition is satisfied,
+    the value is replaced with the median value.
 
-def hampel_filter(series, window_size, n_sigmas=3, autowindow=False):
 
-    filtered_series = series.copy()
-    k = 1.4826  # scale factor for Gaussian distribution
-
-    if type(window_size) != int:
-        raise TypeError("type(window_size) = int")
-    index = []
-    """
     Parameters
     ----------
     x : numpy.ndarray
         1d-timeseries data
-
-    window_size : int
-                  정수형만 가능하며, 자신의 데이터에 맞게 Window size 를 조절해줘야한다.
+    window_size : int,
+        Lenght of the sliding window.
+        Only integer types are available,
+        and the window size must be adjusted according to your data.
+    n_sigma : float, defalut=3
+        Coefficient of standard deviation.
+    Auto_window : Boolean, defalut=False
+        If set to True, the user does not need to modify the window size multiple times.
 
     Returns
     ----------
     filtered_series : numpy.ndarray
-                      필터로 인해 Outlier 값이 제거된 값이 나오게 됩니다.
-                      현재는 Window size 에 따라 제거 되거나, 제거되지 않는 결과들이있으며,
-                      이는 AutoWindow=True 로 개선할 예정입니다.
+        A value from which Outlier or NaN has been removed by the filter.
     index : list
-            Outlier 로 판단되어 제거가 된 index 들을 list 로 반환해줍니다.
+        Returns the index corresponding to Outlier.
 
     References
     ----------
@@ -65,6 +65,25 @@ def hampel_filter(series, window_size, n_sigmas=3, autowindow=False):
     >>> plt.plot(t,second_hampel_filter_array, label='window_size : 3',color='g', alpha=0.5)
     >>> plt.legend(loc = 'upper right',fontsize=7)
     """
+
+
+def hampel_filter(series: np.ndarray, window_size: int, n_sigmas=3, autowindow=False) -> np.ndarray:
+
+    filtered_series = series.copy()
+    k = 1.4826  # scale factor for Gaussian distribution
+    # The factor 1.4826 makes the MAD scale estimate an unbiased estimate
+    # of the standard deviation for Gaussian data.
+
+    # Check inputs
+    if not isinstance(series, np.ndarray):
+        raise TypeError("'series' must be np.ndarray")
+    if not isinstance(window_size, int):
+        raise TypeError("'window_size' must be integer")
+    if not isinstance(autowindow, bool):
+        raise TypeError("'autowindow' must be boolean")
+
+    index = []
+
     if autowindow is False:
         for i in range((window_size), (len(filtered_series) - window_size)):
             window_median = np.median(filtered_series[(i - window_size) : (i + window_size)])
