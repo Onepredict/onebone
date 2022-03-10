@@ -1,4 +1,4 @@
-"""Test code for pd.py
+"""Test code for pd.py.
 
 - Author: Hyunjae Kim
 - Contact: hyunjae.kim@onepredict.com
