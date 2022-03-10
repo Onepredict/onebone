@@ -33,16 +33,16 @@ def phase_alignment(y: np.ndarray, fs: Union[int, float]) -> Tuple[np.ndarray, n
     Returns
     -------
     freq : numpy.ndarray
-        frequency array
+        Frequency array
     phase_alignment : numpy.ndarray
-        phase alignment value of each frequency
+        Phase alignment value of each frequency
 
     Examples
     --------
     >>> fs, n = 1000.0, 1000
     >>> x = np.linspace(0.0, n  / fs, n, endpoint=False)
     >>> signal = 3 * np.sin(50. * np.pi * x) + 2 * np.sin(80.0 * np.pi * x)
-    >>> y = [signal + np.random.uniform(low=-1, high=1, size=(n,)) for i in range(10)]
+    >>> y = np.array([signal + np.random.uniform(low=-1, high=1, size=(n,)) for i in range(10)])
     >>> freq, pa_result = phase_alignment(y, fs)
     """
     if not isinstance(y, np.ndarray):
