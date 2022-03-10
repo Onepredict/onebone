@@ -17,7 +17,7 @@ def phase_alignment(y: np.ndarray, fs: Union[int, float]) -> Tuple[np.ndarray, n
 
     Where :math:`PA_{f}` is phase alignment value on frequency :math:`f`,
     :math:`n` is the number of signals, and :math:`j` is the index of each signals.
-    :math:`w_{j, f}` denotes phase of singal :math:`j` at frequency :math:`f`.
+    :math:`w_{j, f}` denotes phase of signal :math:`j` at frequency :math:`f`.
 
 
     This function computes mean vector of unit phase vectors of 1D signals.
