@@ -2,15 +2,21 @@
 - Author: Sunjin Kim
 - Contact: sunjin.kim@onepredict.com
 """
+from typing import Tuple
+
 import numpy as np
 
-"""
+
+def hampel_filter(
+    series: np.ndarray, window_size: int, n_sigmas=3, autowindow=False
+) -> Tuple[np.ndarray, list]:
+
+    """
     A hampel filter removes outliers.
     Estimate the median and standard deviation of each sample using
     MAD(Median Absolute Deviation) in the window range set by the user.
     If the MAD > 3 * sigma condition is satisfied,
     the value is replaced with the median value.
-
 
     Parameters
     ----------
@@ -22,7 +28,7 @@ import numpy as np
         and the window size must be adjusted according to your data.
     n_sigma : float, defalut=3
         Coefficient of standard deviation.
-    Auto_window : Boolean, defalut=False
+    auto_window : boolean, defalut=False
         If set to True, the user does not need to modify the window size multiple times.
 
     Returns
@@ -50,24 +56,10 @@ import numpy as np
     >>> first_hampel_filter_array = hampel_filter.hampel_filter(y,2)[0]
     >>> second_hampel_filter_array = hampel_filter.hampel_filter(y,3)[0]
 
-    >>> ax1 = plt.subplot(2,2,1)
-    >>> plt.plot(t,y,label='origin_data',color='b', alpha=0.5)
-    >>> plt.legend(loc = 'upper right',fontsize=7)
-    >>> ax2 = plt.subplot(2,2,2,sharey=ax1)
-    >>> plt.plot(t,first_hampel_filter_array, label='window_size : 2',color='r', alpha=0.5)
-    >>> plt.legend(loc = 'upper right',fontsize=7)
-    >>> ax3 = plt.subplot(2,2,3,sharey=ax1)
-    >>> plt.plot(t,second_hampel_filter_array, label='window_size : 3',color='g', alpha=0.5)
-    >>> plt.legend(loc = 'upper right',fontsize=7)
-    >>> ax4 = plt.subplot(2,2,4,sharey=ax1)
-    >>> plt.plot(t,y,label='origin_data',color='b', alpha=0.5)
-    >>> plt.plot(t,first_hampel_filter_array, label='window_size : 2',color='r', alpha=0.5)
-    >>> plt.plot(t,second_hampel_filter_array, label='window_size : 3',color='g', alpha=0.5)
-    >>> plt.legend(loc = 'upper right',fontsize=7)
+    .. image:: https://bit.ly/3t55Dlc #nopa
+        :width: 300
+
     """
-
-
-def hampel_filter(series: np.ndarray, window_size: int, n_sigmas=3, autowindow=False) -> np.ndarray:
 
     filtered_series = series.copy()
     k = 1.4826  # scale factor for Gaussian distribution
@@ -79,6 +71,8 @@ def hampel_filter(series: np.ndarray, window_size: int, n_sigmas=3, autowindow=F
         raise TypeError("'series' must be np.ndarray")
     if not isinstance(window_size, int):
         raise TypeError("'window_size' must be integer")
+    if not isinstance(n_sigmas, (int, float)):
+        raise TypeError("'n_sigmas' must be int or float")
     if not isinstance(autowindow, bool):
         raise TypeError("'autowindow' must be boolean")
 
