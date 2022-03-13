@@ -8,7 +8,7 @@ import numpy as np
 
 
 def hampel_filter(
-    series: np.ndarray, window_size: int, n_sigmas=3, autowindow=False
+    series: np.ndarray, window_size: int, n_sigmas: float = 3, autowindow: bool = False
 ) -> Tuple[np.ndarray, list]:
 
     """
@@ -80,13 +80,15 @@ def hampel_filter(
 
     if autowindow is False:
         for i in range((window_size), (len(filtered_series) - window_size)):
-            window_median = np.median(filtered_series[(i - window_size) : (i + window_size)])
-            S_k = k * np.median(
-                np.abs(filtered_series[(i - window_size) : (i + window_size)] - window_median)
-            )
+            real_window_size = filtered_series[(i - window_size) : (i + window_size)]
+
+            window_median = np.median(real_window_size)
+            S_k = k * np.median(np.abs(real_window_size - window_median))
+
             """
             MAD scale estimate, defined as : S_k = 1.4826 * median_j∈-K,K]{|x_(k-j) - m_k|}.
             """
+
             if np.abs(filtered_series[i] - window_median) > n_sigmas * S_k:
                 filtered_series[i] = window_median
                 index.append(i)
