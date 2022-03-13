@@ -1,3 +1,4 @@
+from .correlations import phase_alignment
 from .frequency import mdf, mnf, vcf
 from .gear import na4
 from .snr import snr
@@ -18,4 +19,5 @@ __all__ = [
     "tacho_to_rpm",
     "snr",
     "two_step_if",
+    "phase_alignment",
 ]
