@@ -30,7 +30,13 @@ def ps2pd(ps, range_amp: Tuple[int, int] = (0, 256), resol_amp: int = 128) -> np
 
     Examples
     --------
-    -
+    >>> ps = np.random.random([128,3600])
+    >>> ps2pd(ps)
+    array([[0.19502315, 0.29224009, 0.1954162 , ..., 0.34533713, 0.75964062,
+            0.40776178],
+        ...,
+        [0.50566304, 0.72387638, 0.18342599, ..., 0.97458101, 0.5760689 ,
+            0.38951   ]])
     """
     if len(ps.shape) == 1:
         raise ValueError("`ps` has to be 2-dimensions.")
