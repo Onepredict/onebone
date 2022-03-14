@@ -4,6 +4,7 @@
 - Contact: sunjin.kim@onepredict.com
 """
 
+import matplotlib.pyplot as plt
 import numpy as np
 from numpy.testing import assert_array_almost_equal
 
@@ -32,20 +33,20 @@ def timeseries_data(num_outlier: int = 10) -> np.ndarray:
 
 def test_hampel_filter(is_plot: bool = False):
     window_size = 4
-    filtered_data = hampel_filter.hampel_filter(timeseries_data(), window_size)[0]
-    origin_data = timeseries_data()
-    perfect_data = timeseries_data(num_outlier=0)
 
-    check_window_region = [window_size * 2, len(timeseries_data()) - window_size * 2]
+    origin_data = timeseries_data(num_outlier=0)
+    noisy_data = timeseries_data(num_outlier=10)
+    filtered_data = hampel_filter.hampel_filter(noisy_data, window_size)[0]
+
+    check_window_region = [window_size, len(noisy_data) - window_size]
 
     assert_array_almost_equal(
         filtered_data[check_window_region[0] : check_window_region[1]],
-        perfect_data[check_window_region[0] : check_window_region[1]],
+        origin_data[check_window_region[0] : check_window_region[1]],
         decimal=0,
     )
 
     if is_plot:
-        import matplotlib.pyplot as plt
 
         plt.plot(origin_data)
         plt.show()
@@ -55,7 +56,7 @@ def test_hampel_filter(is_plot: bool = False):
         plt.show()
         plt.close()
 
-        plt.plot(perfect_data)
+        plt.plot(origin_data)
         plt.show()
         plt.close()
 

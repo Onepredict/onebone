@@ -7,9 +7,7 @@ from typing import Tuple
 import numpy as np
 
 
-def hampel_filter(
-    series: np.ndarray, window_size: int, n_sigmas: float = 3
-) -> Tuple[np.ndarray, list]:
+def hampel_filter(x: np.ndarray, window_size: int, n_sigmas: float = 3) -> Tuple[np.ndarray, list]:
 
     """
     A hampel filter removes outliers.
@@ -17,6 +15,11 @@ def hampel_filter(
     MAD(Median Absolute Deviation) in the window range set by the user.
     If the MAD > 3 * sigma condition is satisfied,
     the value is replaced with the median value.
+
+    '''
+    MAD scale estimate,
+    defined as : S_k = 1.4826 * median_j∈-K,K]{|x_(k-j) - m_k|}.
+    '''
 
     Parameters
     ----------
@@ -41,7 +44,6 @@ def hampel_filter(
     [1] Pearson, Ronald K., et al. "Generalized hampel filters."
     EURASIP Journal on Advances in Signal Processing 2016.1 (2016): 1-18.
     DOI: 10.1186/s13634-016-0383-6
-    [2] https://github.com/MichaelisTrofficus/hampel_filter
 
     Examples
     --------
@@ -64,14 +66,14 @@ def hampel_filter(
     # of the standard deviation for Gaussian data.
 
     # Check inputs
-    if not isinstance(series, np.ndarray):
+    if not isinstance(x, np.ndarray):
         raise TypeError("'series' must be np.ndarray")
     if not isinstance(window_size, int):
         raise TypeError("'window_size' must be integer")
     if not isinstance(n_sigmas, (int, float)):
         raise TypeError("'n_sigmas' must be int or float")
 
-    copy_series = series.copy()
+    copy_series = x.copy()
     oulier_index = []
 
     ## define sliding window
@@ -85,10 +87,6 @@ def hampel_filter(
         np.shape(copy_series[indexer])[0], window_size
     )
 
-    """
-    MAD scale estimate,
-    defined as : S_k = 1.4826 * median_j∈-K,K]{|x_(k-j) - m_k|}.
-    """
     ## get MAD * k
     MAD_k = k * np.median(np.abs(copy_series[indexer] - window_median_array), axis=1)
 
