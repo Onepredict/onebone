@@ -8,7 +8,7 @@ import numpy as np
 
 
 def hampel_filter(
-    series: np.ndarray, window_size: int, n_sigmas: float = 3, autowindow: bool = False
+    series: np.ndarray, window_size: int, n_sigmas: float = 3
 ) -> Tuple[np.ndarray, list]:
 
     """
@@ -28,8 +28,6 @@ def hampel_filter(
         and the window size must be adjusted according to your data.
     n_sigma : float, defalut=3
         Coefficient of standard deviation.
-    auto_window : boolean, defalut=False
-        If set to True, the user does not need to modify the window size multiple times.
 
     Returns
     ----------
@@ -61,7 +59,6 @@ def hampel_filter(
 
     """
 
-    filtered_series = series.copy()
     k = 1.4826  # scale factor for Gaussian distribution
     # The factor 1.4826 makes the MAD scale estimate an unbiased estimate
     # of the standard deviation for Gaussian data.
@@ -73,27 +70,35 @@ def hampel_filter(
         raise TypeError("'window_size' must be integer")
     if not isinstance(n_sigmas, (int, float)):
         raise TypeError("'n_sigmas' must be int or float")
-    if not isinstance(autowindow, bool):
-        raise TypeError("'autowindow' must be boolean")
 
-    index = []
+    copy_series = series.copy()
+    oulier_index = []
 
-    if autowindow is False:
-        for i in range((window_size), (len(filtered_series) - window_size)):
-            real_window_size = filtered_series[(i - window_size) : (i + window_size)]
+    ## define sliding window
+    indexer = (
+        np.arange(window_size)[None, :] + np.arange(int(len(copy_series) - window_size))[:, None]
+    )
 
-            window_median = np.median(real_window_size)
-            S_k = k * np.median(np.abs(real_window_size - window_median))
+    ## define window median
+    window_median = np.median(copy_series[indexer], axis=1)
+    window_median_array = np.repeat(window_median, window_size, axis=0).reshape(
+        np.shape(copy_series[indexer])[0], window_size
+    )
 
-            """
-            MAD scale estimate, defined as : S_k = 1.4826 * median_j∈-K,K]{|x_(k-j) - m_k|}.
-            """
+    """
+    MAD scale estimate,
+    defined as : S_k = 1.4826 * median_j∈-K,K]{|x_(k-j) - m_k|}.
+    """
+    ## get MAD * k
+    MAD_k = k * np.median(np.abs(copy_series[indexer] - window_median_array), axis=1)
 
-            if np.abs(filtered_series[i] - window_median) > n_sigmas * S_k:
-                filtered_series[i] = window_median
-                index.append(i)
-        return filtered_series, index
+    ## get comparative value
+    value = np.abs(copy_series[indexer][:, 0] - window_median)
 
-    elif autowindow is True:
-        # window size를 지정 및 가장 유사한 graph로 후보군을 정리해주는 코드 구현 하고싶음
-        raise AttributeError("We are preparing to provide a function")
+    filtered_series = np.where(value > n_sigmas * MAD_k, window_median, copy_series[indexer][:, 0])
+
+    ## get index
+    oulier_index = np.where(value < n_sigmas * MAD_k, None, indexer[:, 0])
+    oulier_index = list(filter(None, oulier_index))
+
+    return filtered_series, oulier_index
