@@ -20,7 +20,7 @@ def ps2pd(ps, range_amp: Tuple[int, int] = (0, 256), resol_amp: int = 128) -> np
         The data. Ex: kepco standard=(128, 3600)
     range_amp : tuple (min, max), default=(0, 256)
         Measurement range of PD DAQ. Refers to DAQ manufacture.
-    resol_amp : int, default 128
+    resol_amp : int, default=128
         Desired resolution of amplitude resolution for transformd prpd.
 
     Returns
