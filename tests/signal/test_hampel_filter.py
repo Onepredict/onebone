@@ -32,7 +32,7 @@ def timeseries_data(num_outlier: int = 10) -> np.ndarray:
 
 
 def test_hampel_filter(is_plot: bool = False):
-    window_size = 4
+    window_size = 3
 
     origin_data = timeseries_data(num_outlier=0)
     noisy_data = timeseries_data(num_outlier=10)
