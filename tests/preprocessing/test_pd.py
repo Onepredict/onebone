@@ -12,13 +12,22 @@ from onebone.preprocessing import pd
 
 
 def _generate_pspd(coord_point: Tuple[int, int], cum_value: int) -> Tuple[np.ndarray, np.ndarray]:
-    prps = np.zeros([3600, 128])
-    prpd = np.zeros([128, 128])
+    time_step = 3600
+    phase_resol = 128
+    range_amp = (0, 256)
+    resol_amp = 128
+
+    prps = np.zeros([time_step, phase_resol])
+    idx_pulse = np.random.permutation(time_step)[:cum_value]
+    prps[idx_pulse, coord[0]] = coord[1]
+
+    prpd = np.zeros([phase_resol, resol_amp])
+    prpd[resol_amp-int(coord[1]/range_amp[1]*resol_amp), coord[0]] = cum_value
     return prps, prpd
 
 
 def _check_ps2pd():
-    coord = (3, 12)
+    coord = (60, 182)
     cum_value = 50
     prps, prpd = _generate_pspd(coord, cum_value)
     prpd_transformed = pd.ps2pd(prps)
@@ -27,7 +36,8 @@ def _check_ps2pd():
 
 
 def test_ps2pd():
-    _check_ps2pd()
+    for _ in range(10):
+        _check_ps2pd()
 
 
 if __name__ == "__main__":
