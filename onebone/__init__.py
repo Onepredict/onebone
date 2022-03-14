@@ -1,5 +1,5 @@
 """
-onebone: onepredict base algorithm library
+onebone: Onepredict Base algorithm Library
 """
 
 import pkg_resources
