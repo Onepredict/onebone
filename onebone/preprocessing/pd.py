@@ -11,7 +11,8 @@ import numpy as np
 
 def ps2pd(ps, range_amp: Tuple[int, int] = (0, 256), resol_amp: int = 128) -> np.ndarray:
     """
-    Transform prps(phase resolved pulse sequance) to a prpd(phaes resolved partial discharge) by marginalizing time dimension.
+    Transform prps(phase resolved pulse sequance) to a prpd(phaes resolved partial discharge)
+    by marginalizing time dimension.
 
     Parameters
     ----------
@@ -29,8 +30,11 @@ def ps2pd(ps, range_amp: Tuple[int, int] = (0, 256), resol_amp: int = 128) -> np
 
     Examples
     --------
-    To be filled.
+    -
     """
+    if len(ps.shape) == 1:
+        raise ValueError("`ps` has to be 2-dimensions.")
+
     imat = np.eye(resol_amp)
     imat[0, 0] = 0
     bins = np.linspace(range_amp[0], range_amp[1], resol_amp)
