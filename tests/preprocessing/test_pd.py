@@ -11,7 +11,7 @@ import numpy as np
 from onebone.preprocessing import pd
 
 
-def _generate_pspd(coord_point: Tuple[int, int], cum_value: int) -> Tuple[np.ndarray, np.ndarray]:
+def _generate_pspd(coord: Tuple[int, int], cum_value: int) -> Tuple[np.ndarray, np.ndarray]:
     time_step = 3600
     phase_resol = 128
     range_amp = (0, 256)
@@ -22,7 +22,7 @@ def _generate_pspd(coord_point: Tuple[int, int], cum_value: int) -> Tuple[np.nda
     prps[idx_pulse, coord[0]] = coord[1]
 
     prpd = np.zeros([phase_resol, resol_amp])
-    prpd[resol_amp-int(coord[1]/range_amp[1]*resol_amp), coord[0]] = cum_value
+    prpd[resol_amp - int(coord[1] / range_amp[1] * resol_amp), coord[0]] = cum_value
     return prps, prpd
 
 
