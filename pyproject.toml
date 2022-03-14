@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "onebone"
-version = "1.1.0"
+version = "1.2.0"
 description = "Base algorithm in Onepredict"
 authors = ["Kyunghwan Kim <kyunghwan.kim@onepredict.com>"]
 
