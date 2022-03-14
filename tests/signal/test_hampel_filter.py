@@ -48,7 +48,7 @@ def test_hampel_filter(is_plot: bool = False):
 
     if is_plot:
 
-        plt.plot(origin_data)
+        plt.plot(noisy_data)
         plt.show()
         plt.close()
 
