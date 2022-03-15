@@ -16,9 +16,13 @@ def hampel_filter(x: np.ndarray, window_size: int, n_sigmas: float = 3) -> Tuple
     If the MAD > 3 * sigma condition is satisfied,
     the value is replaced with the median value.
 
+    .. math::
+    Local\,median\,:\,m_i = median(x[window\:\_\: size])\\
+    Median\,absolute\,deviation\,:\,MAD_i = median(\left|x_i-k-m_i\right|,...\:,\left|x_i+k-m_i\right|)).
     '''
     MAD scale estimate,
     defined as : S_k = 1.4826 * median_j∈-K,K]{|x_(k-j) - m_k|}.
+
     '''
 
     Parameters
