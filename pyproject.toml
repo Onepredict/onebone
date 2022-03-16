@@ -11,6 +11,7 @@ pandas = ">=1.1.5"
 scipy = ">=1.5.4"
 sklearn = "^0.0"
 matplotlib = ">=3.3.4"
+PyWavelets = "1.1.1"
 
 [tool.poetry.dev-dependencies]
 black = "^21.10b0"

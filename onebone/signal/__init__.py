@@ -1,3 +1,4 @@
+from .denoise import wavelet_denoising
 from .envelope import envelope_hilbert
 from .fft import positive_fft
 from .filter import bandpass_filter, bandstop_filter, highpass_filter, lowpass_filter
@@ -14,4 +15,5 @@ __all__ = [
     "envelope_hilbert",
     "positive_fft",
     "moving_average",
+    "wavelet_denoising",
 ]
