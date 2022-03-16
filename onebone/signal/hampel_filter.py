@@ -17,13 +17,20 @@ def hampel_filter(x: np.ndarray, window_size: int, n_sigmas: float = 3) -> Tuple
     the value is replaced with the median value.
 
     .. math::
-    Local\,median\,:\,m_i = median(x[window\:\_\: size])\\
-    Median\,absolute\,deviation\,:\,MAD_i = median(\left|x_i-k-m_i\right|,...\:,\left|x_i+k-m_i\right|)).
-    '''
-    MAD scale estimate,
-    defined as : S_k = 1.4826 * median_j∈-K,K]{|x_(k-j) - m_k|}.
+        m_{i} = median(x[window_size])
+        \\\\
+        mad_i = median(|x_{i}-k-m_{i}|,...,|x_{i}+k-m_{i}|})
+        \\\\
+        k_mad = k * mad_i
+    Where :math: `m_i` is Local median,
+    :math: `mad_i` is Median absolute deviation.
+           the residuals (deviations) from the data's median.
+    :math: k_mad is the MAD may be used similarly to how one would use the deviation for the average.
+           In order to use the MAD as a consistent estimator
+           for the estimation of the standard deviation `{\sigma}`,one takes `k * mad_i`
+    :math: `k` is a constant scale factor, which depends on the distribution.
+           For normally distributed data `k` is taken to be `k` = 1.4826
 
-    '''
 
     Parameters
     ----------
@@ -61,7 +68,7 @@ def hampel_filter(x: np.ndarray, window_size: int, n_sigmas: float = 3) -> Tuple
     >>> second_hampel_filter_array = hampel_filter.hampel_filter(y,3)[0]
 
     .. image:: https://bit.ly/3t55Dlc #nopa
-        :width: 300
+        :width: 600
 
     """
 
@@ -81,9 +88,7 @@ def hampel_filter(x: np.ndarray, window_size: int, n_sigmas: float = 3) -> Tuple
     oulier_index = []
 
     ## define sliding window
-    indexer = (
-        np.arange(window_size)[None, :] + np.arange(int(len(copy_series) - window_size))[:, None]
-    )
+    indexer = np.arange(window_size)[None, :] + np.arange(len(copy_series) - window_size)[:, None]
 
     ## define window median
     window_median = np.median(copy_series[indexer], axis=1)
@@ -91,16 +96,16 @@ def hampel_filter(x: np.ndarray, window_size: int, n_sigmas: float = 3) -> Tuple
         np.shape(copy_series[indexer])[0], window_size
     )
 
-    ## get MAD * k
-    MAD_k = k * np.median(np.abs(copy_series[indexer] - window_median_array), axis=1)
+    ## get mad * k
+    k_mad = k * np.median(np.abs(copy_series[indexer] - window_median_array), axis=1)
 
     ## get comparative value
     value = np.abs(copy_series[indexer][:, 0] - window_median)
 
-    filtered_series = np.where(value > n_sigmas * MAD_k, window_median, copy_series[indexer][:, 0])
+    filtered_series = np.where(value > n_sigmas * k_mad, window_median, copy_series[indexer][:, 0])
 
     ## get index
-    oulier_index = np.where(value < n_sigmas * MAD_k, None, indexer[:, 0])
+    oulier_index = np.where(value <= n_sigmas * k_mad, None, indexer[:, 0])
     oulier_index = list(filter(None, oulier_index))
 
     return filtered_series, oulier_index

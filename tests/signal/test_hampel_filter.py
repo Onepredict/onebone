@@ -11,7 +11,7 @@ from numpy.testing import assert_array_almost_equal
 from onebone.signal import hampel_filter
 
 
-def timeseries_data(num_outlier: int = 10) -> np.ndarray:
+def timeseries_data(outlier: bool = True) -> np.ndarray:
 
     """
     make example timeseries
@@ -19,23 +19,25 @@ def timeseries_data(num_outlier: int = 10) -> np.ndarray:
 
     Parameters
     ----------
-    num_outlier : numpy.ndarray
-        You can set the number of random outliers.
-        default = 10
+    num_outlier : bool
+        You can generate/degenerate timeseries data with example outliers.
+        default = True
     """
+
     t = np.linspace(0, 1, 1000)
     y = np.sin(2 * np.pi * 10 * t)
-    make_outlier = np.random.randint(0, 1000, size=num_outlier)
-    np.put(y, [make_outlier], 10)
-
+    np.put(y, [13, 124, 330, 445, 651, 775, 978], 10)
+    if outlier is False:
+        t = np.linspace(0, 1, 1000)
+        y = np.sin(2 * np.pi * 10 * t)
     return y
 
 
 def test_hampel_filter(is_plot: bool = False):
     window_size = 3
 
-    origin_data = timeseries_data(num_outlier=0)
-    noisy_data = timeseries_data(num_outlier=10)
+    origin_data = timeseries_data(outlier=False)
+    noisy_data = timeseries_data(outlier=True)
     filtered_data = hampel_filter.hampel_filter(noisy_data, window_size)[0]
 
     check_window_region = [window_size, len(noisy_data) - window_size]
@@ -46,20 +48,17 @@ def test_hampel_filter(is_plot: bool = False):
         decimal=0,
     )
 
-    if is_plot:
+    if is_plot is True:
 
         plt.plot(noisy_data)
         plt.show()
-        plt.close()
 
         plt.plot(filtered_data)
         plt.show()
-        plt.close()
 
         plt.plot(origin_data)
         plt.show()
-        plt.close()
 
 
 if __name__ == "__main__":
-    test_hampel_filter(is_plot=True)
+    test_hampel_filter(is_plot=False)
