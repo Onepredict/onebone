@@ -132,7 +132,7 @@ def timeseries_data(outlier: bool = True) -> np.ndarray:
 
     Parameters
     ----------
-    num_outlier : bool, default=True
+    outlier : bool, default=True
         You can generate/degenerate timeseries data with example outliers.
 
     Returns

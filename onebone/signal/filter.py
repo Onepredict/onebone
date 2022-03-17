@@ -439,9 +439,6 @@ def hampel_filter(x: np.ndarray, window_size: int, n_sigma: float = 3) -> Tuple[
     .. image:: https://bit.ly/3JlBion #nopa
         :width: 600
     """
-    # Scale factor for Gaussian distribution
-    # The factor 1.4826 makes the MAD scale estimate an unbiased estimate
-    # of the standard deviation for Gaussian data.
     k = 1.4826
 
     # Check inputs
@@ -466,8 +463,11 @@ def hampel_filter(x: np.ndarray, window_size: int, n_sigma: float = 3) -> Tuple[
 
     # Get estimated_sigma (mad * k)
     estimated_sigma = k * np.median(np.abs(copy_x[indexer] - window_median_array), axis=1)
-
+    # Scale factor for Gaussian distribution
+    # The factor 1.4826 makes the MAD scale estimate an unbiased estimate
+    # of the standard deviation for Gaussian data.
     # Get comparative value
+
     value = np.abs(copy_x[indexer][:, 0] - window_median)
 
     filtered_x = np.where(value > n_sigma * estimated_sigma, window_median, copy_x[indexer][:, 0])
