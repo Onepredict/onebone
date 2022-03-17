@@ -4,7 +4,7 @@
 - Contact: kyunghwan.kim@onepredict.com
 """
 
-from typing import Union
+from typing import Tuple, Union
 
 import numpy as np
 from scipy.signal import butter, lfilter
@@ -367,3 +367,118 @@ def bandstop_filter(
     b, a = butter(order, [low, high], btype="bandstop")
     signal = lfilter(b, a, signal, axis=axis)
     return signal
+
+
+"""hampel_filter.
+- Author: Sunjin Kim
+- Contact: sunjin.kim@onepredict.com
+"""
+
+
+def hampel_filter(x: np.ndarray, window_size: int, n_sigmas: float = 3) -> Tuple[np.ndarray, list]:
+    """
+    A hampel filter removes outliers.
+    Estimate the median and standard deviation of each sample using
+    MAD(Median Absolute Deviation) in the window range set by the user.
+    If the MAD > 3 * sigma condition is satisfied,
+    the value is replaced with the median value.
+
+    .. math::
+        m_i = median(x_{i-k_{left}}, x_{i-k_{left}+1}, ..., x_{i+k_{right}-1}, x_{i+k_{right}})
+    .. math::
+        MAD_i = median(|x_{i-k}-m_{i}|,...,|x_{i+k}-m_{i}|)
+    .. math::
+        {\sigma}_i = {\kappa} * MAD_i
+
+    Where :math:`k_{left}` and :math:`k_{right}` are the number of neighbors on the left and right sides,
+    respectively, based on x_i (:math:`k_{left} + k_{right}` = window samples).
+    :math:`m_i` is Local median, :math:`MAD_i` is median absolute deviation
+    which is the residuals (deviations) from the data's median.
+    :math:`{\sigma}_i` is the MAD may be used similarly to how one would use the deviation for the average.
+    In order to use the MAD as a consistent estimator
+    for the estimation of the standard deviation :math:`{\sigma}`, one takes :math:`{\kappa} * MAD_i`.
+    :math:`{\kappa}` is a constant scale factor, which depends on the distribution.
+    For normally distributed data :math:`{\kappa}` is taken to be :math:`{\kappa}` = 1.4826
+
+
+    Parameters
+    ----------
+    x : numpy.ndarray
+        1d-timeseries data.
+        The shape of x must be (signal_length,) .
+    window_size : int
+        Lenght of the sliding window.
+        Only integer types are available,
+        and the window size must be adjusted according to your data.
+    n_sigma : float, defalut=3
+        Coefficient of standard deviation.
+
+    Returns
+    ----------
+    filtered_series : numpy.ndarray
+        A value from which Outlier or NaN has been removed by the filter.
+    index : list
+        Returns the index corresponding to Outlier.
+
+    References
+    ----------
+    [1] Pearson, Ronald K., et al. "Generalized hampel filters."
+    EURASIP Journal on Advances in Signal Processing 2016.1 (2016): 1-18.
+    DOI: 10.1186/s13634-016-0383-6
+
+    Examples
+    --------
+    >>> fs = 1000.0
+    >>> t = np.linspace(0, 1, int(fs))
+    >>> y = np.sin(2 * np.pi * 10.0 * t)
+    >>> np.put(y, [13, 124, 330, 445, 651, 775, 978], 3)
+    >>> print('noise_signal')
+    .. image:: https://bit.ly/3JitQu0 #nopa
+        :width: 600
+    >>> filtered_signal = hampel_filter.hampel_filter(y, window_size=2)[0]
+    >>> print('filtered_signal_window=5')
+    .. image:: https://bit.ly/3MX92KV #nopa
+        :width: 600
+    >>> filtered_signal = hampel_filter.hampel_filter(y, window_size=3)[0]
+    >>> print('filtered_signal_window=10')
+    .. image:: https://bit.ly/3JlBion #nopa
+        :width: 600
+    """
+
+    k = 1.4826  # scale factor for Gaussian distribution
+    # The factor 1.4826 makes the MAD scale estimate an unbiased estimate
+    # of the standard deviation for Gaussian data.
+
+    # Check inputs
+    if not isinstance(x, np.ndarray):
+        raise TypeError("'series' must be np.ndarray")
+    if not isinstance(window_size, int):
+        raise TypeError("'window_size' must be integer")
+    if not isinstance(n_sigmas, (int, float)):
+        raise TypeError("'n_sigmas' must be int or float")
+
+    copy_series = x.copy()
+    oulier_index = []
+
+    ## define sliding window
+    indexer = np.arange(window_size)[None, :] + np.arange(len(copy_series) - window_size)[:, None]
+
+    ## define window median
+    window_median = np.median(copy_series[indexer], axis=1)
+    window_median_array = np.repeat(window_median, window_size, axis=0).reshape(
+        np.shape(copy_series[indexer])[0], window_size
+    )
+
+    ## get mad * k
+    k_mad = k * np.median(np.abs(copy_series[indexer] - window_median_array), axis=1)
+
+    ## get comparative value
+    value = np.abs(copy_series[indexer][:, 0] - window_median)
+
+    filtered_series = np.where(value > n_sigmas * k_mad, window_median, copy_series[indexer][:, 0])
+
+    ## get index
+    oulier_index = np.where(value <= n_sigmas * k_mad, None, indexer[:, 0])
+    oulier_index = list(filter(None, oulier_index))
+
+    return filtered_series, oulier_index
