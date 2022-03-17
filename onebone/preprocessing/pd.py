@@ -1,4 +1,5 @@
-"""Transform PRPS(Phase Resolved Pulse Sequence) format pd data to PRPD(Phase Resolved Partial Discharge) format.
+"""Transform PRPS(Phase Resolved Pulse Sequence) format pd data
+to PRPD(Phase Resolved Partial Discharge) format.
 
 - Author: Hyunjae Kim
 - Contact: hyunjae.kim@onepredict.com
