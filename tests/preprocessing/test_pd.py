@@ -10,6 +10,8 @@ import numpy as np
 
 from onebone.preprocessing import pd
 
+np.random.seed(0)
+
 
 def _generate_pspd(coord: Tuple[int, int], cum_value: int) -> Tuple[np.ndarray, np.ndarray]:
     time_step = 3600
