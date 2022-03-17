@@ -2,6 +2,13 @@
 
 - Author: Kyunghwan Kim
 - Contact: kyunghwan.kim@onepredict.com
+'''
+
+'''hampel_filter.
+
+- Author: Sunjin Kim
+- Contact: sunjin.kim@onepredict.com
+
 """
 
 from typing import Tuple, Union
@@ -369,13 +376,7 @@ def bandstop_filter(
     return signal
 
 
-"""hampel_filter.
-- Author: Sunjin Kim
-- Contact: sunjin.kim@onepredict.com
-"""
-
-
-def hampel_filter(x: np.ndarray, window_size: int, n_sigmas: float = 3) -> Tuple[np.ndarray, list]:
+def hampel_filter(x: np.ndarray, window_size: int, n_sigma: float = 3) -> Tuple[np.ndarray, list]:
     """
     A hampel filter removes outliers.
     Estimate the median and standard deviation of each sample using
@@ -415,10 +416,10 @@ def hampel_filter(x: np.ndarray, window_size: int, n_sigmas: float = 3) -> Tuple
 
     Returns
     ----------
-    filtered_series : numpy.ndarray
-        A value from which Outlier or NaN has been removed by the filter.
+    filtered_x : numpy.ndarray
+        A value from which outlier or NaN has been removed by the filter.
     index : list
-        Returns the index corresponding to Outlier.
+        Returns the index corresponding to outlier.
 
     References
     ----------
@@ -444,41 +445,41 @@ def hampel_filter(x: np.ndarray, window_size: int, n_sigmas: float = 3) -> Tuple
     .. image:: https://bit.ly/3JlBion #nopa
         :width: 600
     """
-
-    k = 1.4826  # scale factor for Gaussian distribution
+    # Scale factor for Gaussian distribution
     # The factor 1.4826 makes the MAD scale estimate an unbiased estimate
     # of the standard deviation for Gaussian data.
+    k = 1.4826
 
     # Check inputs
     if not isinstance(x, np.ndarray):
-        raise TypeError("'series' must be np.ndarray")
+        raise TypeError("'x' must be np.ndarray")
     if not isinstance(window_size, int):
         raise TypeError("'window_size' must be integer")
-    if not isinstance(n_sigmas, (int, float)):
-        raise TypeError("'n_sigmas' must be int or float")
+    if not isinstance(n_sigma, (int, float)):
+        raise TypeError("'n_sigma' must be int or float")
 
-    copy_series = x.copy()
+    copy_x = x.copy()
     oulier_index = []
 
-    ## define sliding window
-    indexer = np.arange(window_size)[None, :] + np.arange(len(copy_series) - window_size)[:, None]
+    # Define sliding window
+    indexer = np.arange(window_size)[None, :] + np.arange(len(copy_x) - window_size)[:, None]
 
-    ## define window median
-    window_median = np.median(copy_series[indexer], axis=1)
+    # Define window median
+    window_median = np.median(copy_x[indexer], axis=1)
     window_median_array = np.repeat(window_median, window_size, axis=0).reshape(
-        np.shape(copy_series[indexer])[0], window_size
+        np.shape(copy_x[indexer])[0], window_size
     )
 
-    ## get mad * k
-    k_mad = k * np.median(np.abs(copy_series[indexer] - window_median_array), axis=1)
+    # Get estimated_sigma (mad * k)
+    estimated_sigma = k * np.median(np.abs(copy_x[indexer] - window_median_array), axis=1)
 
-    ## get comparative value
-    value = np.abs(copy_series[indexer][:, 0] - window_median)
+    # Get comparative value
+    value = np.abs(copy_x[indexer][:, 0] - window_median)
 
-    filtered_series = np.where(value > n_sigmas * k_mad, window_median, copy_series[indexer][:, 0])
+    filtered_x = np.where(value > n_sigma * estimated_sigma, window_median, copy_x[indexer][:, 0])
 
-    ## get index
-    oulier_index = np.where(value <= n_sigmas * k_mad, None, indexer[:, 0])
+    # Get index
+    oulier_index = np.where(value <= n_sigma * estimated_sigma, None, indexer[:, 0])
     oulier_index = list(filter(None, oulier_index))
 
-    return filtered_series, oulier_index
+    return filtered_x, oulier_index

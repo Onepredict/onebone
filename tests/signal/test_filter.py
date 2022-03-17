@@ -2,6 +2,12 @@
 
 - Author: Kyunghwan Kim
 - Contact: kyunghwan.kim@onepredict.com
+'''
+
+'''Test_hampel_filter.
+
+- Author: Sunjin.kim
+- Contact: sunjin.kim@onepredict.com
 """
 
 from typing import Callable, Tuple
@@ -122,13 +128,6 @@ if __name__ == "__main__":
     test_highpass_filter()
     test_bandpass_filter()
     test_bandstop_filter()
-
-
-"""Test_hampel_filter.
-
-- Author: Sunjin.kim
-- Contact: sunjin.kim@onepredict.com
-"""
 
 
 def timeseries_data(outlier: bool = True) -> np.ndarray:
