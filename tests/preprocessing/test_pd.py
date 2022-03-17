@@ -27,9 +27,9 @@ def _generate_pspd(coord: Tuple[int, int], cum_value: int) -> Tuple[np.ndarray, 
 
 
 def _check_ps2pd():
-    rand_x = np.random.randint(0, 128)
-    rand_y = np.random.randint(0, 256)
-    rand_cum = np.random.randint(0, 3600)
+    rand_x = np.random.randint(1, 128)
+    rand_y = np.random.randint(1, 256)
+    rand_cum = np.random.randint(1, 3600)
     coord = (rand_x, rand_y)
     cum_value = rand_cum
     prps, prpd = _generate_pspd(coord, cum_value)
