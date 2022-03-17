@@ -41,8 +41,7 @@ def _check_ps2pd():
 
 
 def test_ps2pd():
-    for _ in range(10):
-        _check_ps2pd()
+    _check_ps2pd()
 
 
 if __name__ == "__main__":
