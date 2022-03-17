@@ -1,14 +1,8 @@
 """A frequency filter to leave only a specific frequency band.
+   and a filter that replaces outlier values in data with other values.
 
-- Author: Kyunghwan Kim
-- Contact: kyunghwan.kim@onepredict.com
-'''
-
-'''hampel_filter.
-
-- Author: Sunjin Kim
-- Contact: sunjin.kim@onepredict.com
-
+- Author: Kyunghwan Kim, Sunjin Kim
+- Contact: kyunghwan.kim@onepredict.com, sunjin.kim@onepredict.com
 """
 
 from typing import Tuple, Union
@@ -415,7 +409,7 @@ def hampel_filter(x: np.ndarray, window_size: int, n_sigma: float = 3) -> Tuple[
         Coefficient of standard deviation.
 
     Returns
-    ----------
+    -------
     filtered_x : numpy.ndarray
         A value from which outlier or NaN has been removed by the filter.
     index : list

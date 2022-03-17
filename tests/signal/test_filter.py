@@ -1,13 +1,8 @@
 """Test frequency filter.
+   and test_hampel_filter.
 
-- Author: Kyunghwan Kim
-- Contact: kyunghwan.kim@onepredict.com
-'''
-
-'''Test_hampel_filter.
-
-- Author: Sunjin.kim
-- Contact: sunjin.kim@onepredict.com
+- Author: Kyunghwan Kim, Sunjin.kim
+- Contact: kyunghwan.kim@onepredict.com, sunjin.kim@onepredict.com
 """
 
 from typing import Callable, Tuple
@@ -141,7 +136,7 @@ def timeseries_data(outlier: bool = True) -> np.ndarray:
         You can generate/degenerate timeseries data with example outliers.
 
     Returns
-    ----------
+    -------
     y : numpy.ndarray
         the numpy.ndarray data including outliers
 
