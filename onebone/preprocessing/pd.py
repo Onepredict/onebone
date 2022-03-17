@@ -38,7 +38,7 @@ def ps2pd(ps, range_amp: Tuple[int, int] = (0, 256), resol_amp: int = 128) -> np
         ...,
         [0., 0., 0., ..., 0., 0., 0.]])
     """
-    if len(ps.shape) == 1:
+    if len(ps.shape) != 2:
         raise ValueError("`ps` has to be 2-dimensions.")
 
     imat = np.eye(resol_amp)
