@@ -427,17 +427,17 @@ def hampel_filter(x: np.ndarray, window_size: int, n_sigma: float = 3) -> Tuple[
     >>> t = np.linspace(0, 1, int(fs))
     >>> y = np.sin(2 * np.pi * 10.0 * t)
     >>> np.put(y, [13, 124, 330, 445, 651, 775, 978], 3)
-    >>> print('noise_signal')
-    .. image:: https://bit.ly/3JitQu0 #nopa
+    >>> plt.plot(y) # noise_signal
+
+    .. image:: https://bit.ly/3JitQu0
         :width: 600
-    >>> filtered_signal = hampel_filter.hampel_filter(y, window_size=2)[0]
-    >>> print('filtered_signal_window=5')
-    .. image:: https://bit.ly/3MX92KV #nopa
+
+    >>> filtered_signal = hampel_filter.hampel_filter(y, window_size=5)[0]
+    >>> plt.plot(filtered_signal) # filtered_signal
+
+    .. image:: https://bit.ly/3MX92KV
         :width: 600
-    >>> filtered_signal = hampel_filter.hampel_filter(y, window_size=3)[0]
-    >>> print('filtered_signal_window=10')
-    .. image:: https://bit.ly/3JlBion #nopa
-        :width: 600
+
     """
     k = 1.4826
 

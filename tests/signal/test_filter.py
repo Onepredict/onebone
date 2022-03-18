@@ -118,13 +118,6 @@ def test_bandstop_filter():
     check_3d_signal(bandstop_filter, (5000.0, 50, 300), np.array([10.0, 20.0, 500.0]))
 
 
-if __name__ == "__main__":
-    test_lowpass_filter()
-    test_highpass_filter()
-    test_bandpass_filter()
-    test_bandstop_filter()
-
-
 def timeseries_data(outlier: bool = True) -> np.ndarray:
     """
     Make example timeseries.
@@ -183,4 +176,8 @@ def test_hampel_filter(is_plot: bool = False):
 
 
 if __name__ == "__main__":
+    test_lowpass_filter()
+    test_highpass_filter()
+    test_bandpass_filter()
+    test_bandstop_filter()
     test_hampel_filter(is_plot=False)
