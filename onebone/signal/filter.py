@@ -1,10 +1,11 @@
 """A frequency filter to leave only a specific frequency band.
+   and a filter that replaces outlier values in data with other values.
 
-- Author: Kyunghwan Kim
-- Contact: kyunghwan.kim@onepredict.com
+- Author: Kyunghwan Kim, Sunjin Kim
+- Contact: kyunghwan.kim@onepredict.com, sunjin.kim@onepredict.com
 """
 
-from typing import Union
+from typing import Tuple, Union
 
 import numpy as np
 from scipy.signal import butter, lfilter
@@ -367,3 +368,112 @@ def bandstop_filter(
     b, a = butter(order, [low, high], btype="bandstop")
     signal = lfilter(b, a, signal, axis=axis)
     return signal
+
+
+def hampel_filter(x: np.ndarray, window_size: int, n_sigma: float = 3) -> Tuple[np.ndarray, list]:
+    """
+    A hampel filter removes outliers.
+    Estimate the median and standard deviation of each sample using
+    MAD(Median Absolute Deviation) in the window range set by the user.
+    If the MAD > 3 * sigma condition is satisfied,
+    the value is replaced with the median value.
+
+    .. math::
+        m_i = median(x_{i-k_{left}}, x_{i-k_{left}+1}, ..., x_{i+k_{right}-1}, x_{i+k_{right}})
+    .. math::
+        MAD_i = median(|x_{i-k}-m_{i}|,...,|x_{i+k}-m_{i}|)
+    .. math::
+        {\sigma}_i = {\kappa} * MAD_i
+
+    Where :math:`k_{left}` and :math:`k_{right}` are the number of neighbors on the left and right sides,
+    respectively, based on x_i (:math:`k_{left} + k_{right}` = window samples).
+    :math:`m_i` is Local median, :math:`MAD_i` is median absolute deviation
+    which is the residuals (deviations) from the data's median.
+    :math:`{\sigma}_i` is the MAD may be used similarly to how one would use the deviation for the average.
+    In order to use the MAD as a consistent estimator
+    for the estimation of the standard deviation :math:`{\sigma}`, one takes :math:`{\kappa} * MAD_i`.
+    :math:`{\kappa}` is a constant scale factor, which depends on the distribution.
+    For normally distributed data :math:`{\kappa}` is taken to be :math:`{\kappa}` = 1.4826
+
+
+    Parameters
+    ----------
+    x : numpy.ndarray
+        1d-timeseries data.
+        The shape of x must be (signal_length,) .
+    window_size : int
+        Lenght of the sliding window.
+        Only integer types are available,
+        and the window size must be adjusted according to your data.
+    n_sigma : float, defalut=3
+        Coefficient of standard deviation.
+
+    Returns
+    -------
+    filtered_x : numpy.ndarray
+        A value from which outlier or NaN has been removed by the filter.
+    index : list
+        Returns the index corresponding to outlier.
+
+    References
+    ----------
+    [1] Pearson, Ronald K., et al. "Generalized hampel filters."
+    EURASIP Journal on Advances in Signal Processing 2016.1 (2016): 1-18.
+    DOI: 10.1186/s13634-016-0383-6
+
+    Examples
+    --------
+    >>> fs = 1000.0
+    >>> t = np.linspace(0, 1, int(fs))
+    >>> y = np.sin(2 * np.pi * 10.0 * t)
+    >>> np.put(y, [13, 124, 330, 445, 651, 775, 978], 3)
+    >>> plt.plot(y) # noise_signal
+
+    .. image:: https://bit.ly/3CWKVaw
+        :width: 600
+
+    >>> filtered_signal = hampel_filter.hampel_filter(y, window_size=5)[0]
+    >>> plt.plot(filtered_signal) # filtered_signal
+
+    .. image:: https://bit.ly/3in3Jq1
+        :width: 600
+
+    """
+
+    # Check inputs
+    if not isinstance(x, np.ndarray):
+        raise TypeError("'x' must be np.ndarray")
+    if not isinstance(window_size, int):
+        raise TypeError("'window_size' must be integer")
+    if not isinstance(n_sigma, (int, float)):
+        raise TypeError("'n_sigma' must be int or float")
+
+    copy_x = x.copy()
+    oulier_index = []
+
+    # Define sliding window
+    indexer = np.arange(window_size)[None, :] + np.arange(len(copy_x) - window_size)[:, None]
+
+    # Define window median
+    window_median = np.median(copy_x[indexer], axis=1)
+    window_median_array = np.repeat(window_median, window_size, axis=0).reshape(
+        np.shape(copy_x[indexer])[0], window_size
+    )
+
+    # Get estimated_sigma (mad * k)
+    k = 1.4826
+    estimated_sigma = k * np.median(np.abs(copy_x[indexer] - window_median_array), axis=1)
+    # Scale factor for Gaussian distribution
+    # The factor 1.4826 makes the MAD scale estimate an unbiased estimate
+    # of the standard deviation for Gaussian data.
+    # Get comparative value
+
+    value = np.abs(copy_x[indexer][:, 0] - window_median)
+
+    filtered_x = np.where(value > n_sigma * estimated_sigma, window_median, copy_x[indexer][:, 0])
+
+    # Get index
+    oulier_index = np.where(value <= n_sigma * estimated_sigma, None, indexer[:, 0])
+    oulier_index = list(filter(None, oulier_index))
+
+    return filtered_x, oulier_index
