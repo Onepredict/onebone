@@ -4,7 +4,9 @@ setup:
 	pre-commit install
 
 clean:
-	rm -vrf ./build ./dist ./*.pyc ./*.tgz ./*.egg-info */.pytest_cache .pytest_cache
+	rm -vrf ./build ./dist ./*.tgz ./*.egg-info */.pytest_cache .pytest_cache
+	python3 -Bc "import pathlib; [p.unlink() for p in pathlib.Path('.').rglob('*.py[co]')]"
+	python3 -Bc "import pathlib; [p.rmdir() for p in pathlib.Path('.').rglob('__pycache__')]"
 
 format:
 	isort .

@@ -42,7 +42,8 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/31462012?v=4",
       "profile": "https://github.com/isingmodel",
       "contributions": [
-        "review"
+        "review",
+        "code"
       ]
     },
     {
@@ -69,6 +70,15 @@
       "name": "jeonjuna",
       "avatar_url": "https://avatars.githubusercontent.com/u/88358071?v=4",
       "profile": "https://github.com/jeonjuna",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "akangel0307",
+      "name": "SunjinKim",
+      "avatar_url": "https://avatars.githubusercontent.com/u/92007351?v=4",
+      "profile": "https://github.com/akangel0307",
       "contributions": [
         "code"
       ]

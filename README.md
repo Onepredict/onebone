@@ -2,7 +2,7 @@
 <img src="https://user-images.githubusercontent.com/79968466/149683786-52ad7fc8-df64-4778-8381-35663c100c77.png" align="center" width="50%" alt="onepredict logo">
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-7-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Summary
@@ -46,10 +46,13 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/kyunghwan-onepredict"><img src="https://avatars.githubusercontent.com/u/86699249?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kyunghwan Kim</b></sub></a><br /><a href="https://github.com/Onepredict/onebone/commits?author=kyunghwan-onepredict" title="Code">💻</a> <a href="https://github.com/Onepredict/onebone/commits?author=kyunghwan-onepredict" title="Documentation">📖</a> <a href="https://github.com/Onepredict/onebone/pulls?q=is%3Apr+reviewed-by%3Akyunghwan-onepredict" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/Kangwhi-Kim"><img src="https://avatars.githubusercontent.com/u/79968466?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kangwhi Kim</b></sub></a><br /><a href="https://github.com/Onepredict/onebone/commits?author=Kangwhi-Kim" title="Code">💻</a> <a href="https://github.com/Onepredict/onebone/commits?author=Kangwhi-Kim" title="Documentation">📖</a> <a href="https://github.com/Onepredict/onebone/pulls?q=is%3Apr+reviewed-by%3AKangwhi-Kim" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/DaeyeopN"><img src="https://avatars.githubusercontent.com/u/80095250?v=4?s=100" width="100px;" alt=""/><br /><sub><b>DaeyeopN</b></sub></a><br /><a href="https://github.com/Onepredict/onebone/commits?author=DaeyeopN" title="Code">💻</a></td>
-    <td align="center"><a href="https://github.com/isingmodel"><img src="https://avatars.githubusercontent.com/u/31462012?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kibum Fred Kim</b></sub></a><br /><a href="https://github.com/Onepredict/onebone/pulls?q=is%3Apr+reviewed-by%3Aisingmodel" title="Reviewed Pull Requests">👀</a></td>
+    <td align="center"><a href="https://github.com/isingmodel"><img src="https://avatars.githubusercontent.com/u/31462012?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kibum Fred Kim</b></sub></a><br /><a href="https://github.com/Onepredict/onebone/pulls?q=is%3Apr+reviewed-by%3Aisingmodel" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/Onepredict/onebone/commits?author=isingmodel" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/kbpark-onepredict"><img src="https://avatars.githubusercontent.com/u/67666211?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Kibum Park</b></sub></a><br /><a href="https://github.com/Onepredict/onebone/commits?author=kbpark-onepredict" title="Code">💻</a> <a href="https://github.com/Onepredict/onebone/pulls?q=is%3Apr+reviewed-by%3Akbpark-onepredict" title="Reviewed Pull Requests">👀</a></td>
     <td align="center"><a href="https://github.com/seone-kim"><img src="https://avatars.githubusercontent.com/u/91518385?v=4?s=100" width="100px;" alt=""/><br /><sub><b>sewon.kim</b></sub></a><br /><a href="https://github.com/Onepredict/onebone/commits?author=seone-kim" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/jeonjuna"><img src="https://avatars.githubusercontent.com/u/88358071?v=4?s=100" width="100px;" alt=""/><br /><sub><b>jeonjuna</b></sub></a><br /><a href="https://github.com/Onepredict/onebone/commits?author=jeonjuna" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/akangel0307"><img src="https://avatars.githubusercontent.com/u/92007351?v=4?s=100" width="100px;" alt=""/><br /><sub><b>SunjinKim</b></sub></a><br /><a href="https://github.com/Onepredict/onebone/commits?author=akangel0307" title="Code">💻</a></td>
   </tr>
 </table>
 
