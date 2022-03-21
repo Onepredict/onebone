@@ -429,17 +429,16 @@ def hampel_filter(x: np.ndarray, window_size: int, n_sigma: float = 3) -> Tuple[
     >>> np.put(y, [13, 124, 330, 445, 651, 775, 978], 3)
     >>> plt.plot(y) # noise_signal
 
-    .. image:: https://bit.ly/3JitQu0
+    .. image:: https://bit.ly/3CWKVaw
         :width: 600
 
     >>> filtered_signal = hampel_filter.hampel_filter(y, window_size=5)[0]
     >>> plt.plot(filtered_signal) # filtered_signal
 
-    .. image:: https://bit.ly/3MX92KV
+    .. image:: https://bit.ly/3in3Jq1
         :width: 600
 
     """
-    k = 1.4826
 
     # Check inputs
     if not isinstance(x, np.ndarray):
@@ -462,6 +461,7 @@ def hampel_filter(x: np.ndarray, window_size: int, n_sigma: float = 3) -> Tuple[
     )
 
     # Get estimated_sigma (mad * k)
+    k = 1.4826
     estimated_sigma = k * np.median(np.abs(copy_x[indexer] - window_median_array), axis=1)
     # Scale factor for Gaussian distribution
     # The factor 1.4826 makes the MAD scale estimate an unbiased estimate
