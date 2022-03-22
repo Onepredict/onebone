@@ -77,7 +77,7 @@ onebone requires Python 3.6.5+.
 onebone can be installed via pip from [PyPI](https://pypi.org/)
 
 ```bash
-$ pip install --extra-index-url http://10.10.30.16:8008 --trusted-host 10.10.30.16:8008 onebone
+$ pip install onebone
 ```
 
 It can be checked as follows whether the onebone has been installed.
