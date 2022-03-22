@@ -24,6 +24,5 @@ jobs:
     - name: Build & Deploy
       run: |
         poetry build
-        poetry config repositories.onebone http://10.10.30.16:8008
-        poetry config repositories
-        poetry publish -r onebone
+        poetry config pypi-token.pypi ${{ secrets.PYPI_TOKEN }}
+        poetry publish
