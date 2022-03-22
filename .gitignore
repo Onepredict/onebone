@@ -13,6 +13,6 @@ dist
 poetry.lock
 
 # sphinx
-# docs/build
-# docs/source/*.rst
-# !docs/source/index.rst
+docs/build
+docs/source/*.rst
+!docs/source/index.rst
