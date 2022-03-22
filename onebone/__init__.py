@@ -1,5 +1,5 @@
 """
-onebone: Onepredict Base algorithm Library
+onebone: An Open Source Signal Processing Library for Sensor Signals about vibration, current, etc.
 """
 
 import pkg_resources
