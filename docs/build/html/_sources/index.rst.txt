@@ -1,3 +1,6 @@
+Welcome, onebone!
+=================
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
