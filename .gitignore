@@ -14,5 +14,5 @@ poetry.lock
 
 # sphinx
 docs/build
-docs/source/*.rst
-!docs/source/index.rst
+# docs/source/*.rst
+# !docs/source/index.rst
