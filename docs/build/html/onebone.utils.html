@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>onebone.utils &mdash; onebone  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="onebone.signal" href="onebone.signal.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> onebone
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="onebone.html">onebone</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="onebone.feature.html">onebone.feature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="onebone.math.html">onebone.math</a></li>
+<li class="toctree-l2"><a class="reference internal" href="onebone.preprocessing.html">onebone.preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="onebone.signal.html">onebone.signal</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">onebone.utils</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-onebone.utils.slicing">onebone.utils.slicing</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-onebone.utils.timer">onebone.utils.timer</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">onebone</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="onebone.html">onebone</a> &raquo;</li>
+      <li>onebone.utils</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/onebone.utils.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="onebone-utils">
+<h1>onebone.utils<a class="headerlink" href="#onebone-utils" title="Permalink to this headline"></a></h1>
+<section id="module-onebone.utils.slicing">
+<span id="onebone-utils-slicing"></span><h2>onebone.utils.slicing<a class="headerlink" href="#module-onebone.utils.slicing" title="Permalink to this headline"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="onebone.utils.slicing.slice_along_axis">
+<span class="sig-prename descclassname"><span class="pre">onebone.utils.slicing.</span></span><span class="sig-name descname"><span class="pre">slice_along_axis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">arr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">s</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">slice</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#onebone.utils.slicing.slice_along_axis" title="Permalink to this definition"></a></dt>
+<dd><p>Slice the values of the array within a certain range on the axis.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>arr</strong> (<em>numpy.ndarray</em>) – Input array.</p></li>
+<li><p><strong>s</strong> (<em>slice</em>) – Range on the <cite>axis</cite>.</p></li>
+<li><p><strong>axis</strong> (<em>int</em>) – Axis</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>arr_out</strong> (<em>numpy.ndarray</em>) – Sliced input array.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-onebone.utils.timer">
+<span id="onebone-utils-timer"></span><h2>onebone.utils.timer<a class="headerlink" href="#module-onebone.utils.timer" title="Permalink to this headline"></a></h2>
+<p>Timer function.</p>
+<ul class="simple">
+<li><p>Author: Kangwhi Kim</p></li>
+<li><p>Contact: <a class="reference external" href="mailto:kangwhi&#46;kim&#37;&#52;&#48;onepredict&#46;com">kangwhi<span>&#46;</span>kim<span>&#64;</span>onepredict<span>&#46;</span>com</a></p></li>
+</ul>
+<dl class="py class">
+<dt class="sig sig-object py" id="onebone.utils.timer.Timer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">onebone.utils.timer.</span></span><span class="sig-name descname"><span class="pre">Timer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">logger</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optional</span><span class="p"><span class="pre">[</span></span><span class="pre">logging.Logger</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#onebone.utils.timer.Timer" title="Permalink to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Check the elapsed time of the function.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Use it as a function decorator.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>logger</strong> (<em>logging.Logger</em><em>, </em><em>default=None</em>) – A logger.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>wrapper</strong> (<em>function</em>) – Wrapper function. When <cite>logger</cite> is not <cite>None</cite>,
+the debug level message is delivered to the logger within the wrapper function.
+But, when <cite>logger</cite> is <cite>None</cite>,
+the message is delivered to the <cite>print</cite> function.</p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">time</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">onebone.utils</span> <span class="kn">import</span> <span class="n">Timer</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Create a logger.</p>
+</div></blockquote>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">DEBUG</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">stream_handler</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">StreamHandler</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">logger</span><span class="o">.</span><span class="n">addHandler</span><span class="p">(</span><span class="n">stream_handler</span><span class="p">)</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Add the <cite>Timer</cite> Decorator to the function.</p>
+</div></blockquote>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nd">@Timer</span><span class="p">(</span><span class="n">logger</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">timer_test</span><span class="p">():</span>
+<span class="go">        start = time.time()</span>
+<span class="go">        time.sleep(1)</span>
+<span class="go">        duration = time.time() - start</span>
+<span class="go">        return duration</span>
+</pre></div>
+</div>
+<blockquote>
+<div><p>Run the function.</p>
+</div></blockquote>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">timer_test</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="onebone.signal.html" class="btn btn-neutral float-left" title="onebone.signal" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Kyunghwan Kim.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

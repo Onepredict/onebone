@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>onebone.math &mdash; onebone  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="onebone.preprocessing" href="onebone.preprocessing.html" />
+    <link rel="prev" title="onebone.feature" href="onebone.feature.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> onebone
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="onebone.html">onebone</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="onebone.feature.html">onebone.feature</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">onebone.math</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-onebone.math.integrate">onebone.math.integrate</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="onebone.preprocessing.html">onebone.preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="onebone.signal.html">onebone.signal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="onebone.utils.html">onebone.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">onebone</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="onebone.html">onebone</a> &raquo;</li>
+      <li>onebone.math</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/onebone.math.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="onebone-math">
+<h1>onebone.math<a class="headerlink" href="#onebone-math" title="Permalink to this headline"></a></h1>
+<section id="module-onebone.math.integrate">
+<span id="onebone-math-integrate"></span><h2>onebone.math.integrate<a class="headerlink" href="#module-onebone.math.integrate" title="Permalink to this headline"></a></h2>
+<p>Frequency domain feature.</p>
+<ul class="simple">
+<li><p>Author: Kangwhi Kim</p></li>
+<li><p>Contact: <a class="reference external" href="mailto:kangwhi&#46;kim&#37;&#52;&#48;onepredict&#46;com">kangwhi<span>&#46;</span>kim<span>&#64;</span>onepredict<span>&#46;</span>com</a></p></li>
+</ul>
+<dl class="py function">
+<dt class="sig sig-object py" id="onebone.math.integrate.integrate_trapezoid">
+<span class="sig-prename descclassname"><span class="pre">onebone.math.integrate.</span></span><span class="sig-name descname"><span class="pre">integrate_trapezoid</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-</span> <span class="pre">1</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Union</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">numpy.ndarray</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#onebone.math.integrate.integrate_trapezoid" title="Permalink to this definition"></a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method uses <a class="reference external" href="https://numpy.org/doc/stable/reference/generated/numpy.trapz.html">numpy.trapz</a> method as it is.</p>
+</div>
+<p>Integrate along the given axis using the composite trapezoidal rule.</p>
+<p>If <cite>x</cite> is provided, the integration happens in sequence along its
+elements - they are not sorted.</p>
+<p>Integrate <cite>y</cite> (<cite>x</cite>) along each 1d slice on the given axis, compute
+<span class="math notranslate nohighlight">\(\int y(x) dx\)</span>.
+When <cite>x</cite> is specified, this integrates along the parametric curve,
+computing <span class="math notranslate nohighlight">\(\int_t y(t) dt =
+\int_t y(t) \left.\frac{dx}{dt}\right|_{x=x(t)} dt\)</span>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>array_like</em>) – Input array to integrate.</p></li>
+<li><p><strong>x</strong> (<em>array_like</em><em>, </em><em>optional</em><em>, </em><em>default=None</em>) – The sample points corresponding to the <cite>y</cite> values. If <cite>x</cite> is None,
+the sample points are assumed to be evenly spaced <cite>dx</cite> apart.</p></li>
+<li><p><strong>dx</strong> (<em>float</em><em>, </em><em>optional</em><em>, </em><em>default=1</em>) – The spacing between sample points when <cite>x</cite> is None.</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>optional</em><em>, </em><em>default=-1</em>) – The axis along which to integrate.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>trapz</strong> (<em>float or ndarray</em>) – Definite integral of ‘y’ = n-dimensional array as approximated along
+a single axis by the trapezoidal rule. If ‘y’ is a 1-dimensional array,
+then the result is a float. If ‘n’ is greater than 1, then the result
+is an ‘n-1’ dimensional array.</p>
+</dd>
+</dl>
+<div class="admonition seealso">
+<p class="admonition-title">See also</p>
+<p><code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.sum</span></code>, <code class="xref py py-obj docutils literal notranslate"><span class="pre">numpy.cumsum</span></code></p>
+</div>
+<div class="admonition-notes admonition">
+<p class="admonition-title">Notes</p>
+<p>Image <a class="footnote-reference brackets" href="#id3" id="id1">2</a> illustrates trapezoidal rule – y-axis locations of points
+will be taken from <cite>y</cite> array, by default x-axis distances between
+points will be 1.0, alternatively they can be provided with <cite>x</cite> array
+or with <cite>dx</cite> scalar.  Return value will be equal to combined area under
+the red lines.</p>
+</div>
+<div class="admonition-references admonition">
+<p class="admonition-title">References</p>
+<dl class="footnote brackets">
+<dt class="label" id="id2"><span class="brackets">1</span></dt>
+<dd><p>Wikipedia page: <a class="reference external" href="https://en.wikipedia.org/wiki/Trapezoidal_rule">https://en.wikipedia.org/wiki/Trapezoidal_rule</a></p>
+</dd>
+<dt class="label" id="id3"><span class="brackets"><a class="fn-backref" href="#id1">2</a></span></dt>
+<dd><p>Illustration image:
+<a class="reference external" href="https://en.wikipedia.org/wiki/File:Composite_trapezoidal_rule_illustration.png">https://en.wikipedia.org/wiki/File:Composite_trapezoidal_rule_illustration.png</a></p>
+</dd>
+</dl>
+</div>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<span class="go">4.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="mi">4</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">8</span><span class="p">])</span>
+<span class="go">8.0</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">dx</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="go">8.0</span>
+</pre></div>
+</div>
+<p>Using a decreasing <cite>x</cite> corresponds to integrating in reverse:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="p">[</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">])</span>
+<span class="go">-8.0</span>
+</pre></div>
+</div>
+<p>More generally <cite>x</cite> is used to integrate along a parametric curve.
+This finds the area of a circle, noting we repeat the sample which closes
+the curve:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">theta</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="p">,</span> <span class="n">num</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">endpoint</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">theta</span><span class="p">),</span> <span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">theta</span><span class="p">))</span>
+<span class="go">3.141571941375841</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">array([[0, 1, 2],</span>
+<span class="go">       [3, 4, 5]])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">array([1.5, 2.5, 3.5])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">np</span><span class="o">.</span><span class="n">trapz</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="go">array([2.,  8.])</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="onebone.feature.html" class="btn btn-neutral float-left" title="onebone.feature" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="onebone.preprocessing.html" class="btn btn-neutral float-right" title="onebone.preprocessing" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Kyunghwan Kim.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

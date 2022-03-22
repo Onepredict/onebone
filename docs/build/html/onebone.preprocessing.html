@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>onebone.preprocessing &mdash; onebone  documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/favicon.ico"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+        <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="onebone.signal" href="onebone.signal.html" />
+    <link rel="prev" title="onebone.math" href="onebone.math.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+            <a href="index.html" class="icon icon-home"> onebone
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="onebone.html">onebone</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="onebone.feature.html">onebone.feature</a></li>
+<li class="toctree-l2"><a class="reference internal" href="onebone.math.html">onebone.math</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">onebone.preprocessing</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-onebone.preprocessing.feature_selection">onebone.preprocessing.feature_selection</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-onebone.preprocessing.pd">onebone.preprocessing.pd</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-onebone.preprocessing.scaling">onebone.preprocessing.scaling</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="onebone.signal.html">onebone.signal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="onebone.utils.html">onebone.utils</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">onebone</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+          <li><a href="onebone.html">onebone</a> &raquo;</li>
+      <li>onebone.preprocessing</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/onebone.preprocessing.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="onebone-preprocessing">
+<h1>onebone.preprocessing<a class="headerlink" href="#onebone-preprocessing" title="Permalink to this headline"></a></h1>
+<section id="module-onebone.preprocessing.feature_selection">
+<span id="onebone-preprocessing-feature-selection"></span><h2>onebone.preprocessing.feature_selection<a class="headerlink" href="#module-onebone.preprocessing.feature_selection" title="Permalink to this headline"></a></h2>
+<p>Feature Selection methods.</p>
+<ul class="simple">
+<li><p>Author: Junha Jeon</p></li>
+<li><p>Contact: <a class="reference external" href="mailto:junha&#46;jeon&#37;&#52;&#48;onepredict&#46;com">junha<span>&#46;</span>jeon<span>&#64;</span>onepredict<span>&#46;</span>com</a></p></li>
+</ul>
+<dl class="py function">
+<dt class="sig sig-object py" id="onebone.preprocessing.feature_selection.fs_crosscorrelation">
+<span class="sig-prename descclassname"><span class="pre">onebone.preprocessing.feature_selection.</span></span><span class="sig-name descname"><span class="pre">fs_crosscorrelation</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">numpy.ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_col_num</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#onebone.preprocessing.feature_selection.fs_crosscorrelation" title="Permalink to this definition"></a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method uses <a class="reference external" href="https://docs.scipy.org/doc/scipy/reference/generated/scipy.signal.correlate.html">scipy.signal.correlate</a>.</p>
+</div>
+<p>Reduce the dimension of input data by removing the signals
+which have small cross correlation with reference signal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>data_length</em><em>, </em><em>n_features</em><em>)</em>) – The data.</p></li>
+<li><p><strong>refer</strong> (<em>numpy.ndarray of shape</em><em> (</em><em>data_length</em><em>,</em><em>)</em>) – The reference data.</p></li>
+<li><p><strong>output_col_num</strong> (<em>int</em>) – Number of columns after dimension reduction.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>x_tr</strong> (<em>numpy.ndarray of shape (data_length, n_features)</em>) – The data after dimension reduction.</p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">t</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mf">30.0</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">b</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mf">30.0</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(1000, 2)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">refer</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">pi</span> <span class="o">*</span> <span class="mf">10.0</span> <span class="o">*</span> <span class="n">t</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x_dimreduced</span> <span class="o">=</span> <span class="n">fs_crosscorrelation</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">refer</span><span class="p">,</span> <span class="n">output_col_num</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x_dimreduced</span><span class="o">.</span><span class="n">shape</span>
+<span class="go">(1000, 1)</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-onebone.preprocessing.pd">
+<span id="onebone-preprocessing-pd"></span><h2>onebone.preprocessing.pd<a class="headerlink" href="#module-onebone.preprocessing.pd" title="Permalink to this headline"></a></h2>
+<p>Transform PRPS(Phase Resolved Pulse Sequence) format pd data
+to PRPD(Phase Resolved Partial Discharge) format.</p>
+<ul class="simple">
+<li><p>Author: Hyunjae Kim</p></li>
+<li><p>Contact: <a class="reference external" href="mailto:hyunjae&#46;kim&#37;&#52;&#48;onepredict&#46;com">hyunjae<span>&#46;</span>kim<span>&#64;</span>onepredict<span>&#46;</span>com</a></p></li>
+</ul>
+<dl class="py function">
+<dt class="sig sig-object py" id="onebone.preprocessing.pd.ps2pd">
+<span class="sig-prename descclassname"><span class="pre">onebone.preprocessing.pd.</span></span><span class="sig-name descname"><span class="pre">ps2pd</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ps</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">range_amp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">256)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resol_amp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">128</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#onebone.preprocessing.pd.ps2pd" title="Permalink to this definition"></a></dt>
+<dd><p>Transform prps(phase resolved pulse sequance) to a prpd(phaes resolved partial discharge)
+by marginalizing time dimension.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>ps</strong> (<em>array_like of shape</em><em> (</em><em>n_resolution_phase</em><em>, </em><em>n_timestep</em><em>)</em>) – The data. Ex: kepco standard=(3600, 128)</p></li>
+<li><p><strong>range_amp</strong> (<em>tuple</em><em> (</em><em>min</em><em>, </em><em>max</em><em>)</em><em>, </em><em>default=</em><em>(</em><em>0</em><em>, </em><em>256</em><em>)</em>) – Measurement range of PD DAQ. Refers to DAQ manufacture.</p></li>
+<li><p><strong>resol_amp</strong> (<em>int</em><em>, </em><em>default=128</em>) – Desired resolution of amplitude resolution for transformd prpd.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>pd</strong> (<em>numpy.ndarray of shape (n_resolution_phase, n_resolution_amplitude)</em>) – The transformed prpd.</p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ps</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">([</span><span class="mi">3600</span><span class="p">,</span><span class="mi">128</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ps2pd</span><span class="p">(</span><span class="n">ps</span><span class="p">)</span>
+<span class="go">array([[0., 0., 0., ..., 0., 0., 0.],</span>
+<span class="go">    [0., 0., 0., ..., 0., 0., 0.],</span>
+<span class="go">    ...,</span>
+<span class="go">    [0., 0., 0., ..., 0., 0., 0.]])</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-onebone.preprocessing.scaling">
+<span id="onebone-preprocessing-scaling"></span><h2>onebone.preprocessing.scaling<a class="headerlink" href="#module-onebone.preprocessing.scaling" title="Permalink to this headline"></a></h2>
+<p>Data scaling methods.</p>
+<ul class="simple">
+<li><p>Author: Kyunghwan Kim</p></li>
+<li><p>Contact: <a class="reference external" href="mailto:kyunghwan&#46;kim&#37;&#52;&#48;onepredict&#46;com">kyunghwan<span>&#46;</span>kim<span>&#64;</span>onepredict<span>&#46;</span>com</a></p></li>
+</ul>
+<dl class="py function">
+<dt class="sig sig-object py" id="onebone.preprocessing.scaling.minmax_scaling">
+<span class="sig-prename descclassname"><span class="pre">onebone.preprocessing.scaling.</span></span><span class="sig-name descname"><span class="pre">minmax_scaling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">feature_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(0,</span> <span class="pre">1)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">numpy.ndarray</span></span></span><a class="headerlink" href="#onebone.preprocessing.scaling.minmax_scaling" title="Permalink to this definition"></a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method uses <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.minmax_scale.html">sklearn.preprocessing.minmax_scale</a> method as it is.</p>
+</div>
+<p>Transform features by scaling each feature to a given range.</p>
+<div class="math notranslate nohighlight">
+\[x' = {(x - x_{min}) \over (x_{max} - x_{min})}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>array_like of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – The data.</p></li>
+<li><p><strong>feature_range</strong> (<em>tuple</em><em> (</em><em>min</em><em>, </em><em>max</em><em>)</em><em>, </em><em>default=</em><em>(</em><em>0</em><em>, </em><em>1</em><em>)</em>) – Desired range of transformed data.</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>default=0</em>) – Axis used to scale along.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>x_tr</strong> (<em>numpy.ndarray of shape (n_samples, n_features)</em>) – The transformed data.</p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">[0, 1, 2, 3, 4, 5, 6, 7, 8]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">minmax_scaling</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([0.   , 0.125, 0.25 , 0.375, 0.5  , 0.625, 0.75 , 0.875, 1.   ])</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="onebone.preprocessing.scaling.zscore_scaling">
+<span class="sig-prename descclassname"><span class="pre">onebone.preprocessing.scaling.</span></span><span class="sig-name descname"><span class="pre">zscore_scaling</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">axis</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#onebone.preprocessing.scaling.zscore_scaling" title="Permalink to this definition"></a></dt>
+<dd><div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This method uses <a class="reference external" href="https://scikit-learn.org/stable/modules/generated/sklearn.preprocessing.scale.html">sklearn.preprocessing.scale</a> method as it is.</p>
+</div>
+<p>Transform input data so that they can be described as a normal distribution.</p>
+<div class="math notranslate nohighlight">
+\[x' = {(x - x_{mean}) \over x_{std}}\]</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x</strong> (<em>array_like of shape</em><em> (</em><em>n_samples</em><em>, </em><em>n_features</em><em>)</em>) – The data.</p></li>
+<li><p><strong>axis</strong> (<em>int</em><em>, </em><em>default=0</em>) – Axis used to compute the means and standard deviations along.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p><strong>x_tr</strong> (<em>numpy.ndarray of shape (n_samples, n_features)</em>) – The transformed data.</p>
+</dd>
+</dl>
+<div class="admonition-examples admonition">
+<p class="admonition-title">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">a</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">9</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">a</span>
+<span class="go">[0, 1, 2, 3, 4, 5, 6, 7, 8]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">zscore_scaling</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+<span class="go">array([-1.54919334, -1.161895  , -0.77459667, -0.38729833,  0.,</span>
+<span class="go">        0.38729833,  0.77459667,  1.161895  ,  1.54919334])</span>
+</pre></div>
+</div>
+</div>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="onebone.math.html" class="btn btn-neutral float-left" title="onebone.math" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="onebone.signal.html" class="btn btn-neutral float-right" title="onebone.signal" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2021, Kyunghwan Kim.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
