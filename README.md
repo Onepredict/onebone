@@ -2,8 +2,7 @@
 <img src="https://user-images.githubusercontent.com/79968466/149683786-52ad7fc8-df64-4778-8381-35663c100c77.png" align="center" width="50%" alt="onepredict logo">
 
 [![Documentation Status](https://readthedocs.org/projects/onebone/badge/?version=latest)](https://onebone.readthedocs.io/?badge=latest)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section --> [![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-) <!-- ALL-CONTRIBUTORS-BADGE:END -->
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black) <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section --> [![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-) <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 # Summary
 
