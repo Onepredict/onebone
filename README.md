@@ -1,6 +1,8 @@
 <p align="center">
 <img src="https://user-images.githubusercontent.com/79968466/149683786-52ad7fc8-df64-4778-8381-35663c100c77.png" align="center" width="50%" alt="onepredict logo">
 
+[![Documentation Status](https://readthedocs.org/projects/onebone/badge/?version=latest)](https://onebone.readthedocs.io/?badge=latest)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
@@ -32,7 +34,7 @@ The directory is as follows:
 <!--TODO: Changes the documentation link to public accessible link.-->
 <!--TODO: Add the reference for modules like this link(https://numpy.org/doc/stable/reference/index.html)-->
 
-This reference manual details functions included in onebone, describing what they are and what they do. For learning how to use onebone, see the complete [documentation](http://10.10.30.16/).
+This reference manual details functions included in onebone, describing what they are and what they do. For learning how to use onebone, see the complete [documentation](https://onebone.readthedocs.io/index.html).
 
 # Contributors ✨
 
