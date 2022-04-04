@@ -7,7 +7,7 @@
 
 # Summary
 
-`onebone` is an open-source software for signal analysis about predictive maintenance, being used for research activities at [ⓒ ONEPREDICT Corp.](https://onepredict.ai/). It includes modules for preprocessing, health feature, and more. If you need to analyze signals for industrial equipments like turbines, a rotary machinery or componets like gears, bearings, give onebone a try!.
+`onebone` is an open-source software for signal analysis about predictive maintenance, being used for research activities at [ⓒ ONEPREDICT Corp.](https://onepredict.ai/). It includes modules for preprocessing, health feature, and more. If you need to analyze signals for industrial equipments like turbines, a rotary machinery or componets like gears, bearings, give onebone a try!
 
 The directory is as follows:
 
@@ -74,10 +74,10 @@ onebone requires Python 3.6.5+.
 
 <!--TODO: Register onebone on the pypi server.-->
 
-onebone can be installed via pip from [PyPI](https://pypi.org/)
+onebone can be installed via pip from [PyPI](https://pypi.org/project/onebone/)
 
 ```bash
-$ pip install --extra-index-url http://10.10.30.16:8008 --trusted-host 10.10.30.16:8008 onebone
+$ pip install onebone
 ```
 
 It can be checked as follows whether the onebone has been installed.
@@ -111,9 +111,9 @@ If you're unsure where to start or how your skills fit in, reach out! You can as
 
 If you want to use an code for signal analysis, but it's not in onebone, make a issue.
 
-If you are new to contributing to open source, [this guide](https://opensource.guide/how-to-contribute/) helps explain why, what, and how to get involved.
+Please follow [this guide](https://github.com/Onepredict/onebone/blob/main/wiki/development_guide.md) to contribute to onebone.
 
-If you want to contribute onebone, follow [this guide](https://github.com/Onepredict/onebone/blob/main/wiki/development_guide.md).
+If you are new to contributing to open source, [this guide](https://opensource.guide/how-to-contribute/) helps explain why, what, and how to get involved.
 
 # References
 

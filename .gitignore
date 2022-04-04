@@ -9,10 +9,10 @@ dist
 
 .DS_Store
 .vscode/
+.idea
 poetry.lock
 
 # sphinx
 docs/build
-docs/source/*.rst
-!docs/source/index.rst
-.idea
+# docs/source/*.rst
+# !docs/source/index.rst

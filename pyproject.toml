@@ -1,8 +1,12 @@
 [tool.poetry]
 name = "onebone"
-version = "1.2.0"
+version = "1.2.2"
 description = "An Open Source Signal Processing Library for Sensor Signals about vibration, current, etc."
-authors = ["Kyunghwan Kim <kyunghwan.kim@onepredict.com>"]
+authors = [
+    "Kyunghwan Kim <kyunghwan.kim@onepredict.com>",
+    "Kangwhi Kim <kangwhi.kim@onepredict.com>",
+]
+readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.6.5, <3.11"
