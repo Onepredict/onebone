@@ -95,8 +95,6 @@ def moving_average(
     :math:`n` is the :math:`n`th value of the input array,
     if pad is True and :math: `n` is smaller than :math:`t`, :math:`i` is set to :math:`0`.
 
-
-
     Parameters
     ----------
     signal : numpy.ndarray of shape (signal_length,), (n, signal_length,)
@@ -130,7 +128,6 @@ def moving_average(
     >>> window_size = 3
     >>> moving_average(signal, window_size)
     [2, 3, 4, 5, 6, 7, 8, 9]
-
 
     >>> signal = np.array([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
     >>> window_size = 3
