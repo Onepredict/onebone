@@ -274,6 +274,87 @@ def bandpass_filter(
     signal = lfilter(b, a, signal, axis=axis)
     return signal
 
+def bandpass_filter_ideal(
+    signal: np.ndarray,
+    fs: Union[int, float],
+    l_cutoff: Union[int, float],
+    h_cutoff: Union[int, float],
+) -> np.ndarray:
+    """
+    1D ideal bandpass filter.
+
+    Parameters
+    ----------
+    signal : numpy.ndarray
+        Original time-domain signal.
+    fs : Union[int, float]
+        Sampling rate.
+    l_cutoff : Union[int, float]
+        Low cutoff frequency.
+    h_cutoff : Union[int, float]
+        High cutoff frequency.
+    
+    Returns
+    -------
+    out : numpy.ndarray
+        Filtered signal.
+        Input shape is [signal_length,] and output shape is [signal_length,].
+
+    Examples
+    --------
+    Apply the filter to 1d signal. And then check the frequency component of the filtered signal.
+
+    >>> fs = 5000.0
+    >>> t = np.linspace(0, 1, int(fs))
+    >>> signal = 10.0 * np.sin(2 * np.pi * 20.0 * t)
+    >>> signal += 5.0 * np.sin(2 * np.pi * 100.0 * t)
+    >>> signal += 5.0 * np.sin(2 * np.pi * 500.0 * t)
+    >>> signal.shape
+    (5000,)
+    >>> freq_x = np.fft.rfftfreq(signal.size, 1 / fs)[:-1]
+    >>> origin_fft_mag = abs((np.fft.rfft(signal) / signal.size)[:-1] * 2)
+    >>> origin_freq = freq_x[np.where(origin_fft_mag > 0.5)]
+    >>> origin_freq
+    [ 20., 100., 500.]
+    >>> filtered_signal = bandpass_filter_ideal(signal, fs, l_cutoff=50, h_cutoff=300)
+    >>> filtered_fft_mag = abs((np.fft.rfft(filtered_signal) / signal.size)[:-1] * 2)
+    >>> filtered_freq = freq_x[np.where(filtered_fft_mag > 0.5)]
+    >>> filtered_freq
+    [ 100.]
+    """
+    if not (isinstance(fs, int) | isinstance(fs, float)):
+        raise TypeError(f"Argument 'fs' must be of type int or float, not {type(fs).__name__}")
+    if not (isinstance(l_cutoff, int) | isinstance(l_cutoff, float)):
+        raise TypeError(
+            f"Argument 'l_cutoff' must be of type int or float, not {type(l_cutoff).__name__}"
+        )
+    if not (isinstance(h_cutoff, int) | isinstance(h_cutoff, float)):
+        raise TypeError(
+            f"Argument 'h_cutoff' must be of type int or float, not {type(h_cutoff).__name__}"
+        )
+    
+    N = len(signal)
+    T = N/fs
+    k = np.arange(N)
+    
+    freq_full = (k/T)
+
+    yFull = np.array(np.fft.fft(signal))
+    Band2Low = fs - h_cutoff
+    Band2High = fs - l_cutoff
+    Band1LowIdx = np.where(freq_full>=l_cutoff)[0][0]
+    Band1HighIdx = np.where(freq_full>=h_cutoff)[0][0]
+    Band2LowIdx = np.where(freq_full>=Band2Low)[0][0]
+    Band2HighIdx = np.where(freq_full>=Band2High)[0][0]
+    Band1Idx = np.arange(Band1LowIdx, Band1HighIdx)
+    Band2Idx = np.arange(Band2LowIdx, Band2HighIdx)
+    BandIdx = np.vstack([Band1Idx, Band2Idx]).T
+    FullIdx = np.arange(len(freq_full))
+    NotchIdx = np.setdiff1d(FullIdx, BandIdx)
+    FiltYFull = yFull.copy()
+    FiltYFull[NotchIdx] = 0
+    filter_signal = np.real(np.fft.ifft(FiltYFull))
+    return filter_signal
 
 def bandstop_filter(
     signal: np.ndarray,
