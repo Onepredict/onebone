@@ -1,6 +1,6 @@
 from .denoise import wavelet_denoising
 from .envelope import envelope_hilbert
-from .fft import positive_fft
+from .fft import positive_fft, full_spectrum
 from .filter import (
     bandpass_filter,
     bandpass_filter_ideal,
@@ -22,6 +22,7 @@ __all__ = [
     "vcf",
     "envelope_hilbert",
     "positive_fft",
+    "full_spectrum",
     "moving_average",
     "wavelet_denoising",
     "hampel_filter",

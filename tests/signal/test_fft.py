@@ -1,6 +1,6 @@
 import numpy as np
 
-from onebone.signal import positive_fft
+from onebone.signal import positive_fft, full_spectrum
 
 
 def generate_signal():
@@ -70,6 +70,18 @@ def check_3d_signal():
                 + f"but output is {freq}"
             )
 
+def check_2d_full_spectrum():
+    fs = 800
+    signal = generate_signal()
+    signal_2d = np.stack([signal] * 2)
+
+    freq, mag = full_spectrum(signal_2d, fs=fs, direction='CCW')
+    target_freq = np.around(freq[np.where(mag[0, :] > 1)])
+
+    expected_return = np.array([50, 80.0])
+    assert np.all(np.equal(target_freq, expected_return)), (
+        f"Wrong return: The expected return is {expected_return}, " + f"but output is {freq}"
+    )
 
 def test_fft():
     check_1d_signal()
@@ -77,6 +89,9 @@ def test_fft():
     check_2d_signal_axis_one()
     check_3d_signal()
 
+def test_full_spectrum():
+    check_2d_full_spectrum()
 
 if __name__ == "__main__":
     test_fft()
+    test_full_spectrum()
