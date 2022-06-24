@@ -112,8 +112,10 @@ def test_bandpass_filter():
     check_2d_signal(bandpass_filter, (5000.0, 50, 300), np.array([100.0, 200.0]))
     check_3d_signal(bandpass_filter, (5000.0, 50, 300), np.array([100.0, 200.0]))
 
+
 def test_bandpass_filter_ideal():
     check_1d_signal(bandpass_filter_ideal, (5000.0, 50, 300), np.array([100.0, 200.0]))
+
 
 def test_bandstop_filter():
     check_1d_signal(bandstop_filter, (5000.0, 50, 300), np.array([10.0, 20.0, 500.0]))
