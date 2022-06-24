@@ -274,6 +274,7 @@ def bandpass_filter(
     signal = lfilter(b, a, signal, axis=axis)
     return signal
 
+
 def bandpass_filter_ideal(
     signal: np.ndarray,
     fs: Union[int, float],
@@ -293,7 +294,7 @@ def bandpass_filter_ideal(
         Low cutoff frequency.
     h_cutoff : Union[int, float]
         High cutoff frequency.
-    
+
     Returns
     -------
     out : numpy.ndarray
@@ -332,20 +333,20 @@ def bandpass_filter_ideal(
         raise TypeError(
             f"Argument 'h_cutoff' must be of type int or float, not {type(h_cutoff).__name__}"
         )
-    
+
     N = len(signal)
-    T = N/fs
+    T = N / fs
     k = np.arange(N)
-    
-    freq_full = (k/T)
+
+    freq_full = k / T
 
     yFull = np.array(np.fft.fft(signal))
     Band2Low = fs - h_cutoff
     Band2High = fs - l_cutoff
-    Band1LowIdx = np.where(freq_full>=l_cutoff)[0][0]
-    Band1HighIdx = np.where(freq_full>=h_cutoff)[0][0]
-    Band2LowIdx = np.where(freq_full>=Band2Low)[0][0]
-    Band2HighIdx = np.where(freq_full>=Band2High)[0][0]
+    Band1LowIdx = np.where(freq_full >= l_cutoff)[0][0]
+    Band1HighIdx = np.where(freq_full >= h_cutoff)[0][0]
+    Band2LowIdx = np.where(freq_full >= Band2Low)[0][0]
+    Band2HighIdx = np.where(freq_full >= Band2High)[0][0]
     Band1Idx = np.arange(Band1LowIdx, Band1HighIdx)
     Band2Idx = np.arange(Band2LowIdx, Band2HighIdx)
     BandIdx = np.vstack([Band1Idx, Band2Idx]).T
@@ -355,6 +356,7 @@ def bandpass_filter_ideal(
     FiltYFull[NotchIdx] = 0
     filter_signal = np.real(np.fft.ifft(FiltYFull))
     return filter_signal
+
 
 def bandstop_filter(
     signal: np.ndarray,
