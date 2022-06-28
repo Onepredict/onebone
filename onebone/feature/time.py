@@ -77,7 +77,7 @@ def rms(x: np.ndarray, axis: int = None) -> np.ndarray:
     if not (isinstance(axis, int) | (axis is None)):
         raise TypeError(f"Argument 'axis' must be of type int or None, not {type(axis).__name__}")
 
-    return np.sqrt(np.mean(x ** 2, axis=axis))
+    return np.sqrt(np.mean(x**2, axis=axis))
 
 
 def crest_factor(x: np.ndarray, axis: int = None) -> np.ndarray:
