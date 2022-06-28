@@ -333,28 +333,32 @@ def bandpass_filter_ideal(
         raise TypeError(
             f"Argument 'h_cutoff' must be of type int or float, not {type(h_cutoff).__name__}"
         )
+    if len(signal.shape) > 1:
+        raise TypeError(
+            f"Argument 'len(signal.shape)' must be 1, not {len(signal.shape)}"
+        )
 
-    N = len(signal)
-    T = N / fs
-    k = np.arange(N)
+    n = len(signal)
+    t = n / fs
+    k = np.arange(n)
 
-    freq_full = k / T
+    freq_full = k / t
 
-    yFull = np.array(np.fft.fft(signal))
-    Band2Low = fs - h_cutoff
-    Band2High = fs - l_cutoff
-    Band1LowIdx = np.where(freq_full >= l_cutoff)[0][0]
-    Band1HighIdx = np.where(freq_full >= h_cutoff)[0][0]
-    Band2LowIdx = np.where(freq_full >= Band2Low)[0][0]
-    Band2HighIdx = np.where(freq_full >= Band2High)[0][0]
-    Band1Idx = np.arange(Band1LowIdx, Band1HighIdx)
-    Band2Idx = np.arange(Band2LowIdx, Band2HighIdx)
-    BandIdx = np.vstack([Band1Idx, Band2Idx]).T
-    FullIdx = np.arange(len(freq_full))
-    NotchIdx = np.setdiff1d(FullIdx, BandIdx)
-    FiltYFull = yFull.copy()
-    FiltYFull[NotchIdx] = 0
-    filter_signal = np.real(np.fft.ifft(FiltYFull))
+    yfull = np.fft.fft(signal)
+    band2low = fs - h_cutoff
+    band2high = fs - l_cutoff
+    band1low_idx = np.where(freq_full >= l_cutoff)[0][0]
+    band1high_idx = np.where(freq_full >= h_cutoff)[0][0]
+    band2low_idx = np.where(freq_full >= band2low)[0][0]
+    band2high_idx = np.where(freq_full >= band2high)[0][0]
+    band1_idx = np.arange(band1low_idx, band1high_idx)
+    band2_idx = np.arange(band2low_idx, band2high_idx)
+    band_idx = np.vstack([band1_idx, band2_idx]).T
+    full_idx = np.arange(n)
+    notch_idx = np.setdiff1d(full_idx, band_idx)
+    filt_yfull = yfull.copy()
+    filt_yfull[notch_idx] = 0
+    filter_signal = np.real(np.fft.ifft(filt_yfull))
     return filter_signal
 
 
