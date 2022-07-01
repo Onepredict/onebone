@@ -3,7 +3,6 @@ from .envelope import envelope_hilbert
 from .fft import full_spectrum, positive_fft
 from .filter import (
     bandpass_filter,
-    bandpass_filter_ideal,
     bandstop_filter,
     hampel_filter,
     highpass_filter,
@@ -15,7 +14,6 @@ __all__ = [
     "lowpass_filter",
     "highpass_filter",
     "bandpass_filter",
-    "bandpass_filter_ideal",
     "bandstop_filter",
     "mnf",
     "mdf",

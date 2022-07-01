@@ -131,8 +131,8 @@ def full_spectrum(
     Q_pos = np.imag(FFT_X_half) + np.real(FFT_Y_half)
     Q_neg = -np.imag(FFT_X_half) + np.real(FFT_Y_half)
 
-    R_pos = np.sqrt(D_pos ** 2 + Q_pos ** 2)
-    R_neg = np.sqrt(D_neg ** 2 + Q_neg ** 2)
+    R_pos = np.sqrt(D_pos**2 + Q_pos**2)
+    R_neg = np.sqrt(D_neg**2 + Q_neg**2)
 
     if direction == "CCW":
         full_spectrum = np.hstack([np.flip(R_neg), R_pos[1:]])
