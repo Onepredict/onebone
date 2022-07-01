@@ -334,9 +334,7 @@ def bandpass_filter_ideal(
             f"Argument 'h_cutoff' must be of type int or float, not {type(h_cutoff).__name__}"
         )
     if len(signal.shape) > 1:
-        raise TypeError(
-            f"Argument 'len(signal.shape)' must be 1, not {len(signal.shape)}"
-        )
+        raise TypeError(f"Argument 'len(signal.shape)' must be 1, not {len(signal.shape)}")
 
     n = len(signal)
     t = n / fs
