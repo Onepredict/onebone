@@ -286,7 +286,6 @@ def bandpass_filter_ideal(
         Generally, this operates well on signals extracted in low resolution. \
         In order to check the distortion of signals, \
         it is recommended to monitor the linear transition of phase.
-        In order to check the distortion of signals, it is recommended to monitor the linear transition of phase.
 
     1D ideal bandpass filter.
 
