@@ -282,7 +282,10 @@ def bandpass_filter_ideal(
     h_cutoff: Union[int, float],
 ) -> np.ndarray:
     """
-    .. note:: This method may cause distortion of signal. Generally, this operates well on signals extracted in low resolution. \
+    .. warning:: This method **may cause distortion of signal**. \
+        Generally, this operates well on signals extracted in low resolution. \
+        In order to check the distortion of signals, \
+        it is recommended to monitor the linear transition of phase.
         In order to check the distortion of signals, it is recommended to monitor the linear transition of phase.
 
     1D ideal bandpass filter.
