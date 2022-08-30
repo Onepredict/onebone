@@ -31,7 +31,7 @@ The directory is as follows:
 <!--TODO: Changes the documentation link to public accessible link.-->
 <!--TODO: Add the reference for modules like this link(https://numpy.org/doc/stable/reference/index.html)-->
 
-This reference manual details functions included in onebone, describing what they are and what they do. For learning how to use onebone, see the complete [documentation](https://onebone.readthedocs.io/index.html).
+This reference manual details functions included in onebone, describing what they are and what they do. For learning how to use onebone, see the complete [documentation](https://onebone.readthedocs.io/en/latest/).
 
 # Contributors ✨
 
@@ -67,7 +67,7 @@ This project follows the [all-contributors](https://github.com/all-contributors/
 
 ## Prerequisite
 
-onebone requires Python 3.6.5+.
+onebone requires Python 3.8+.
 
 ## Installation
 
